@@ -228,6 +228,7 @@ export class ForgeOrchestrationService extends Disposable {
 			this._abort?.abort();
 			this._run = { ...this._run, status: 'cancelled', updatedAt: Date.now() };
 			this._publish();
+			safeModelLog(this._modelLog.endRun('cancelled'));
 			return;
 		}
 		if (command.type === 'pause') {
