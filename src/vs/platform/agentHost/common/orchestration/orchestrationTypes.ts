@@ -168,6 +168,7 @@ export interface IOrchestrationTranscriptEntry {
 }
 
 export interface IOrchestrationProgressHooks {
+	readonly entryId?: string;
 	onProgress?(update: { thinking: string; output?: string }): void;
 }
 

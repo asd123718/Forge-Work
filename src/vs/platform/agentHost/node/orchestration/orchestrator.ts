@@ -45,6 +45,7 @@ import { CODEX_MODELS_ROOT_CONFIG_KEY, normalizeCodexModelsConfig } from '../../
 import { parseForgeVendorAccountInfo, vendorAccountMetaKey } from '../../common/forgeVendorAccount.js';
 import { findOfficialModelProvider, officialApiFallbackReady, remainingPercentFromUsed } from '../../common/officialModelCards.js';
 import { getVendorAccountSecret, providerSecretId } from './vendorAccountSecrets.js';
+import { ForgeModelLog, safeModelLog } from './forgeModelLog.js';
 
 const MAX_TASK_ATTEMPTS = 2;
 
@@ -62,6 +63,7 @@ export class ForgeOrchestrationService extends Disposable {
 	private _activeLeader: ILeaderProvider = this._fallbackLeader;
 	private _transcriptPublishTimer: ReturnType<typeof setTimeout> | undefined;
 	private _transcriptPublishPending = false;
+	private readonly _modelLog = ForgeModelLog.instance();
 
 	constructor(
 		@IAgentConfigurationService private readonly _configuration: IAgentConfigurationService,
@@ -72,6 +74,7 @@ export class ForgeOrchestrationService extends Disposable {
 		super();
 		const runner = createNodeProcessRunner();
 		const repoRoot = environment.appRoot;
+		this._modelLog.configure(repoRoot);
 		const resolveDeepSeek = async () => resolveDeepSeekCommand(repoRoot, this._workerEnv('deepseek'));
 		const resolveGrok = async () => resolveGrokCommand(repoRoot, this._workerEnv('grok'));
 		this._workers.set('codex', new CodexWorkerProvider(() => this._getCodex?.(), stateManager, this._logService));
@@ -157,6 +160,12 @@ export class ForgeOrchestrationService extends Disposable {
 			usage: emptyUsage(),
 		};
 		this._publish();
+		safeModelLog(this._modelLog.beginRun({
+			runId: this._run.runId,
+			goal: request.goal,
+			mode: request.mode ?? 'dialectic',
+			workspace: request.workspace,
+		}));
 		try {
 			this._activeLeader = this._leaderFor(assignment);
 			if (request.mode === 'logos') {
@@ -193,6 +202,7 @@ export class ForgeOrchestrationService extends Disposable {
 			this._completeTranscript(reviewEntryId, review, 'completed');
 			this._run = { ...this._run, status: 'completed', review, updatedAt: Date.now(), usage: this._sumUsage(this._run.tasks) };
 			this._publish();
+			safeModelLog(this._modelLog.endRun('completed'));
 			return this._run;
 		} catch (error) {
 			if (this._run) {
@@ -203,6 +213,7 @@ export class ForgeOrchestrationService extends Disposable {
 					updatedAt: Date.now(),
 				};
 				this._publish();
+				safeModelLog(this._modelLog.endRun(this._run.status));
 				return this._run;
 			}
 			throw error;
@@ -308,6 +319,7 @@ export class ForgeOrchestrationService extends Disposable {
 			usage: this._sumUsage(this._run.tasks),
 		};
 		this._publish();
+		safeModelLog(this._modelLog.endRun(this._run.status));
 		return this._run;
 	}
 
@@ -603,11 +615,19 @@ export class ForgeOrchestrationService extends Disposable {
 			updatedAt: Date.now(),
 		};
 		this._publish();
+		safeModelLog(this._modelLog.beginEntry({
+			entryId: id,
+			phase,
+			agentLabel,
+			title,
+			taskId,
+		}));
 		return id;
 	}
 
 	private _transcriptHooks(entryId: string): IOrchestrationProgressHooks {
 		return {
+			entryId,
 			onProgress: update => {
 				if (!this._run) {
 					return;
@@ -621,6 +641,7 @@ export class ForgeOrchestrationService extends Disposable {
 					} : entry),
 					updatedAt: Date.now(),
 				};
+				safeModelLog(this._modelLog.updateEntry(entryId, update));
 				this._publishTranscriptThrottled();
 			},
 		};
@@ -640,6 +661,7 @@ export class ForgeOrchestrationService extends Disposable {
 			updatedAt: Date.now(),
 		};
 		this._publish();
+		safeModelLog(this._modelLog.completeEntry(entryId, output, status));
 	}
 
 	private _publishTranscriptThrottled(): void {

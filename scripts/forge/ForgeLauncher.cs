@@ -60,7 +60,9 @@ internal static class ForgeLauncher
 
 			string userProfile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
 			string forgeCodexHome = Path.Combine(userProfile, ".forge", "codex");
+			string forgeModelLogDir = Path.Combine(forgeRoot, "logs", "models");
 			Directory.CreateDirectory(forgeCodexHome);
+			Directory.CreateDirectory(forgeModelLogDir);
 			CopyIfMissing(Path.Combine(userProfile, ".codex", "auth.json"), Path.Combine(forgeCodexHome, "auth.json"));
 			CopyIfMissing(Path.Combine(userProfile, ".codex", "config.toml"), Path.Combine(forgeCodexHome, "config.toml"));
 
@@ -73,6 +75,7 @@ internal static class ForgeLauncher
 			startInfo.WindowStyle = ProcessWindowStyle.Normal;
 			startInfo.EnvironmentVariables["VSCODE_AGENT_HOST_CODEX_AGENT_ENABLED"] = "true";
 			startInfo.EnvironmentVariables["CODEX_HOME"] = forgeCodexHome;
+			startInfo.EnvironmentVariables["FORGE_MODEL_LOG_DIR"] = forgeModelLogDir;
 
 			if (!usePackaged)
 			{

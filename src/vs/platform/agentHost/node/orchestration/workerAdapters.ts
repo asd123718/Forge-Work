@@ -17,6 +17,7 @@ import {
 	isExecutablePath,
 	probeExecutable,
 } from './workerRuntime.js';
+import { ForgeModelLog, safeModelLog } from './forgeModelLog.js';
 
 export interface IProcessRunResult {
 	readonly exitCode: number;
@@ -226,9 +227,16 @@ export class DeepSeekHarnessWorker implements IWorkerProvider {
 		}
 		const startedAt = Date.now();
 		let streamed = '';
+		const commandLine = formatCommandLine(resolved.command, [...resolved.args, workerPrompt(request)]);
+		if (request.hooks?.entryId) {
+			safeModelLog(ForgeModelLog.instance().appendCommand(request.hooks.entryId, commandLine));
+		}
 		const onChunk = (chunk: string) => {
 			streamed += chunk;
 			request.hooks?.onProgress?.({ thinking: streamed });
+			if (request.hooks?.entryId) {
+				safeModelLog(ForgeModelLog.instance().appendCommand(request.hooks.entryId, commandLine, chunk));
+			}
 		};
 		try {
 			const result = await this._runner(resolved.command, [...resolved.args, workerPrompt(request)], {
@@ -287,9 +295,24 @@ export class GrokBuildWorker implements IWorkerProvider {
 		}
 		const startedAt = Date.now();
 		let streamed = '';
+		const commandLine = formatCommandLine(resolved.command, [
+			...resolved.prefixArgs,
+			'-p', workerPrompt(request),
+			'--cwd', request.workspace,
+			'--yolo',
+			'--no-auto-update',
+			'--output-format', 'json',
+			'-m', request.task.workerModel ?? this._model,
+		]);
+		if (request.hooks?.entryId) {
+			safeModelLog(ForgeModelLog.instance().appendCommand(request.hooks.entryId, commandLine));
+		}
 		const onChunk = (chunk: string) => {
 			streamed += chunk;
 			request.hooks?.onProgress?.({ thinking: streamed });
+			if (request.hooks?.entryId) {
+				safeModelLog(ForgeModelLog.instance().appendCommand(request.hooks.entryId, commandLine, chunk));
+			}
 		};
 		try {
 			const result = await this._runner(resolved.command, [
@@ -328,4 +351,8 @@ function unavailableResult(label: string, startedAt: number): IWorkerTaskResult 
 		error: `${label} is not installed or its API key is missing.`,
 		usage: { durationMs: Date.now() - startedAt },
 	};
+}
+
+function formatCommandLine(command: string, args: readonly string[]): string {
+	return [command, ...args].map(part => part.includes(' ') ? `"${part.replace(/"/g, '\\"')}"` : part).join(' ');
 }

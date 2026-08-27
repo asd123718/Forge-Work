@@ -2,6 +2,8 @@
 setlocal
 set "FORGE_ROOT=%~dp0"
 set "PACKAGED=%~dp0.build\VSCode-win32-x64\Forge.exe"
+set "FORGE_MODEL_LOG_DIR=%FORGE_ROOT%logs\models"
+if not exist "%FORGE_MODEL_LOG_DIR%" mkdir "%FORGE_MODEL_LOG_DIR%" >nul 2>&1
 
 if exist "%FORGE_ROOT%start-forge.exe" (
 	start "" "%FORGE_ROOT%start-forge.exe" %*

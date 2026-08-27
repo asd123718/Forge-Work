@@ -12,9 +12,11 @@ import { leaderImplementPrompt, leaderPlanPrompt, leaderReviewPrompt } from '../
 import type { ILeaderPlanContext, ILeaderProvider, IOrchestrationPlan, IOrchestrationProgressHooks, IOrchestrationRunState, IOrchestrationTaskState, IWorkerAvailability, IWorkerProvider, IWorkerRunRequest, IWorkerTaskResult } from '../../common/orchestration/orchestrationTypes.js';
 import { CODEX_LEADER_PROVIDER_ID } from '../../common/orchestration/orchestrationTypes.js';
 import { fallbackOrchestrationPlan, parseOrchestrationPlan } from '../../common/orchestration/taskGraph.js';
-import { AHP_CHAT_SCHEME, buildDefaultChatUri, parseChatUri, ResponsePartKind, type Turn } from '../../common/state/sessionState.js';
+import { AHP_CHAT_SCHEME, buildDefaultChatUri, parseChatUri, ResponsePartKind, ToolCallStatus, type ToolCallState, type Turn } from '../../common/state/sessionState.js';
+import { getInlineToolInput, getToolOutputText } from '../../common/state/sessionState.js';
 import { IAgentHostStateManager } from '../agentHostStateManager.js';
 import { workerPrompt } from './workerAdapters.js';
+import { ForgeModelLog, safeModelLog, type IForgeModelLogToolCall } from './forgeModelLog.js';
 
 export class LocalLeaderProvider implements ILeaderProvider {
 	readonly id = 'local-fallback';
@@ -183,6 +185,10 @@ async function askCodex(
 				lastContent = content;
 				hooks?.onProgress?.(content);
 			}
+			if (hooks?.entryId) {
+				const toolCalls = extractToolCalls(turns);
+				safeModelLog(ForgeModelLog.instance().setToolCalls(hooks.entryId, toolCalls));
+			}
 			if (!stateManager.getActiveTurnId(chat)) {
 				await timeout(350);
 				if (!stateManager.getActiveTurnId(chat)) {
@@ -217,6 +223,51 @@ function lastTurnContent(turns: readonly Turn[]): ICodexTurnContent {
 		}
 	}
 	return { thinking: '', output: '' };
+}
+
+function extractToolCalls(turns: readonly Turn[]): IForgeModelLogToolCall[] {
+	const toolCalls: IForgeModelLogToolCall[] = [];
+	for (const turn of turns) {
+		for (const part of turn.responseParts) {
+			if (part.kind !== ResponsePartKind.ToolCall) {
+				continue;
+			}
+			const toolCall = part.toolCall;
+			const input = getInlineToolInput(toolCall.toolInput)
+				?? (toolCall.status === ToolCallStatus.Streaming ? toolCall.partialInput : undefined);
+			const output = extractToolCallOutput(toolCall);
+			const message = stringifyStringOrMarkdown(toolCall.invocationMessage);
+			toolCalls.push({
+				toolName: toolCall.toolName,
+				status: toolCall.status,
+				input,
+				output,
+				message,
+			});
+		}
+	}
+	return toolCalls;
+}
+
+function extractToolCallOutput(toolCall: ToolCallState): string | undefined {
+	if (toolCall.status === ToolCallStatus.Completed || toolCall.status === ToolCallStatus.Cancelled) {
+		return getToolOutputText(toolCall);
+	}
+	if ('content' in toolCall && toolCall.content) {
+		return getToolOutputText({
+			success: true,
+			pastTenseMessage: '',
+			content: toolCall.content,
+		});
+	}
+	return undefined;
+}
+
+function stringifyStringOrMarkdown(value: { markdown?: string } | string | undefined): string | undefined {
+	if (value === undefined) {
+		return undefined;
+	}
+	return typeof value === 'string' ? value : value.markdown;
 }
 
 export function resolveLeaderAddresses(chatUri: string, sessionUri: string): { chat: URI; session: URI } {
