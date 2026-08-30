@@ -1,0 +1,24 @@
+# FORGE STARTUP
+started.local=2026-08-30 11:57:18.631 +08:00 Asia/Shanghai
+started.utc=2026-08-30T03:57:18.631Z
+timezone=Asia/Shanghai
+product=Forge AI IDE Dev
+version=1.134.0
+commit=unknown
+pid=229220
+ppid=228752
+platform=win32
+arch=x64
+hostname=Admin
+locale=zh-CN
+cwd=C:\Project\Forge_Duplicate2\forge\.build\electron
+executable=C:\Project\Forge_Duplicate2\forge\.build\electron\Forge.exe
+logs=c:\Project\Forge_Duplicate2\forge\logs\2026-08-30_11-56-52.895_UTC+08-00_China-Standard-Time_run-7f3dbf7
+argv.count=5
+env.values=not-recorded
+argv.values=not-recorded
+ownership=Forge application instrumentation; models are never asked to write these logs
+reasoning=only provider-published reasoning summaries/events; hidden chain-of-thought is never collected
+redaction=credentials, tokens, cookies, passwords and private keys are replaced with <redacted>
+index=01 timeline; 10 UI; 20 chat; 30 agent; 40 tools; 50/51 files; 60 terminal; 70 protocol; 90 errors; 99 summary
+correlation=sort by detailed timestamp; use session, turn, toolCallId, commandId and R-* event identifiers

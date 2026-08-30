@@ -1,0 +1,41 @@
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __decorateClass = (decorators, target, key, kind) => {
+  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc(target, key) : target;
+  for (var i = decorators.length - 1, decorator; i >= 0; i--)
+    if (decorator = decorators[i])
+      result = (kind ? decorator(target, key, result) : decorator(result)) || result;
+  if (kind && result) __defProp(target, key, result);
+  return result;
+};
+var __decorateParam = (index, decorator) => (target, key) => decorator(target, key, index);
+import { Disposable } from "../../../../../base/common/lifecycle.js";
+import { IInstantiationService } from "../../../../../platform/instantiation/common/instantiation.js";
+import { DEFAULT_LABELS_CONTAINER, ResourceLabels } from "../../../../browser/labels.js";
+import { isChatTranscriptContextVariableEntry } from "../../common/attachments/chatVariableEntries.js";
+import { TranscriptContextAttachmentWidget } from "./chatAttachmentWidgets.js";
+import { IChatAttachmentWidgetRegistry } from "./chatAttachmentWidgetRegistry.js";
+let TranscriptContextAttachmentWidgetContribution = class extends Disposable {
+  constructor(registry, instantiationService) {
+    super();
+    const labels = this._register(instantiationService.createInstance(ResourceLabels, DEFAULT_LABELS_CONTAINER));
+    this._register(registry.registerFactory(
+      "transcriptContext",
+      (attachment, options, container) => {
+        if (!isChatTranscriptContextVariableEntry(attachment)) {
+          throw new Error("Expected a transcriptContext attachment");
+        }
+        return instantiationService.createInstance(TranscriptContextAttachmentWidget, attachment, void 0, options, container, labels);
+      }
+    ));
+  }
+};
+TranscriptContextAttachmentWidgetContribution.ID = "workbench.contrib.transcriptContextAttachmentWidgetFactory";
+TranscriptContextAttachmentWidgetContribution = __decorateClass([
+  __decorateParam(0, IChatAttachmentWidgetRegistry),
+  __decorateParam(1, IInstantiationService)
+], TranscriptContextAttachmentWidgetContribution);
+export {
+  TranscriptContextAttachmentWidgetContribution
+};
+//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsiQzpcXFByb2plY3RcXEZvcmdlX0R1cGxpY2F0ZTJcXGZvcmdlXFxzcmNcXHZzXFx3b3JrYmVuY2hcXGNvbnRyaWJcXGNoYXRcXGJyb3dzZXJcXGF0dGFjaG1lbnRzXFx0cmFuc2NyaXB0Q29udGV4dEF0dGFjaG1lbnRXaWRnZXQuY29udHJpYnV0aW9uLnRzIl0sCiAgInNvdXJjZXNDb250ZW50IjogWyIvKi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLVxuICogIENvcHlyaWdodCAoYykgTWljcm9zb2Z0IENvcnBvcmF0aW9uLiBBbGwgcmlnaHRzIHJlc2VydmVkLlxuICogIExpY2Vuc2VkIHVuZGVyIHRoZSBNSVQgTGljZW5zZS4gU2VlIExpY2Vuc2UudHh0IGluIHRoZSBwcm9qZWN0IHJvb3QgZm9yIGxpY2Vuc2UgaW5mb3JtYXRpb24uXG4gKi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tKi9cblxuaW1wb3J0IHsgRGlzcG9zYWJsZSB9IGZyb20gJy4uLy4uLy4uLy4uLy4uL2Jhc2UvY29tbW9uL2xpZmVjeWNsZS5qcyc7XG5pbXBvcnQgeyBJSW5zdGFudGlhdGlvblNlcnZpY2UgfSBmcm9tICcuLi8uLi8uLi8uLi8uLi9wbGF0Zm9ybS9pbnN0YW50aWF0aW9uL2NvbW1vbi9pbnN0YW50aWF0aW9uLmpzJztcbmltcG9ydCB7IERFRkFVTFRfTEFCRUxTX0NPTlRBSU5FUiwgUmVzb3VyY2VMYWJlbHMgfSBmcm9tICcuLi8uLi8uLi8uLi9icm93c2VyL2xhYmVscy5qcyc7XG5pbXBvcnQgeyBJV29ya2JlbmNoQ29udHJpYnV0aW9uIH0gZnJvbSAnLi4vLi4vLi4vLi4vY29tbW9uL2NvbnRyaWJ1dGlvbnMuanMnO1xuaW1wb3J0IHsgaXNDaGF0VHJhbnNjcmlwdENvbnRleHRWYXJpYWJsZUVudHJ5IH0gZnJvbSAnLi4vLi4vY29tbW9uL2F0dGFjaG1lbnRzL2NoYXRWYXJpYWJsZUVudHJpZXMuanMnO1xuaW1wb3J0IHsgVHJhbnNjcmlwdENvbnRleHRBdHRhY2htZW50V2lkZ2V0IH0gZnJvbSAnLi9jaGF0QXR0YWNobWVudFdpZGdldHMuanMnO1xuaW1wb3J0IHsgSUNoYXRBdHRhY2htZW50V2lkZ2V0UmVnaXN0cnkgfSBmcm9tICcuL2NoYXRBdHRhY2htZW50V2lkZ2V0UmVnaXN0cnkuanMnO1xuXG5leHBvcnQgY2xhc3MgVHJhbnNjcmlwdENvbnRleHRBdHRhY2htZW50V2lkZ2V0Q29udHJpYnV0aW9uIGV4dGVuZHMgRGlzcG9zYWJsZSBpbXBsZW1lbnRzIElXb3JrYmVuY2hDb250cmlidXRpb24ge1xuXHRzdGF0aWMgcmVhZG9ubHkgSUQgPSAnd29ya2JlbmNoLmNvbnRyaWIudHJhbnNjcmlwdENvbnRleHRBdHRhY2htZW50V2lkZ2V0RmFjdG9yeSc7XG5cblx0Y29uc3RydWN0b3IoXG5cdFx0QElDaGF0QXR0YWNobWVudFdpZGdldFJlZ2lzdHJ5IHJlZ2lzdHJ5OiBJQ2hhdEF0dGFjaG1lbnRXaWRnZXRSZWdpc3RyeSxcblx0XHRASUluc3RhbnRpYXRpb25TZXJ2aWNlIGluc3RhbnRpYXRpb25TZXJ2aWNlOiBJSW5zdGFudGlhdGlvblNlcnZpY2UsXG5cdCkge1xuXHRcdHN1cGVyKCk7XG5cblx0XHRjb25zdCBsYWJlbHMgPSB0aGlzLl9yZWdpc3RlcihpbnN0YW50aWF0aW9uU2VydmljZS5jcmVhdGVJbnN0YW5jZShSZXNvdXJjZUxhYmVscywgREVGQVVMVF9MQUJFTFNfQ09OVEFJTkVSKSk7XG5cdFx0dGhpcy5fcmVnaXN0ZXIocmVnaXN0cnkucmVnaXN0ZXJGYWN0b3J5KFxuXHRcdFx0J3RyYW5zY3JpcHRDb250ZXh0Jyxcblx0XHRcdChhdHRhY2htZW50LCBvcHRpb25zLCBjb250YWluZXIpID0+IHtcblx0XHRcdFx0aWYgKCFpc0NoYXRUcmFuc2NyaXB0Q29udGV4dFZhcmlhYmxlRW50cnkoYXR0YWNobWVudCkpIHtcblx0XHRcdFx0XHR0aHJvdyBuZXcgRXJyb3IoJ0V4cGVjdGVkIGEgdHJhbnNjcmlwdENvbnRleHQgYXR0YWNobWVudCcpO1xuXHRcdFx0XHR9XG5cdFx0XHRcdHJldHVybiBpbnN0YW50aWF0aW9uU2VydmljZS5jcmVhdGVJbnN0YW5jZShUcmFuc2NyaXB0Q29udGV4dEF0dGFjaG1lbnRXaWRnZXQsIGF0dGFjaG1lbnQsIHVuZGVmaW5lZCwgb3B0aW9ucywgY29udGFpbmVyLCBsYWJlbHMpO1xuXHRcdFx0fSxcblx0XHQpKTtcblx0fVxufVxuIl0sCiAgIm1hcHBpbmdzIjogIjs7Ozs7Ozs7Ozs7QUFLQSxTQUFTLGtCQUFrQjtBQUMzQixTQUFTLDZCQUE2QjtBQUN0QyxTQUFTLDBCQUEwQixzQkFBc0I7QUFFekQsU0FBUyw0Q0FBNEM7QUFDckQsU0FBUyx5Q0FBeUM7QUFDbEQsU0FBUyxxQ0FBcUM7QUFFdkMsSUFBTSxnREFBTixjQUE0RCxXQUE2QztBQUFBLEVBRy9HLFlBQ2dDLFVBQ1Isc0JBQ3RCO0FBQ0QsVUFBTTtBQUVOLFVBQU0sU0FBUyxLQUFLLFVBQVUscUJBQXFCLGVBQWUsZ0JBQWdCLHdCQUF3QixDQUFDO0FBQzNHLFNBQUssVUFBVSxTQUFTO0FBQUEsTUFDdkI7QUFBQSxNQUNBLENBQUMsWUFBWSxTQUFTLGNBQWM7QUFDbkMsWUFBSSxDQUFDLHFDQUFxQyxVQUFVLEdBQUc7QUFDdEQsZ0JBQU0sSUFBSSxNQUFNLHlDQUF5QztBQUFBLFFBQzFEO0FBQ0EsZUFBTyxxQkFBcUIsZUFBZSxtQ0FBbUMsWUFBWSxRQUFXLFNBQVMsV0FBVyxNQUFNO0FBQUEsTUFDaEk7QUFBQSxJQUNELENBQUM7QUFBQSxFQUNGO0FBQ0Q7QUFwQmEsOENBQ0ksS0FBSztBQURULGdEQUFOO0FBQUEsRUFJSjtBQUFBLEVBQ0E7QUFBQSxHQUxVOyIsCiAgIm5hbWVzIjogW10KfQo=

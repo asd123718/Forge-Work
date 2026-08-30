@@ -1,0 +1,98 @@
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __decorateClass = (decorators, target, key, kind) => {
+  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc(target, key) : target;
+  for (var i = decorators.length - 1, decorator; i >= 0; i--)
+    if (decorator = decorators[i])
+      result = (kind ? decorator(target, key, result) : decorator(result)) || result;
+  if (kind && result) __defProp(target, key, result);
+  return result;
+};
+var __decorateParam = (index, decorator) => (target, key) => decorator(target, key, index);
+import { AccessibleViewProviderId, AccessibleViewType } from "../../../../platform/accessibility/browser/accessibleView.js";
+import { ContextKeyExpr } from "../../../../platform/contextkey/common/contextkey.js";
+import { Disposable } from "../../../../base/common/lifecycle.js";
+import { AccessibilityVerbositySettingId } from "../../accessibility/browser/accessibilityConfiguration.js";
+import { localize } from "../../../../nls.js";
+import { ICommandService } from "../../../../platform/commands/common/commands.js";
+import { IViewsService } from "../../../services/views/common/viewsService.js";
+import { AccessibilityHelpNLS } from "../../../../editor/common/standaloneStrings.js";
+import { FocusedViewContext, SidebarFocusContext } from "../../../common/contextkeys.js";
+import { BREAKPOINTS_VIEW_ID, CALLSTACK_VIEW_ID, LOADED_SCRIPTS_VIEW_ID, VARIABLES_VIEW_ID, WATCH_VIEW_ID } from "../common/debug.js";
+class RunAndDebugAccessibilityHelp {
+  constructor() {
+    this.priority = 120;
+    this.name = "runAndDebugHelp";
+    this.when = ContextKeyExpr.or(
+      ContextKeyExpr.and(ContextKeyExpr.equals("activeViewlet", "workbench.view.debug"), SidebarFocusContext),
+      ContextKeyExpr.equals(FocusedViewContext.key, VARIABLES_VIEW_ID),
+      ContextKeyExpr.equals(FocusedViewContext.key, WATCH_VIEW_ID),
+      ContextKeyExpr.equals(FocusedViewContext.key, CALLSTACK_VIEW_ID),
+      ContextKeyExpr.equals(FocusedViewContext.key, LOADED_SCRIPTS_VIEW_ID),
+      ContextKeyExpr.equals(FocusedViewContext.key, BREAKPOINTS_VIEW_ID)
+    );
+    this.type = AccessibleViewType.Help;
+  }
+  getProvider(accessor) {
+    return new RunAndDebugAccessibilityHelpProvider(accessor.get(ICommandService), accessor.get(IViewsService));
+  }
+}
+let RunAndDebugAccessibilityHelpProvider = class extends Disposable {
+  constructor(_commandService, _viewsService) {
+    super();
+    this._commandService = _commandService;
+    this._viewsService = _viewsService;
+    this.id = AccessibleViewProviderId.RunAndDebug;
+    this.verbositySettingKey = AccessibilityVerbositySettingId.Debug;
+    this.options = { type: AccessibleViewType.Help };
+    this._focusedView = this._viewsService.getFocusedViewName();
+  }
+  onClose() {
+    switch (this._focusedView) {
+      case "Watch":
+        this._commandService.executeCommand("workbench.debug.action.focusWatchView");
+        break;
+      case "Variables":
+        this._commandService.executeCommand("workbench.debug.action.focusVariablesView");
+        break;
+      case "Call Stack":
+        this._commandService.executeCommand("workbench.debug.action.focusCallStackView");
+        break;
+      case "Breakpoints":
+        this._commandService.executeCommand("workbench.debug.action.focusBreakpointsView");
+        break;
+      default:
+        this._commandService.executeCommand("workbench.view.debug");
+    }
+  }
+  provideContent() {
+    return [
+      localize("debug.showRunAndDebug", "The Show Run and Debug view command{0} will open the current view.", "<keybinding:workbench.view.debug>"),
+      localize("debug.startDebugging", "The Debug: Start Debugging command{0} will start a debug session.", "<keybinding:workbench.action.debug.start>"),
+      localize("debug.help", "Access debug output and evaluate expressions in the debug console, which can be focused with{0}.", "<keybinding:workbench.panel.repl.view.focus>"),
+      AccessibilityHelpNLS.setBreakpoint,
+      AccessibilityHelpNLS.addToWatch,
+      localize("onceDebugging", "Once debugging, the following commands will be available:"),
+      localize("debug.restartDebugging", "- Debug: Restart Debugging command{0} will restart the current debug session.", "<keybinding:workbench.action.debug.restart>"),
+      localize("debug.stopDebugging", "- Debug: Stop Debugging command{0} will stop the current debugging session.", "<keybinding:workbench.action.debug.stop>"),
+      localize("debug.continue", "- Debug: Continue command{0} will continue execution until the next breakpoint.", "<keybinding:workbench.action.debug.continue>"),
+      localize("debug.stepInto", "- Debug: Step Into command{0} will step into the next function call.", "<keybinding:workbench.action.debug.stepInto>"),
+      localize("debug.stepOver", "- Debug: Step Over command{0} will step over the current function call.", "<keybinding:workbench.action.debug.stepOver>"),
+      localize("debug.stepOut", "- Debug: Step Out command{0} will step out of the current function call.", "<keybinding:workbench.action.debug.stepOut>"),
+      localize("debug.views", "The debug viewlet is comprised of several views that can be focused with the following commands or navigated to via tab then arrow keys:"),
+      localize("debug.focusBreakpoints", "- Debug: Focus Breakpoints View command{0} will focus the breakpoints view.", "<keybinding:workbench.debug.action.focusBreakpointsView>"),
+      localize("debug.focusCallStack", "- Debug: Focus Call Stack View command{0} will focus the call stack view.", "<keybinding:workbench.debug.action.focusCallStackView>"),
+      localize("debug.focusVariables", "- Debug: Focus Variables View command{0} will focus the variables view.", "<keybinding:workbench.debug.action.focusVariablesView>"),
+      localize("debug.focusWatch", "- Debug: Focus Watch View command{0} will focus the watch view.", "<keybinding:workbench.debug.action.focusWatchView>"),
+      localize("debug.watchSetting", "The setting {0} controls whether watch variable changes are announced.", "accessibility.debugWatchVariableAnnouncements")
+    ].join("\n");
+  }
+};
+RunAndDebugAccessibilityHelpProvider = __decorateClass([
+  __decorateParam(0, ICommandService),
+  __decorateParam(1, IViewsService)
+], RunAndDebugAccessibilityHelpProvider);
+export {
+  RunAndDebugAccessibilityHelp
+};
+//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsiQzpcXFByb2plY3RcXEZvcmdlX0R1cGxpY2F0ZTJcXGZvcmdlXFxzcmNcXHZzXFx3b3JrYmVuY2hcXGNvbnRyaWJcXGRlYnVnXFxicm93c2VyXFxydW5BbmREZWJ1Z0FjY2Vzc2liaWxpdHlIZWxwLnRzIl0sCiAgInNvdXJjZXNDb250ZW50IjogWyIvKi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLVxuICogIENvcHlyaWdodCAoYykgTWljcm9zb2Z0IENvcnBvcmF0aW9uLiBBbGwgcmlnaHRzIHJlc2VydmVkLlxuICogIExpY2Vuc2VkIHVuZGVyIHRoZSBNSVQgTGljZW5zZS4gU2VlIExpY2Vuc2UudHh0IGluIHRoZSBwcm9qZWN0IHJvb3QgZm9yIGxpY2Vuc2UgaW5mb3JtYXRpb24uXG4gKi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tKi9cblxuXG5pbXBvcnQgeyBTZXJ2aWNlc0FjY2Vzc29yIH0gZnJvbSAnLi4vLi4vLi4vLi4vZWRpdG9yL2Jyb3dzZXIvZWRpdG9yRXh0ZW5zaW9ucy5qcyc7XG5pbXBvcnQgeyBBY2Nlc3NpYmxlVmlld1Byb3ZpZGVySWQsIEFjY2Vzc2libGVWaWV3VHlwZSwgSUFjY2Vzc2libGVWaWV3Q29udGVudFByb3ZpZGVyIH0gZnJvbSAnLi4vLi4vLi4vLi4vcGxhdGZvcm0vYWNjZXNzaWJpbGl0eS9icm93c2VyL2FjY2Vzc2libGVWaWV3LmpzJztcbmltcG9ydCB7IElBY2Nlc3NpYmxlVmlld0ltcGxlbWVudGF0aW9uIH0gZnJvbSAnLi4vLi4vLi4vLi4vcGxhdGZvcm0vYWNjZXNzaWJpbGl0eS9icm93c2VyL2FjY2Vzc2libGVWaWV3UmVnaXN0cnkuanMnO1xuaW1wb3J0IHsgQ29udGV4dEtleUV4cHIgfSBmcm9tICcuLi8uLi8uLi8uLi9wbGF0Zm9ybS9jb250ZXh0a2V5L2NvbW1vbi9jb250ZXh0a2V5LmpzJztcbmltcG9ydCB7IERpc3Bvc2FibGUgfSBmcm9tICcuLi8uLi8uLi8uLi9iYXNlL2NvbW1vbi9saWZlY3ljbGUuanMnO1xuaW1wb3J0IHsgQWNjZXNzaWJpbGl0eVZlcmJvc2l0eVNldHRpbmdJZCB9IGZyb20gJy4uLy4uL2FjY2Vzc2liaWxpdHkvYnJvd3Nlci9hY2Nlc3NpYmlsaXR5Q29uZmlndXJhdGlvbi5qcyc7XG5pbXBvcnQgeyBsb2NhbGl6ZSB9IGZyb20gJy4uLy4uLy4uLy4uL25scy5qcyc7XG5pbXBvcnQgeyBJQ29tbWFuZFNlcnZpY2UgfSBmcm9tICcuLi8uLi8uLi8uLi9wbGF0Zm9ybS9jb21tYW5kcy9jb21tb24vY29tbWFuZHMuanMnO1xuaW1wb3J0IHsgSVZpZXdzU2VydmljZSB9IGZyb20gJy4uLy4uLy4uL3NlcnZpY2VzL3ZpZXdzL2NvbW1vbi92aWV3c1NlcnZpY2UuanMnO1xuaW1wb3J0IHsgQWNjZXNzaWJpbGl0eUhlbHBOTFMgfSBmcm9tICcuLi8uLi8uLi8uLi9lZGl0b3IvY29tbW9uL3N0YW5kYWxvbmVTdHJpbmdzLmpzJztcbmltcG9ydCB7IEZvY3VzZWRWaWV3Q29udGV4dCwgU2lkZWJhckZvY3VzQ29udGV4dCB9IGZyb20gJy4uLy4uLy4uL2NvbW1vbi9jb250ZXh0a2V5cy5qcyc7XG5pbXBvcnQgeyBCUkVBS1BPSU5UU19WSUVXX0lELCBDQUxMU1RBQ0tfVklFV19JRCwgTE9BREVEX1NDUklQVFNfVklFV19JRCwgVkFSSUFCTEVTX1ZJRVdfSUQsIFdBVENIX1ZJRVdfSUQgfSBmcm9tICcuLi9jb21tb24vZGVidWcuanMnO1xuXG5leHBvcnQgY2xhc3MgUnVuQW5kRGVidWdBY2Nlc3NpYmlsaXR5SGVscCBpbXBsZW1lbnRzIElBY2Nlc3NpYmxlVmlld0ltcGxlbWVudGF0aW9uIHtcblx0cHJpb3JpdHkgPSAxMjA7XG5cdG5hbWUgPSAncnVuQW5kRGVidWdIZWxwJztcblx0d2hlbiA9IENvbnRleHRLZXlFeHByLm9yKFxuXHRcdENvbnRleHRLZXlFeHByLmFuZChDb250ZXh0S2V5RXhwci5lcXVhbHMoJ2FjdGl2ZVZpZXdsZXQnLCAnd29ya2JlbmNoLnZpZXcuZGVidWcnKSwgU2lkZWJhckZvY3VzQ29udGV4dCksXG5cdFx0Q29udGV4dEtleUV4cHIuZXF1YWxzKEZvY3VzZWRWaWV3Q29udGV4dC5rZXksIFZBUklBQkxFU19WSUVXX0lEKSxcblx0XHRDb250ZXh0S2V5RXhwci5lcXVhbHMoRm9jdXNlZFZpZXdDb250ZXh0LmtleSwgV0FUQ0hfVklFV19JRCksXG5cdFx0Q29udGV4dEtleUV4cHIuZXF1YWxzKEZvY3VzZWRWaWV3Q29udGV4dC5rZXksIENBTExTVEFDS19WSUVXX0lEKSxcblx0XHRDb250ZXh0S2V5RXhwci5lcXVhbHMoRm9jdXNlZFZpZXdDb250ZXh0LmtleSwgTE9BREVEX1NDUklQVFNfVklFV19JRCksXG5cdFx0Q29udGV4dEtleUV4cHIuZXF1YWxzKEZvY3VzZWRWaWV3Q29udGV4dC5rZXksIEJSRUFLUE9JTlRTX1ZJRVdfSUQpXG5cdCk7XG5cdHR5cGU6IEFjY2Vzc2libGVWaWV3VHlwZSA9IEFjY2Vzc2libGVWaWV3VHlwZS5IZWxwO1xuXHRnZXRQcm92aWRlcihhY2Nlc3NvcjogU2VydmljZXNBY2Nlc3Nvcikge1xuXHRcdHJldHVybiBuZXcgUnVuQW5kRGVidWdBY2Nlc3NpYmlsaXR5SGVscFByb3ZpZGVyKGFjY2Vzc29yLmdldChJQ29tbWFuZFNlcnZpY2UpLCBhY2Nlc3Nvci5nZXQoSVZpZXdzU2VydmljZSkpO1xuXHR9XG59XG5cbmNsYXNzIFJ1bkFuZERlYnVnQWNjZXNzaWJpbGl0eUhlbHBQcm92aWRlciBleHRlbmRzIERpc3Bvc2FibGUgaW1wbGVtZW50cyBJQWNjZXNzaWJsZVZpZXdDb250ZW50UHJvdmlkZXIge1xuXHRwdWJsaWMgcmVhZG9ubHkgaWQgPSBBY2Nlc3NpYmxlVmlld1Byb3ZpZGVySWQuUnVuQW5kRGVidWc7XG5cdHB1YmxpYyByZWFkb25seSB2ZXJib3NpdHlTZXR0aW5nS2V5ID0gQWNjZXNzaWJpbGl0eVZlcmJvc2l0eVNldHRpbmdJZC5EZWJ1Zztcblx0cHVibGljIHJlYWRvbmx5IG9wdGlvbnMgPSB7IHR5cGU6IEFjY2Vzc2libGVWaWV3VHlwZS5IZWxwIH07XG5cdHByaXZhdGUgX2ZvY3VzZWRWaWV3OiBzdHJpbmcgfCB1bmRlZmluZWQ7XG5cdGNvbnN0cnVjdG9yKFxuXHRcdEBJQ29tbWFuZFNlcnZpY2UgcHJpdmF0ZSByZWFkb25seSBfY29tbWFuZFNlcnZpY2U6IElDb21tYW5kU2VydmljZSxcblx0XHRASVZpZXdzU2VydmljZSBwcml2YXRlIHJlYWRvbmx5IF92aWV3c1NlcnZpY2U6IElWaWV3c1NlcnZpY2Vcblx0KSB7XG5cdFx0c3VwZXIoKTtcblx0XHR0aGlzLl9mb2N1c2VkVmlldyA9IHRoaXMuX3ZpZXdzU2VydmljZS5nZXRGb2N1c2VkVmlld05hbWUoKTtcblx0fVxuXG5cdHB1YmxpYyBvbkNsb3NlKCk6IHZvaWQge1xuXHRcdHN3aXRjaCAodGhpcy5fZm9jdXNlZFZpZXcpIHtcblx0XHRcdGNhc2UgJ1dhdGNoJzpcblx0XHRcdFx0dGhpcy5fY29tbWFuZFNlcnZpY2UuZXhlY3V0ZUNvbW1hbmQoJ3dvcmtiZW5jaC5kZWJ1Zy5hY3Rpb24uZm9jdXNXYXRjaFZpZXcnKTtcblx0XHRcdFx0YnJlYWs7XG5cdFx0XHRjYXNlICdWYXJpYWJsZXMnOlxuXHRcdFx0XHR0aGlzLl9jb21tYW5kU2VydmljZS5leGVjdXRlQ29tbWFuZCgnd29ya2JlbmNoLmRlYnVnLmFjdGlvbi5mb2N1c1ZhcmlhYmxlc1ZpZXcnKTtcblx0XHRcdFx0YnJlYWs7XG5cdFx0XHRjYXNlICdDYWxsIFN0YWNrJzpcblx0XHRcdFx0dGhpcy5fY29tbWFuZFNlcnZpY2UuZXhlY3V0ZUNvbW1hbmQoJ3dvcmtiZW5jaC5kZWJ1Zy5hY3Rpb24uZm9jdXNDYWxsU3RhY2tWaWV3Jyk7XG5cdFx0XHRcdGJyZWFrO1xuXHRcdFx0Y2FzZSAnQnJlYWtwb2ludHMnOlxuXHRcdFx0XHR0aGlzLl9jb21tYW5kU2VydmljZS5leGVjdXRlQ29tbWFuZCgnd29ya2JlbmNoLmRlYnVnLmFjdGlvbi5mb2N1c0JyZWFrcG9pbnRzVmlldycpO1xuXHRcdFx0XHRicmVhaztcblx0XHRcdGRlZmF1bHQ6XG5cdFx0XHRcdHRoaXMuX2NvbW1hbmRTZXJ2aWNlLmV4ZWN1dGVDb21tYW5kKCd3b3JrYmVuY2gudmlldy5kZWJ1ZycpO1xuXHRcdH1cblx0fVxuXG5cdHB1YmxpYyBwcm92aWRlQ29udGVudCgpOiBzdHJpbmcge1xuXHRcdHJldHVybiBbXG5cdFx0XHRsb2NhbGl6ZSgnZGVidWcuc2hvd1J1bkFuZERlYnVnJywgXCJUaGUgU2hvdyBSdW4gYW5kIERlYnVnIHZpZXcgY29tbWFuZHswfSB3aWxsIG9wZW4gdGhlIGN1cnJlbnQgdmlldy5cIiwgJzxrZXliaW5kaW5nOndvcmtiZW5jaC52aWV3LmRlYnVnPicpLFxuXHRcdFx0bG9jYWxpemUoJ2RlYnVnLnN0YXJ0RGVidWdnaW5nJywgXCJUaGUgRGVidWc6IFN0YXJ0IERlYnVnZ2luZyBjb21tYW5kezB9IHdpbGwgc3RhcnQgYSBkZWJ1ZyBzZXNzaW9uLlwiLCAnPGtleWJpbmRpbmc6d29ya2JlbmNoLmFjdGlvbi5kZWJ1Zy5zdGFydD4nKSxcblx0XHRcdGxvY2FsaXplKCdkZWJ1Zy5oZWxwJywgXCJBY2Nlc3MgZGVidWcgb3V0cHV0IGFuZCBldmFsdWF0ZSBleHByZXNzaW9ucyBpbiB0aGUgZGVidWcgY29uc29sZSwgd2hpY2ggY2FuIGJlIGZvY3VzZWQgd2l0aHswfS5cIiwgJzxrZXliaW5kaW5nOndvcmtiZW5jaC5wYW5lbC5yZXBsLnZpZXcuZm9jdXM+JyksXG5cdFx0XHRBY2Nlc3NpYmlsaXR5SGVscE5MUy5zZXRCcmVha3BvaW50LFxuXHRcdFx0QWNjZXNzaWJpbGl0eUhlbHBOTFMuYWRkVG9XYXRjaCxcblx0XHRcdGxvY2FsaXplKCdvbmNlRGVidWdnaW5nJywgXCJPbmNlIGRlYnVnZ2luZywgdGhlIGZvbGxvd2luZyBjb21tYW5kcyB3aWxsIGJlIGF2YWlsYWJsZTpcIiksXG5cdFx0XHRsb2NhbGl6ZSgnZGVidWcucmVzdGFydERlYnVnZ2luZycsIFwiLSBEZWJ1ZzogUmVzdGFydCBEZWJ1Z2dpbmcgY29tbWFuZHswfSB3aWxsIHJlc3RhcnQgdGhlIGN1cnJlbnQgZGVidWcgc2Vzc2lvbi5cIiwgJzxrZXliaW5kaW5nOndvcmtiZW5jaC5hY3Rpb24uZGVidWcucmVzdGFydD4nKSxcblx0XHRcdGxvY2FsaXplKCdkZWJ1Zy5zdG9wRGVidWdnaW5nJywgXCItIERlYnVnOiBTdG9wIERlYnVnZ2luZyBjb21tYW5kezB9IHdpbGwgc3RvcCB0aGUgY3VycmVudCBkZWJ1Z2dpbmcgc2Vzc2lvbi5cIiwgJzxrZXliaW5kaW5nOndvcmtiZW5jaC5hY3Rpb24uZGVidWcuc3RvcD4nKSxcblx0XHRcdGxvY2FsaXplKCdkZWJ1Zy5jb250aW51ZScsIFwiLSBEZWJ1ZzogQ29udGludWUgY29tbWFuZHswfSB3aWxsIGNvbnRpbnVlIGV4ZWN1dGlvbiB1bnRpbCB0aGUgbmV4dCBicmVha3BvaW50LlwiLCAnPGtleWJpbmRpbmc6d29ya2JlbmNoLmFjdGlvbi5kZWJ1Zy5jb250aW51ZT4nKSxcblx0XHRcdGxvY2FsaXplKCdkZWJ1Zy5zdGVwSW50bycsIFwiLSBEZWJ1ZzogU3RlcCBJbnRvIGNvbW1hbmR7MH0gd2lsbCBzdGVwIGludG8gdGhlIG5leHQgZnVuY3Rpb24gY2FsbC5cIiwgJzxrZXliaW5kaW5nOndvcmtiZW5jaC5hY3Rpb24uZGVidWcuc3RlcEludG8+JyksXG5cdFx0XHRsb2NhbGl6ZSgnZGVidWcuc3RlcE92ZXInLCBcIi0gRGVidWc6IFN0ZXAgT3ZlciBjb21tYW5kezB9IHdpbGwgc3RlcCBvdmVyIHRoZSBjdXJyZW50IGZ1bmN0aW9uIGNhbGwuXCIsICc8a2V5YmluZGluZzp3b3JrYmVuY2guYWN0aW9uLmRlYnVnLnN0ZXBPdmVyPicpLFxuXHRcdFx0bG9jYWxpemUoJ2RlYnVnLnN0ZXBPdXQnLCBcIi0gRGVidWc6IFN0ZXAgT3V0IGNvbW1hbmR7MH0gd2lsbCBzdGVwIG91dCBvZiB0aGUgY3VycmVudCBmdW5jdGlvbiBjYWxsLlwiLCAnPGtleWJpbmRpbmc6d29ya2JlbmNoLmFjdGlvbi5kZWJ1Zy5zdGVwT3V0PicpLFxuXHRcdFx0bG9jYWxpemUoJ2RlYnVnLnZpZXdzJywgJ1RoZSBkZWJ1ZyB2aWV3bGV0IGlzIGNvbXByaXNlZCBvZiBzZXZlcmFsIHZpZXdzIHRoYXQgY2FuIGJlIGZvY3VzZWQgd2l0aCB0aGUgZm9sbG93aW5nIGNvbW1hbmRzIG9yIG5hdmlnYXRlZCB0byB2aWEgdGFiIHRoZW4gYXJyb3cga2V5czonKSxcblx0XHRcdGxvY2FsaXplKCdkZWJ1Zy5mb2N1c0JyZWFrcG9pbnRzJywgXCItIERlYnVnOiBGb2N1cyBCcmVha3BvaW50cyBWaWV3IGNvbW1hbmR7MH0gd2lsbCBmb2N1cyB0aGUgYnJlYWtwb2ludHMgdmlldy5cIiwgJzxrZXliaW5kaW5nOndvcmtiZW5jaC5kZWJ1Zy5hY3Rpb24uZm9jdXNCcmVha3BvaW50c1ZpZXc+JyksXG5cdFx0XHRsb2NhbGl6ZSgnZGVidWcuZm9jdXNDYWxsU3RhY2snLCBcIi0gRGVidWc6IEZvY3VzIENhbGwgU3RhY2sgVmlldyBjb21tYW5kezB9IHdpbGwgZm9jdXMgdGhlIGNhbGwgc3RhY2sgdmlldy5cIiwgJzxrZXliaW5kaW5nOndvcmtiZW5jaC5kZWJ1Zy5hY3Rpb24uZm9jdXNDYWxsU3RhY2tWaWV3PicpLFxuXHRcdFx0bG9jYWxpemUoJ2RlYnVnLmZvY3VzVmFyaWFibGVzJywgXCItIERlYnVnOiBGb2N1cyBWYXJpYWJsZXMgVmlldyBjb21tYW5kezB9IHdpbGwgZm9jdXMgdGhlIHZhcmlhYmxlcyB2aWV3LlwiLCAnPGtleWJpbmRpbmc6d29ya2JlbmNoLmRlYnVnLmFjdGlvbi5mb2N1c1ZhcmlhYmxlc1ZpZXc+JyksXG5cdFx0XHRsb2NhbGl6ZSgnZGVidWcuZm9jdXNXYXRjaCcsIFwiLSBEZWJ1ZzogRm9jdXMgV2F0Y2ggVmlldyBjb21tYW5kezB9IHdpbGwgZm9jdXMgdGhlIHdhdGNoIHZpZXcuXCIsICc8a2V5YmluZGluZzp3b3JrYmVuY2guZGVidWcuYWN0aW9uLmZvY3VzV2F0Y2hWaWV3PicpLFxuXHRcdFx0bG9jYWxpemUoJ2RlYnVnLndhdGNoU2V0dGluZycsIFwiVGhlIHNldHRpbmcgezB9IGNvbnRyb2xzIHdoZXRoZXIgd2F0Y2ggdmFyaWFibGUgY2hhbmdlcyBhcmUgYW5ub3VuY2VkLlwiLCAnYWNjZXNzaWJpbGl0eS5kZWJ1Z1dhdGNoVmFyaWFibGVBbm5vdW5jZW1lbnRzJyksXG5cdFx0XS5qb2luKCdcXG4nKTtcblx0fVxufVxuXG4iXSwKICAibWFwcGluZ3MiOiAiOzs7Ozs7Ozs7OztBQU9BLFNBQVMsMEJBQTBCLDBCQUEwRDtBQUU3RixTQUFTLHNCQUFzQjtBQUMvQixTQUFTLGtCQUFrQjtBQUMzQixTQUFTLHVDQUF1QztBQUNoRCxTQUFTLGdCQUFnQjtBQUN6QixTQUFTLHVCQUF1QjtBQUNoQyxTQUFTLHFCQUFxQjtBQUM5QixTQUFTLDRCQUE0QjtBQUNyQyxTQUFTLG9CQUFvQiwyQkFBMkI7QUFDeEQsU0FBUyxxQkFBcUIsbUJBQW1CLHdCQUF3QixtQkFBbUIscUJBQXFCO0FBRTFHLE1BQU0sNkJBQXNFO0FBQUEsRUFBNUU7QUFDTixvQkFBVztBQUNYLGdCQUFPO0FBQ1AsZ0JBQU8sZUFBZTtBQUFBLE1BQ3JCLGVBQWUsSUFBSSxlQUFlLE9BQU8saUJBQWlCLHNCQUFzQixHQUFHLG1CQUFtQjtBQUFBLE1BQ3RHLGVBQWUsT0FBTyxtQkFBbUIsS0FBSyxpQkFBaUI7QUFBQSxNQUMvRCxlQUFlLE9BQU8sbUJBQW1CLEtBQUssYUFBYTtBQUFBLE1BQzNELGVBQWUsT0FBTyxtQkFBbUIsS0FBSyxpQkFBaUI7QUFBQSxNQUMvRCxlQUFlLE9BQU8sbUJBQW1CLEtBQUssc0JBQXNCO0FBQUEsTUFDcEUsZUFBZSxPQUFPLG1CQUFtQixLQUFLLG1CQUFtQjtBQUFBLElBQ2xFO0FBQ0EsZ0JBQTJCLG1CQUFtQjtBQUFBO0FBQUEsRUFDOUMsWUFBWSxVQUE0QjtBQUN2QyxXQUFPLElBQUkscUNBQXFDLFNBQVMsSUFBSSxlQUFlLEdBQUcsU0FBUyxJQUFJLGFBQWEsQ0FBQztBQUFBLEVBQzNHO0FBQ0Q7QUFFQSxJQUFNLHVDQUFOLGNBQW1ELFdBQXFEO0FBQUEsRUFLdkcsWUFDbUMsaUJBQ0YsZUFDL0I7QUFDRCxVQUFNO0FBSDRCO0FBQ0Y7QUFOakMsU0FBZ0IsS0FBSyx5QkFBeUI7QUFDOUMsU0FBZ0Isc0JBQXNCLGdDQUFnQztBQUN0RSxTQUFnQixVQUFVLEVBQUUsTUFBTSxtQkFBbUIsS0FBSztBQU96RCxTQUFLLGVBQWUsS0FBSyxjQUFjLG1CQUFtQjtBQUFBLEVBQzNEO0FBQUEsRUFFTyxVQUFnQjtBQUN0QixZQUFRLEtBQUssY0FBYztBQUFBLE1BQzFCLEtBQUs7QUFDSixhQUFLLGdCQUFnQixlQUFlLHVDQUF1QztBQUMzRTtBQUFBLE1BQ0QsS0FBSztBQUNKLGFBQUssZ0JBQWdCLGVBQWUsMkNBQTJDO0FBQy9FO0FBQUEsTUFDRCxLQUFLO0FBQ0osYUFBSyxnQkFBZ0IsZUFBZSwyQ0FBMkM7QUFDL0U7QUFBQSxNQUNELEtBQUs7QUFDSixhQUFLLGdCQUFnQixlQUFlLDZDQUE2QztBQUNqRjtBQUFBLE1BQ0Q7QUFDQyxhQUFLLGdCQUFnQixlQUFlLHNCQUFzQjtBQUFBLElBQzVEO0FBQUEsRUFDRDtBQUFBLEVBRU8saUJBQXlCO0FBQy9CLFdBQU87QUFBQSxNQUNOLFNBQVMseUJBQXlCLHNFQUFzRSxtQ0FBbUM7QUFBQSxNQUMzSSxTQUFTLHdCQUF3QixxRUFBcUUsMkNBQTJDO0FBQUEsTUFDakosU0FBUyxjQUFjLG9HQUFvRyw4Q0FBOEM7QUFBQSxNQUN6SyxxQkFBcUI7QUFBQSxNQUNyQixxQkFBcUI7QUFBQSxNQUNyQixTQUFTLGlCQUFpQiwyREFBMkQ7QUFBQSxNQUNyRixTQUFTLDBCQUEwQixpRkFBaUYsNkNBQTZDO0FBQUEsTUFDakssU0FBUyx1QkFBdUIsK0VBQStFLDBDQUEwQztBQUFBLE1BQ3pKLFNBQVMsa0JBQWtCLG1GQUFtRiw4Q0FBOEM7QUFBQSxNQUM1SixTQUFTLGtCQUFrQix3RUFBd0UsOENBQThDO0FBQUEsTUFDakosU0FBUyxrQkFBa0IsMkVBQTJFLDhDQUE4QztBQUFBLE1BQ3BKLFNBQVMsaUJBQWlCLDRFQUE0RSw2Q0FBNkM7QUFBQSxNQUNuSixTQUFTLGVBQWUsMElBQTBJO0FBQUEsTUFDbEssU0FBUywwQkFBMEIsK0VBQStFLDBEQUEwRDtBQUFBLE1BQzVLLFNBQVMsd0JBQXdCLDZFQUE2RSx3REFBd0Q7QUFBQSxNQUN0SyxTQUFTLHdCQUF3QiwyRUFBMkUsd0RBQXdEO0FBQUEsTUFDcEssU0FBUyxvQkFBb0IsbUVBQW1FLG9EQUFvRDtBQUFBLE1BQ3BKLFNBQVMsc0JBQXNCLDBFQUEwRSwrQ0FBK0M7QUFBQSxJQUN6SixFQUFFLEtBQUssSUFBSTtBQUFBLEVBQ1o7QUFDRDtBQXRETSx1Q0FBTjtBQUFBLEVBTUc7QUFBQSxFQUNBO0FBQUEsR0FQRzsiLAogICJuYW1lcyI6IFtdCn0K

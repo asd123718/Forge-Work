@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "computer-use": {
+      "args": [],
+      "command": "${PLUGIN_ROOT}/computer-use-mcp.exe",
+      "cwd": "${PLUGIN_ROOT}",
+      "type": "stdio"
+    }
+  }
+}

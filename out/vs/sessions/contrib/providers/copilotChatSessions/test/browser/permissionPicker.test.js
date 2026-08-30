@@ -1,0 +1,31 @@
+import assert from "assert";
+import { ensureNoDisposablesAreLeakedInTestSuite } from "../../../../../../base/test/common/utils.js";
+import { ChatPermissionLevel } from "../../../../../../workbench/contrib/chat/common/constants.js";
+import { DEFAULT_PERMISSION_LEVELS, getPermissionLevelMeta } from "../../browser/permissionPicker.js";
+suite("Copilot PermissionPicker", () => {
+  ensureNoDisposablesAreLeakedInTestSuite();
+  test("uses descriptions aligned with the agent host permission picker", () => {
+    assert.deepStrictEqual(DEFAULT_PERMISSION_LEVELS.map((level) => ({
+      level,
+      label: getPermissionLevelMeta(level).label,
+      detail: getPermissionLevelMeta(level).detail
+    })), [
+      {
+        level: ChatPermissionLevel.Default,
+        label: "Default permissions",
+        detail: "Asks when approval settings don't apply"
+      },
+      {
+        level: ChatPermissionLevel.AutoApprove,
+        label: "Allow all",
+        detail: "Runs tool calls without asking"
+      },
+      {
+        level: ChatPermissionLevel.Autopilot,
+        label: "Autopilot (Preview)",
+        detail: "Works autonomously within permissions"
+      }
+    ]);
+  });
+});
+//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsiQzpcXFByb2plY3RcXEZvcmdlX0R1cGxpY2F0ZTJcXGZvcmdlXFxzcmNcXHZzXFxzZXNzaW9uc1xcY29udHJpYlxccHJvdmlkZXJzXFxjb3BpbG90Q2hhdFNlc3Npb25zXFx0ZXN0XFxicm93c2VyXFxwZXJtaXNzaW9uUGlja2VyLnRlc3QudHMiXSwKICAic291cmNlc0NvbnRlbnQiOiBbIi8qLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXG4gKiAgQ29weXJpZ2h0IChjKSBNaWNyb3NvZnQgQ29ycG9yYXRpb24uIEFsbCByaWdodHMgcmVzZXJ2ZWQuXG4gKiAgTGljZW5zZWQgdW5kZXIgdGhlIE1JVCBMaWNlbnNlLiBTZWUgTGljZW5zZS50eHQgaW4gdGhlIHByb2plY3Qgcm9vdCBmb3IgbGljZW5zZSBpbmZvcm1hdGlvbi5cbiAqLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0qL1xuXG5pbXBvcnQgYXNzZXJ0IGZyb20gJ2Fzc2VydCc7XG5pbXBvcnQgeyBlbnN1cmVOb0Rpc3Bvc2FibGVzQXJlTGVha2VkSW5UZXN0U3VpdGUgfSBmcm9tICcuLi8uLi8uLi8uLi8uLi8uLi9iYXNlL3Rlc3QvY29tbW9uL3V0aWxzLmpzJztcbmltcG9ydCB7IENoYXRQZXJtaXNzaW9uTGV2ZWwgfSBmcm9tICcuLi8uLi8uLi8uLi8uLi8uLi93b3JrYmVuY2gvY29udHJpYi9jaGF0L2NvbW1vbi9jb25zdGFudHMuanMnO1xuaW1wb3J0IHsgREVGQVVMVF9QRVJNSVNTSU9OX0xFVkVMUywgZ2V0UGVybWlzc2lvbkxldmVsTWV0YSB9IGZyb20gJy4uLy4uL2Jyb3dzZXIvcGVybWlzc2lvblBpY2tlci5qcyc7XG5cbnN1aXRlKCdDb3BpbG90IFBlcm1pc3Npb25QaWNrZXInLCAoKSA9PiB7XG5cdGVuc3VyZU5vRGlzcG9zYWJsZXNBcmVMZWFrZWRJblRlc3RTdWl0ZSgpO1xuXG5cdHRlc3QoJ3VzZXMgZGVzY3JpcHRpb25zIGFsaWduZWQgd2l0aCB0aGUgYWdlbnQgaG9zdCBwZXJtaXNzaW9uIHBpY2tlcicsICgpID0+IHtcblx0XHRhc3NlcnQuZGVlcFN0cmljdEVxdWFsKERFRkFVTFRfUEVSTUlTU0lPTl9MRVZFTFMubWFwKGxldmVsID0+ICh7XG5cdFx0XHRsZXZlbCxcblx0XHRcdGxhYmVsOiBnZXRQZXJtaXNzaW9uTGV2ZWxNZXRhKGxldmVsKS5sYWJlbCxcblx0XHRcdGRldGFpbDogZ2V0UGVybWlzc2lvbkxldmVsTWV0YShsZXZlbCkuZGV0YWlsLFxuXHRcdH0pKSwgW1xuXHRcdFx0e1xuXHRcdFx0XHRsZXZlbDogQ2hhdFBlcm1pc3Npb25MZXZlbC5EZWZhdWx0LFxuXHRcdFx0XHRsYWJlbDogJ0RlZmF1bHQgcGVybWlzc2lvbnMnLFxuXHRcdFx0XHRkZXRhaWw6ICdBc2tzIHdoZW4gYXBwcm92YWwgc2V0dGluZ3MgZG9uXFwndCBhcHBseScsXG5cdFx0XHR9LFxuXHRcdFx0e1xuXHRcdFx0XHRsZXZlbDogQ2hhdFBlcm1pc3Npb25MZXZlbC5BdXRvQXBwcm92ZSxcblx0XHRcdFx0bGFiZWw6ICdBbGxvdyBhbGwnLFxuXHRcdFx0XHRkZXRhaWw6ICdSdW5zIHRvb2wgY2FsbHMgd2l0aG91dCBhc2tpbmcnLFxuXHRcdFx0fSxcblx0XHRcdHtcblx0XHRcdFx0bGV2ZWw6IENoYXRQZXJtaXNzaW9uTGV2ZWwuQXV0b3BpbG90LFxuXHRcdFx0XHRsYWJlbDogJ0F1dG9waWxvdCAoUHJldmlldyknLFxuXHRcdFx0XHRkZXRhaWw6ICdXb3JrcyBhdXRvbm9tb3VzbHkgd2l0aGluIHBlcm1pc3Npb25zJyxcblx0XHRcdH0sXG5cdFx0XSk7XG5cdH0pO1xufSk7XG4iXSwKICAibWFwcGluZ3MiOiAiQUFLQSxPQUFPLFlBQVk7QUFDbkIsU0FBUywrQ0FBK0M7QUFDeEQsU0FBUywyQkFBMkI7QUFDcEMsU0FBUywyQkFBMkIsOEJBQThCO0FBRWxFLE1BQU0sNEJBQTRCLE1BQU07QUFDdkMsMENBQXdDO0FBRXhDLE9BQUssbUVBQW1FLE1BQU07QUFDN0UsV0FBTyxnQkFBZ0IsMEJBQTBCLElBQUksWUFBVTtBQUFBLE1BQzlEO0FBQUEsTUFDQSxPQUFPLHVCQUF1QixLQUFLLEVBQUU7QUFBQSxNQUNyQyxRQUFRLHVCQUF1QixLQUFLLEVBQUU7QUFBQSxJQUN2QyxFQUFFLEdBQUc7QUFBQSxNQUNKO0FBQUEsUUFDQyxPQUFPLG9CQUFvQjtBQUFBLFFBQzNCLE9BQU87QUFBQSxRQUNQLFFBQVE7QUFBQSxNQUNUO0FBQUEsTUFDQTtBQUFBLFFBQ0MsT0FBTyxvQkFBb0I7QUFBQSxRQUMzQixPQUFPO0FBQUEsUUFDUCxRQUFRO0FBQUEsTUFDVDtBQUFBLE1BQ0E7QUFBQSxRQUNDLE9BQU8sb0JBQW9CO0FBQUEsUUFDM0IsT0FBTztBQUFBLFFBQ1AsUUFBUTtBQUFBLE1BQ1Q7QUFBQSxJQUNELENBQUM7QUFBQSxFQUNGLENBQUM7QUFDRixDQUFDOyIsCiAgIm5hbWVzIjogW10KfQo=

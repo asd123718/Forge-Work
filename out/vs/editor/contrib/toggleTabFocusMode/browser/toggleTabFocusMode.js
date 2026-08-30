@@ -1,0 +1,41 @@
+import { alert } from "../../../../base/browser/ui/aria/aria.js";
+import { KeyCode, KeyMod } from "../../../../base/common/keyCodes.js";
+import { TabFocus } from "../../../browser/config/tabFocus.js";
+import * as nls from "../../../../nls.js";
+import { Action2, registerAction2 } from "../../../../platform/actions/common/actions.js";
+import { KeybindingWeight } from "../../../../platform/keybinding/common/keybindingsRegistry.js";
+const _ToggleTabFocusModeAction = class _ToggleTabFocusModeAction extends Action2 {
+  constructor() {
+    super({
+      id: _ToggleTabFocusModeAction.ID,
+      title: nls.localize2({ key: "toggle.tabMovesFocus", comment: ["Turn on/off use of tab key for moving focus around VS Code"] }, "Toggle Tab Key Moves Focus"),
+      precondition: void 0,
+      keybinding: {
+        primary: KeyMod.CtrlCmd | KeyCode.KeyM,
+        mac: { primary: KeyMod.WinCtrl | KeyMod.Shift | KeyCode.KeyM },
+        weight: KeybindingWeight.EditorContrib
+      },
+      metadata: {
+        description: nls.localize2("tabMovesFocusDescriptions", "Determines whether the tab key moves focus around the workbench or inserts the tab character in the current editor. This is also called tab trapping, tab navigation, or tab focus mode.")
+      },
+      f1: true
+    });
+  }
+  run() {
+    const oldValue = TabFocus.getTabFocusMode();
+    const newValue = !oldValue;
+    TabFocus.setTabFocusMode(newValue);
+    if (newValue) {
+      alert(nls.localize("toggle.tabMovesFocus.on", "Pressing Tab will now move focus to the next focusable element"));
+    } else {
+      alert(nls.localize("toggle.tabMovesFocus.off", "Pressing Tab will now insert the tab character"));
+    }
+  }
+};
+_ToggleTabFocusModeAction.ID = "editor.action.toggleTabFocusMode";
+let ToggleTabFocusModeAction = _ToggleTabFocusModeAction;
+registerAction2(ToggleTabFocusModeAction);
+export {
+  ToggleTabFocusModeAction
+};
+//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsiQzpcXFByb2plY3RcXEZvcmdlX0R1cGxpY2F0ZTJcXGZvcmdlXFxzcmNcXHZzXFxlZGl0b3JcXGNvbnRyaWJcXHRvZ2dsZVRhYkZvY3VzTW9kZVxcYnJvd3NlclxcdG9nZ2xlVGFiRm9jdXNNb2RlLnRzIl0sCiAgInNvdXJjZXNDb250ZW50IjogWyIvKi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLVxuICogIENvcHlyaWdodCAoYykgTWljcm9zb2Z0IENvcnBvcmF0aW9uLiBBbGwgcmlnaHRzIHJlc2VydmVkLlxuICogIExpY2Vuc2VkIHVuZGVyIHRoZSBNSVQgTGljZW5zZS4gU2VlIExpY2Vuc2UudHh0IGluIHRoZSBwcm9qZWN0IHJvb3QgZm9yIGxpY2Vuc2UgaW5mb3JtYXRpb24uXG4gKi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tKi9cblxuaW1wb3J0IHsgYWxlcnQgfSBmcm9tICcuLi8uLi8uLi8uLi9iYXNlL2Jyb3dzZXIvdWkvYXJpYS9hcmlhLmpzJztcbmltcG9ydCB7IEtleUNvZGUsIEtleU1vZCB9IGZyb20gJy4uLy4uLy4uLy4uL2Jhc2UvY29tbW9uL2tleUNvZGVzLmpzJztcbmltcG9ydCB7IFRhYkZvY3VzIH0gZnJvbSAnLi4vLi4vLi4vYnJvd3Nlci9jb25maWcvdGFiRm9jdXMuanMnO1xuaW1wb3J0ICogYXMgbmxzIGZyb20gJy4uLy4uLy4uLy4uL25scy5qcyc7XG5pbXBvcnQgeyBBY3Rpb24yLCByZWdpc3RlckFjdGlvbjIgfSBmcm9tICcuLi8uLi8uLi8uLi9wbGF0Zm9ybS9hY3Rpb25zL2NvbW1vbi9hY3Rpb25zLmpzJztcbmltcG9ydCB7IEtleWJpbmRpbmdXZWlnaHQgfSBmcm9tICcuLi8uLi8uLi8uLi9wbGF0Zm9ybS9rZXliaW5kaW5nL2NvbW1vbi9rZXliaW5kaW5nc1JlZ2lzdHJ5LmpzJztcblxuZXhwb3J0IGNsYXNzIFRvZ2dsZVRhYkZvY3VzTW9kZUFjdGlvbiBleHRlbmRzIEFjdGlvbjIge1xuXG5cdHB1YmxpYyBzdGF0aWMgcmVhZG9ubHkgSUQgPSAnZWRpdG9yLmFjdGlvbi50b2dnbGVUYWJGb2N1c01vZGUnO1xuXG5cdGNvbnN0cnVjdG9yKCkge1xuXHRcdHN1cGVyKHtcblx0XHRcdGlkOiBUb2dnbGVUYWJGb2N1c01vZGVBY3Rpb24uSUQsXG5cdFx0XHR0aXRsZTogbmxzLmxvY2FsaXplMih7IGtleTogJ3RvZ2dsZS50YWJNb3Zlc0ZvY3VzJywgY29tbWVudDogWydUdXJuIG9uL29mZiB1c2Ugb2YgdGFiIGtleSBmb3IgbW92aW5nIGZvY3VzIGFyb3VuZCBWUyBDb2RlJ10gfSwgJ1RvZ2dsZSBUYWIgS2V5IE1vdmVzIEZvY3VzJyksXG5cdFx0XHRwcmVjb25kaXRpb246IHVuZGVmaW5lZCxcblx0XHRcdGtleWJpbmRpbmc6IHtcblx0XHRcdFx0cHJpbWFyeTogS2V5TW9kLkN0cmxDbWQgfCBLZXlDb2RlLktleU0sXG5cdFx0XHRcdG1hYzogeyBwcmltYXJ5OiBLZXlNb2QuV2luQ3RybCB8IEtleU1vZC5TaGlmdCB8IEtleUNvZGUuS2V5TSB9LFxuXHRcdFx0XHR3ZWlnaHQ6IEtleWJpbmRpbmdXZWlnaHQuRWRpdG9yQ29udHJpYlxuXHRcdFx0fSxcblx0XHRcdG1ldGFkYXRhOiB7XG5cdFx0XHRcdGRlc2NyaXB0aW9uOiBubHMubG9jYWxpemUyKCd0YWJNb3Zlc0ZvY3VzRGVzY3JpcHRpb25zJywgXCJEZXRlcm1pbmVzIHdoZXRoZXIgdGhlIHRhYiBrZXkgbW92ZXMgZm9jdXMgYXJvdW5kIHRoZSB3b3JrYmVuY2ggb3IgaW5zZXJ0cyB0aGUgdGFiIGNoYXJhY3RlciBpbiB0aGUgY3VycmVudCBlZGl0b3IuIFRoaXMgaXMgYWxzbyBjYWxsZWQgdGFiIHRyYXBwaW5nLCB0YWIgbmF2aWdhdGlvbiwgb3IgdGFiIGZvY3VzIG1vZGUuXCIpLFxuXHRcdFx0fSxcblx0XHRcdGYxOiB0cnVlXG5cdFx0fSk7XG5cdH1cblxuXHRwdWJsaWMgcnVuKCk6IHZvaWQge1xuXHRcdGNvbnN0IG9sZFZhbHVlID0gVGFiRm9jdXMuZ2V0VGFiRm9jdXNNb2RlKCk7XG5cdFx0Y29uc3QgbmV3VmFsdWUgPSAhb2xkVmFsdWU7XG5cdFx0VGFiRm9jdXMuc2V0VGFiRm9jdXNNb2RlKG5ld1ZhbHVlKTtcblx0XHRpZiAobmV3VmFsdWUpIHtcblx0XHRcdGFsZXJ0KG5scy5sb2NhbGl6ZSgndG9nZ2xlLnRhYk1vdmVzRm9jdXMub24nLCBcIlByZXNzaW5nIFRhYiB3aWxsIG5vdyBtb3ZlIGZvY3VzIHRvIHRoZSBuZXh0IGZvY3VzYWJsZSBlbGVtZW50XCIpKTtcblx0XHR9IGVsc2Uge1xuXHRcdFx0YWxlcnQobmxzLmxvY2FsaXplKCd0b2dnbGUudGFiTW92ZXNGb2N1cy5vZmYnLCBcIlByZXNzaW5nIFRhYiB3aWxsIG5vdyBpbnNlcnQgdGhlIHRhYiBjaGFyYWN0ZXJcIikpO1xuXHRcdH1cblx0fVxufVxuXG5yZWdpc3RlckFjdGlvbjIoVG9nZ2xlVGFiRm9jdXNNb2RlQWN0aW9uKTtcbiJdLAogICJtYXBwaW5ncyI6ICJBQUtBLFNBQVMsYUFBYTtBQUN0QixTQUFTLFNBQVMsY0FBYztBQUNoQyxTQUFTLGdCQUFnQjtBQUN6QixZQUFZLFNBQVM7QUFDckIsU0FBUyxTQUFTLHVCQUF1QjtBQUN6QyxTQUFTLHdCQUF3QjtBQUUxQixNQUFNLDRCQUFOLE1BQU0sa0NBQWlDLFFBQVE7QUFBQSxFQUlyRCxjQUFjO0FBQ2IsVUFBTTtBQUFBLE1BQ0wsSUFBSSwwQkFBeUI7QUFBQSxNQUM3QixPQUFPLElBQUksVUFBVSxFQUFFLEtBQUssd0JBQXdCLFNBQVMsQ0FBQyw0REFBNEQsRUFBRSxHQUFHLDRCQUE0QjtBQUFBLE1BQzNKLGNBQWM7QUFBQSxNQUNkLFlBQVk7QUFBQSxRQUNYLFNBQVMsT0FBTyxVQUFVLFFBQVE7QUFBQSxRQUNsQyxLQUFLLEVBQUUsU0FBUyxPQUFPLFVBQVUsT0FBTyxRQUFRLFFBQVEsS0FBSztBQUFBLFFBQzdELFFBQVEsaUJBQWlCO0FBQUEsTUFDMUI7QUFBQSxNQUNBLFVBQVU7QUFBQSxRQUNULGFBQWEsSUFBSSxVQUFVLDZCQUE2QiwwTEFBMEw7QUFBQSxNQUNuUDtBQUFBLE1BQ0EsSUFBSTtBQUFBLElBQ0wsQ0FBQztBQUFBLEVBQ0Y7QUFBQSxFQUVPLE1BQVk7QUFDbEIsVUFBTSxXQUFXLFNBQVMsZ0JBQWdCO0FBQzFDLFVBQU0sV0FBVyxDQUFDO0FBQ2xCLGFBQVMsZ0JBQWdCLFFBQVE7QUFDakMsUUFBSSxVQUFVO0FBQ2IsWUFBTSxJQUFJLFNBQVMsMkJBQTJCLGdFQUFnRSxDQUFDO0FBQUEsSUFDaEgsT0FBTztBQUNOLFlBQU0sSUFBSSxTQUFTLDRCQUE0QixnREFBZ0QsQ0FBQztBQUFBLElBQ2pHO0FBQUEsRUFDRDtBQUNEO0FBL0JhLDBCQUVXLEtBQUs7QUFGdEIsSUFBTSwyQkFBTjtBQWlDUCxnQkFBZ0Isd0JBQXdCOyIsCiAgIm5hbWVzIjogW10KfQo=

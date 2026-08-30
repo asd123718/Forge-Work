@@ -1,0 +1,32 @@
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __decorateClass = (decorators, target, key, kind) => {
+  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc(target, key) : target;
+  for (var i = decorators.length - 1, decorator; i >= 0; i--)
+    if (decorator = decorators[i])
+      result = (kind ? decorator(target, key, result) : decorator(result)) || result;
+  if (kind && result) __defProp(target, key, result);
+  return result;
+};
+var __decorateParam = (index, decorator) => (target, key) => decorator(target, key, index);
+import { CustomizationHarnessServiceBase } from "../../../../workbench/contrib/chat/common/customizationHarnessService.js";
+import { IPromptsService } from "../../../../workbench/contrib/chat/common/promptSyntax/service/promptsService.js";
+let SessionsCustomizationHarnessService = class extends CustomizationHarnessServiceBase {
+  constructor(promptsService) {
+    super([], "", promptsService);
+  }
+  registerExternalHarness(descriptor) {
+    const registration = super.registerExternalHarness(descriptor);
+    if (!this.findHarnessById(this.activeHarness.get())) {
+      this.setActiveSession(this.getSessionResourceForHarness(descriptor.id));
+    }
+    return registration;
+  }
+};
+SessionsCustomizationHarnessService = __decorateClass([
+  __decorateParam(0, IPromptsService)
+], SessionsCustomizationHarnessService);
+export {
+  SessionsCustomizationHarnessService
+};
+//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsiQzpcXFByb2plY3RcXEZvcmdlX0R1cGxpY2F0ZTJcXGZvcmdlXFxzcmNcXHZzXFxzZXNzaW9uc1xcY29udHJpYlxcY2hhdFxcYnJvd3NlclxcY3VzdG9taXphdGlvbkhhcm5lc3NTZXJ2aWNlLnRzIl0sCiAgInNvdXJjZXNDb250ZW50IjogWyIvKi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLVxuICogIENvcHlyaWdodCAoYykgTWljcm9zb2Z0IENvcnBvcmF0aW9uLiBBbGwgcmlnaHRzIHJlc2VydmVkLlxuICogIExpY2Vuc2VkIHVuZGVyIHRoZSBNSVQgTGljZW5zZS4gU2VlIExpY2Vuc2UudHh0IGluIHRoZSBwcm9qZWN0IHJvb3QgZm9yIGxpY2Vuc2UgaW5mb3JtYXRpb24uXG4gKi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tKi9cblxuaW1wb3J0IHsgSURpc3Bvc2FibGUgfSBmcm9tICcuLi8uLi8uLi8uLi9iYXNlL2NvbW1vbi9saWZlY3ljbGUuanMnO1xuaW1wb3J0IHsgQ3VzdG9taXphdGlvbkhhcm5lc3NTZXJ2aWNlQmFzZSwgSUhhcm5lc3NEZXNjcmlwdG9yIH0gZnJvbSAnLi4vLi4vLi4vLi4vd29ya2JlbmNoL2NvbnRyaWIvY2hhdC9jb21tb24vY3VzdG9taXphdGlvbkhhcm5lc3NTZXJ2aWNlLmpzJztcbmltcG9ydCB7IElQcm9tcHRzU2VydmljZSB9IGZyb20gJy4uLy4uLy4uLy4uL3dvcmtiZW5jaC9jb250cmliL2NoYXQvY29tbW9uL3Byb21wdFN5bnRheC9zZXJ2aWNlL3Byb21wdHNTZXJ2aWNlLmpzJztcblxuLyoqXG4gKiBTZXNzaW9ucy13aW5kb3cgb3ZlcnJpZGUgb2YgdGhlIGN1c3RvbWl6YXRpb24gaGFybmVzcyBzZXJ2aWNlLlxuICpcbiAqIEhhcm5lc3NlcyBhcmUgcHJvdmlkZWQgYnkgY2hhdCBzZXNzaW9uIHByb3ZpZGVycyBhbmQgQUhQIHJlbW90ZSBzZXJ2ZXJzLlxuICovXG5leHBvcnQgY2xhc3MgU2Vzc2lvbnNDdXN0b21pemF0aW9uSGFybmVzc1NlcnZpY2UgZXh0ZW5kcyBDdXN0b21pemF0aW9uSGFybmVzc1NlcnZpY2VCYXNlIHtcblxuXHRjb25zdHJ1Y3Rvcihcblx0XHRASVByb21wdHNTZXJ2aWNlIHByb21wdHNTZXJ2aWNlOiBJUHJvbXB0c1NlcnZpY2UsXG5cdCkge1xuXHRcdHN1cGVyKFtdLCAnJywgcHJvbXB0c1NlcnZpY2UpO1xuXHR9XG5cblx0b3ZlcnJpZGUgcmVnaXN0ZXJFeHRlcm5hbEhhcm5lc3MoZGVzY3JpcHRvcjogSUhhcm5lc3NEZXNjcmlwdG9yKTogSURpc3Bvc2FibGUge1xuXHRcdGNvbnN0IHJlZ2lzdHJhdGlvbiA9IHN1cGVyLnJlZ2lzdGVyRXh0ZXJuYWxIYXJuZXNzKGRlc2NyaXB0b3IpO1xuXHRcdGlmICghdGhpcy5maW5kSGFybmVzc0J5SWQodGhpcy5hY3RpdmVIYXJuZXNzLmdldCgpKSkge1xuXHRcdFx0dGhpcy5zZXRBY3RpdmVTZXNzaW9uKHRoaXMuZ2V0U2Vzc2lvblJlc291cmNlRm9ySGFybmVzcyhkZXNjcmlwdG9yLmlkKSk7XG5cdFx0fVxuXHRcdHJldHVybiByZWdpc3RyYXRpb247XG5cdH1cbn1cbiJdLAogICJtYXBwaW5ncyI6ICI7Ozs7Ozs7Ozs7O0FBTUEsU0FBUyx1Q0FBMkQ7QUFDcEUsU0FBUyx1QkFBdUI7QUFPekIsSUFBTSxzQ0FBTixjQUFrRCxnQ0FBZ0M7QUFBQSxFQUV4RixZQUNrQixnQkFDaEI7QUFDRCxVQUFNLENBQUMsR0FBRyxJQUFJLGNBQWM7QUFBQSxFQUM3QjtBQUFBLEVBRVMsd0JBQXdCLFlBQTZDO0FBQzdFLFVBQU0sZUFBZSxNQUFNLHdCQUF3QixVQUFVO0FBQzdELFFBQUksQ0FBQyxLQUFLLGdCQUFnQixLQUFLLGNBQWMsSUFBSSxDQUFDLEdBQUc7QUFDcEQsV0FBSyxpQkFBaUIsS0FBSyw2QkFBNkIsV0FBVyxFQUFFLENBQUM7QUFBQSxJQUN2RTtBQUNBLFdBQU87QUFBQSxFQUNSO0FBQ0Q7QUFmYSxzQ0FBTjtBQUFBLEVBR0o7QUFBQSxHQUhVOyIsCiAgIm5hbWVzIjogW10KfQo=

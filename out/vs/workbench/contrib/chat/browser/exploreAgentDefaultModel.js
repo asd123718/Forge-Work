@@ -1,0 +1,40 @@
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __decorateClass = (decorators, target, key, kind) => {
+  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc(target, key) : target;
+  for (var i = decorators.length - 1, decorator; i >= 0; i--)
+    if (decorator = decorators[i])
+      result = (kind ? decorator(target, key, result) : decorator(result)) || result;
+  if (kind && result) __defProp(target, key, result);
+  return result;
+};
+var __decorateParam = (index, decorator) => (target, key) => decorator(target, key, index);
+import { ILogService } from "../../../../platform/log/common/log.js";
+import { registerWorkbenchContribution2, WorkbenchPhase } from "../../../common/contributions.js";
+import { ChatConfiguration } from "../common/constants.js";
+import { ILanguageModelsService } from "../common/languageModels.js";
+import { createDefaultModelArrays, DefaultModelContribution } from "./defaultModelContribution.js";
+const arrays = createDefaultModelArrays();
+let ExploreAgentDefaultModel = class extends DefaultModelContribution {
+  constructor(languageModelsService, logService) {
+    super(arrays, {
+      configKey: ChatConfiguration.ExploreAgentDefaultModel,
+      configSectionId: "chatSidebar",
+      logPrefix: "[ExploreAgentDefaultModel]",
+      filter: (metadata) => !!metadata.capabilities?.toolCalling
+    }, languageModelsService, logService);
+  }
+};
+ExploreAgentDefaultModel.ID = "workbench.contrib.exploreAgentDefaultModel";
+ExploreAgentDefaultModel.modelIds = arrays.modelIds;
+ExploreAgentDefaultModel.modelLabels = arrays.modelLabels;
+ExploreAgentDefaultModel.modelDescriptions = arrays.modelDescriptions;
+ExploreAgentDefaultModel = __decorateClass([
+  __decorateParam(0, ILanguageModelsService),
+  __decorateParam(1, ILogService)
+], ExploreAgentDefaultModel);
+registerWorkbenchContribution2(ExploreAgentDefaultModel.ID, ExploreAgentDefaultModel, WorkbenchPhase.BlockRestore);
+export {
+  ExploreAgentDefaultModel
+};
+//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsiQzpcXFByb2plY3RcXEZvcmdlX0R1cGxpY2F0ZTJcXGZvcmdlXFxzcmNcXHZzXFx3b3JrYmVuY2hcXGNvbnRyaWJcXGNoYXRcXGJyb3dzZXJcXGV4cGxvcmVBZ2VudERlZmF1bHRNb2RlbC50cyJdLAogICJzb3VyY2VzQ29udGVudCI6IFsiLyotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1cbiAqICBDb3B5cmlnaHQgKGMpIE1pY3Jvc29mdCBDb3Jwb3JhdGlvbi4gQWxsIHJpZ2h0cyByZXNlcnZlZC5cbiAqICBMaWNlbnNlZCB1bmRlciB0aGUgTUlUIExpY2Vuc2UuIFNlZSBMaWNlbnNlLnR4dCBpbiB0aGUgcHJvamVjdCByb290IGZvciBsaWNlbnNlIGluZm9ybWF0aW9uLlxuICotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLSovXG5cbmltcG9ydCB7IElMb2dTZXJ2aWNlIH0gZnJvbSAnLi4vLi4vLi4vLi4vcGxhdGZvcm0vbG9nL2NvbW1vbi9sb2cuanMnO1xuaW1wb3J0IHsgcmVnaXN0ZXJXb3JrYmVuY2hDb250cmlidXRpb24yLCBXb3JrYmVuY2hQaGFzZSB9IGZyb20gJy4uLy4uLy4uL2NvbW1vbi9jb250cmlidXRpb25zLmpzJztcbmltcG9ydCB7IENoYXRDb25maWd1cmF0aW9uIH0gZnJvbSAnLi4vY29tbW9uL2NvbnN0YW50cy5qcyc7XG5pbXBvcnQgeyBJTGFuZ3VhZ2VNb2RlbHNTZXJ2aWNlIH0gZnJvbSAnLi4vY29tbW9uL2xhbmd1YWdlTW9kZWxzLmpzJztcbmltcG9ydCB7IGNyZWF0ZURlZmF1bHRNb2RlbEFycmF5cywgRGVmYXVsdE1vZGVsQ29udHJpYnV0aW9uIH0gZnJvbSAnLi9kZWZhdWx0TW9kZWxDb250cmlidXRpb24uanMnO1xuXG5jb25zdCBhcnJheXMgPSBjcmVhdGVEZWZhdWx0TW9kZWxBcnJheXMoKTtcblxuZXhwb3J0IGNsYXNzIEV4cGxvcmVBZ2VudERlZmF1bHRNb2RlbCBleHRlbmRzIERlZmF1bHRNb2RlbENvbnRyaWJ1dGlvbiB7XG5cdHN0YXRpYyByZWFkb25seSBJRCA9ICd3b3JrYmVuY2guY29udHJpYi5leHBsb3JlQWdlbnREZWZhdWx0TW9kZWwnO1xuXG5cdHN0YXRpYyByZWFkb25seSBtb2RlbElkcyA9IGFycmF5cy5tb2RlbElkcztcblx0c3RhdGljIHJlYWRvbmx5IG1vZGVsTGFiZWxzID0gYXJyYXlzLm1vZGVsTGFiZWxzO1xuXHRzdGF0aWMgcmVhZG9ubHkgbW9kZWxEZXNjcmlwdGlvbnMgPSBhcnJheXMubW9kZWxEZXNjcmlwdGlvbnM7XG5cblx0Y29uc3RydWN0b3IoXG5cdFx0QElMYW5ndWFnZU1vZGVsc1NlcnZpY2UgbGFuZ3VhZ2VNb2RlbHNTZXJ2aWNlOiBJTGFuZ3VhZ2VNb2RlbHNTZXJ2aWNlLFxuXHRcdEBJTG9nU2VydmljZSBsb2dTZXJ2aWNlOiBJTG9nU2VydmljZSxcblx0KSB7XG5cdFx0c3VwZXIoYXJyYXlzLCB7XG5cdFx0XHRjb25maWdLZXk6IENoYXRDb25maWd1cmF0aW9uLkV4cGxvcmVBZ2VudERlZmF1bHRNb2RlbCxcblx0XHRcdGNvbmZpZ1NlY3Rpb25JZDogJ2NoYXRTaWRlYmFyJyxcblx0XHRcdGxvZ1ByZWZpeDogJ1tFeHBsb3JlQWdlbnREZWZhdWx0TW9kZWxdJyxcblx0XHRcdGZpbHRlcjogbWV0YWRhdGEgPT4gISFtZXRhZGF0YS5jYXBhYmlsaXRpZXM/LnRvb2xDYWxsaW5nLFxuXHRcdH0sIGxhbmd1YWdlTW9kZWxzU2VydmljZSwgbG9nU2VydmljZSk7XG5cdH1cbn1cblxucmVnaXN0ZXJXb3JrYmVuY2hDb250cmlidXRpb24yKEV4cGxvcmVBZ2VudERlZmF1bHRNb2RlbC5JRCwgRXhwbG9yZUFnZW50RGVmYXVsdE1vZGVsLCBXb3JrYmVuY2hQaGFzZS5CbG9ja1Jlc3RvcmUpO1xuIl0sCiAgIm1hcHBpbmdzIjogIjs7Ozs7Ozs7Ozs7QUFLQSxTQUFTLG1CQUFtQjtBQUM1QixTQUFTLGdDQUFnQyxzQkFBc0I7QUFDL0QsU0FBUyx5QkFBeUI7QUFDbEMsU0FBUyw4QkFBOEI7QUFDdkMsU0FBUywwQkFBMEIsZ0NBQWdDO0FBRW5FLE1BQU0sU0FBUyx5QkFBeUI7QUFFakMsSUFBTSwyQkFBTixjQUF1Qyx5QkFBeUI7QUFBQSxFQU90RSxZQUN5Qix1QkFDWCxZQUNaO0FBQ0QsVUFBTSxRQUFRO0FBQUEsTUFDYixXQUFXLGtCQUFrQjtBQUFBLE1BQzdCLGlCQUFpQjtBQUFBLE1BQ2pCLFdBQVc7QUFBQSxNQUNYLFFBQVEsY0FBWSxDQUFDLENBQUMsU0FBUyxjQUFjO0FBQUEsSUFDOUMsR0FBRyx1QkFBdUIsVUFBVTtBQUFBLEVBQ3JDO0FBQ0Q7QUFsQmEseUJBQ0ksS0FBSztBQURULHlCQUdJLFdBQVcsT0FBTztBQUh0Qix5QkFJSSxjQUFjLE9BQU87QUFKekIseUJBS0ksb0JBQW9CLE9BQU87QUFML0IsMkJBQU47QUFBQSxFQVFKO0FBQUEsRUFDQTtBQUFBLEdBVFU7QUFvQmIsK0JBQStCLHlCQUF5QixJQUFJLDBCQUEwQixlQUFlLFlBQVk7IiwKICAibmFtZXMiOiBbXQp9Cg==

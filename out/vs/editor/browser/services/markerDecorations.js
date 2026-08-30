@@ -1,0 +1,26 @@
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __decorateClass = (decorators, target, key, kind) => {
+  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc(target, key) : target;
+  for (var i = decorators.length - 1, decorator; i >= 0; i--)
+    if (decorator = decorators[i])
+      result = (kind ? decorator(target, key, result) : decorator(result)) || result;
+  if (kind && result) __defProp(target, key, result);
+  return result;
+};
+var __decorateParam = (index, decorator) => (target, key) => decorator(target, key, index);
+import { IMarkerDecorationsService } from "../../common/services/markerDecorations.js";
+let MarkerDecorationsContribution = class {
+  constructor(_editor, _markerDecorationsService) {
+  }
+  dispose() {
+  }
+};
+MarkerDecorationsContribution.ID = "editor.contrib.markerDecorations";
+MarkerDecorationsContribution = __decorateClass([
+  __decorateParam(1, IMarkerDecorationsService)
+], MarkerDecorationsContribution);
+export {
+  MarkerDecorationsContribution
+};
+//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsiQzpcXFByb2plY3RcXEZvcmdlX0R1cGxpY2F0ZTJcXGZvcmdlXFxzcmNcXHZzXFxlZGl0b3JcXGJyb3dzZXJcXHNlcnZpY2VzXFxtYXJrZXJEZWNvcmF0aW9ucy50cyJdLAogICJzb3VyY2VzQ29udGVudCI6IFsiLyotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1cbiAqICBDb3B5cmlnaHQgKGMpIE1pY3Jvc29mdCBDb3Jwb3JhdGlvbi4gQWxsIHJpZ2h0cyByZXNlcnZlZC5cbiAqICBMaWNlbnNlZCB1bmRlciB0aGUgTUlUIExpY2Vuc2UuIFNlZSBMaWNlbnNlLnR4dCBpbiB0aGUgcHJvamVjdCByb290IGZvciBsaWNlbnNlIGluZm9ybWF0aW9uLlxuICotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLSovXG5cbmltcG9ydCB7IElNYXJrZXJEZWNvcmF0aW9uc1NlcnZpY2UgfSBmcm9tICcuLi8uLi9jb21tb24vc2VydmljZXMvbWFya2VyRGVjb3JhdGlvbnMuanMnO1xuaW1wb3J0IHsgSUNvZGVFZGl0b3IgfSBmcm9tICcuLi9lZGl0b3JCcm93c2VyLmpzJztcbmltcG9ydCB7IElFZGl0b3JDb250cmlidXRpb24gfSBmcm9tICcuLi8uLi9jb21tb24vZWRpdG9yQ29tbW9uLmpzJztcblxuZXhwb3J0IGNsYXNzIE1hcmtlckRlY29yYXRpb25zQ29udHJpYnV0aW9uIGltcGxlbWVudHMgSUVkaXRvckNvbnRyaWJ1dGlvbiB7XG5cblx0cHVibGljIHN0YXRpYyByZWFkb25seSBJRDogc3RyaW5nID0gJ2VkaXRvci5jb250cmliLm1hcmtlckRlY29yYXRpb25zJztcblxuXHRjb25zdHJ1Y3Rvcihcblx0XHRfZWRpdG9yOiBJQ29kZUVkaXRvcixcblx0XHRASU1hcmtlckRlY29yYXRpb25zU2VydmljZSBfbWFya2VyRGVjb3JhdGlvbnNTZXJ2aWNlOiBJTWFya2VyRGVjb3JhdGlvbnNTZXJ2aWNlXG5cdCkge1xuXHRcdC8vIERvZXNuJ3QgZG8gYW55dGhpbmcsIGp1c3QgcmVxdWlyZXMgYElNYXJrZXJEZWNvcmF0aW9uc1NlcnZpY2VgIHRvIG1ha2Ugc3VyZSBpdCBnZXRzIGluc3RhbnRpYXRlZFxuXHR9XG5cblx0ZGlzcG9zZSgpOiB2b2lkIHtcblx0fVxufVxuIl0sCiAgIm1hcHBpbmdzIjogIjs7Ozs7Ozs7Ozs7QUFLQSxTQUFTLGlDQUFpQztBQUluQyxJQUFNLGdDQUFOLE1BQW1FO0FBQUEsRUFJekUsWUFDQyxTQUMyQiwyQkFDMUI7QUFBQSxFQUVGO0FBQUEsRUFFQSxVQUFnQjtBQUFBLEVBQ2hCO0FBQ0Q7QUFiYSw4QkFFVyxLQUFhO0FBRnhCLGdDQUFOO0FBQUEsRUFNSjtBQUFBLEdBTlU7IiwKICAibmFtZXMiOiBbXQp9Cg==

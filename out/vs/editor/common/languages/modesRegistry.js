@@ -1,0 +1,74 @@
+import * as nls from "../../../nls.js";
+import { Emitter } from "../../../base/common/event.js";
+import { Registry } from "../../../platform/registry/common/platform.js";
+import { Disposable } from "../../../base/common/lifecycle.js";
+import { Mimes } from "../../../base/common/mime.js";
+import { Extensions as ConfigurationExtensions } from "../../../platform/configuration/common/configurationRegistry.js";
+const Extensions = {
+  ModesRegistry: "editor.modesRegistry"
+};
+class EditorModesRegistry extends Disposable {
+  constructor() {
+    super();
+    this._onDidChangeLanguages = this._register(new Emitter());
+    this.onDidChangeLanguages = this._onDidChangeLanguages.event;
+    this._languages = [];
+  }
+  registerLanguage(def) {
+    this._languages.push(def);
+    this._onDidChangeLanguages.fire(void 0);
+    return {
+      dispose: () => {
+        for (let i = 0, len = this._languages.length; i < len; i++) {
+          if (this._languages[i] === def) {
+            this._languages.splice(i, 1);
+            return;
+          }
+        }
+      }
+    };
+  }
+  getLanguages() {
+    return this._languages;
+  }
+}
+const ModesRegistry = new EditorModesRegistry();
+Registry.add(Extensions.ModesRegistry, ModesRegistry);
+const PLAINTEXT_LANGUAGE_ID = "plaintext";
+const PLAINTEXT_EXTENSION = ".txt";
+ModesRegistry.registerLanguage({
+  id: PLAINTEXT_LANGUAGE_ID,
+  extensions: [PLAINTEXT_EXTENSION],
+  aliases: [nls.localize("plainText.alias", "Plain Text"), "text"],
+  mimetypes: [Mimes.text]
+});
+Registry.as(ConfigurationExtensions.Configuration).registerDefaultConfigurations([{
+  overrides: {
+    "[plaintext]": {
+      "editor.unicodeHighlight.ambiguousCharacters": false,
+      "editor.unicodeHighlight.invisibleCharacters": false
+    },
+    // TODO: Below is a workaround for: https://github.com/microsoft/vscode/issues/240567
+    "[go]": {
+      "editor.insertSpaces": false
+    },
+    "[makefile]": {
+      "editor.insertSpaces": false
+    },
+    "[shellscript]": {
+      "files.eol": "\n"
+    },
+    "[yaml]": {
+      "editor.insertSpaces": true,
+      "editor.tabSize": 2
+    }
+  }
+}]);
+export {
+  EditorModesRegistry,
+  Extensions,
+  ModesRegistry,
+  PLAINTEXT_EXTENSION,
+  PLAINTEXT_LANGUAGE_ID
+};
+//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsiQzpcXFByb2plY3RcXEZvcmdlX0R1cGxpY2F0ZTJcXGZvcmdlXFxzcmNcXHZzXFxlZGl0b3JcXGNvbW1vblxcbGFuZ3VhZ2VzXFxtb2Rlc1JlZ2lzdHJ5LnRzIl0sCiAgInNvdXJjZXNDb250ZW50IjogWyIvKi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLVxuICogIENvcHlyaWdodCAoYykgTWljcm9zb2Z0IENvcnBvcmF0aW9uLiBBbGwgcmlnaHRzIHJlc2VydmVkLlxuICogIExpY2Vuc2VkIHVuZGVyIHRoZSBNSVQgTGljZW5zZS4gU2VlIExpY2Vuc2UudHh0IGluIHRoZSBwcm9qZWN0IHJvb3QgZm9yIGxpY2Vuc2UgaW5mb3JtYXRpb24uXG4gKi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tKi9cblxuaW1wb3J0ICogYXMgbmxzIGZyb20gJy4uLy4uLy4uL25scy5qcyc7XG5pbXBvcnQgeyBFbWl0dGVyLCBFdmVudCB9IGZyb20gJy4uLy4uLy4uL2Jhc2UvY29tbW9uL2V2ZW50LmpzJztcbmltcG9ydCB7IElMYW5ndWFnZUV4dGVuc2lvblBvaW50IH0gZnJvbSAnLi9sYW5ndWFnZS5qcyc7XG5pbXBvcnQgeyBSZWdpc3RyeSB9IGZyb20gJy4uLy4uLy4uL3BsYXRmb3JtL3JlZ2lzdHJ5L2NvbW1vbi9wbGF0Zm9ybS5qcyc7XG5pbXBvcnQgeyBEaXNwb3NhYmxlLCBJRGlzcG9zYWJsZSB9IGZyb20gJy4uLy4uLy4uL2Jhc2UvY29tbW9uL2xpZmVjeWNsZS5qcyc7XG5pbXBvcnQgeyBNaW1lcyB9IGZyb20gJy4uLy4uLy4uL2Jhc2UvY29tbW9uL21pbWUuanMnO1xuaW1wb3J0IHsgSUNvbmZpZ3VyYXRpb25SZWdpc3RyeSwgRXh0ZW5zaW9ucyBhcyBDb25maWd1cmF0aW9uRXh0ZW5zaW9ucyB9IGZyb20gJy4uLy4uLy4uL3BsYXRmb3JtL2NvbmZpZ3VyYXRpb24vY29tbW9uL2NvbmZpZ3VyYXRpb25SZWdpc3RyeS5qcyc7XG5cbi8vIERlZmluZSBleHRlbnNpb24gcG9pbnQgaWRzXG5leHBvcnQgY29uc3QgRXh0ZW5zaW9ucyA9IHtcblx0TW9kZXNSZWdpc3RyeTogJ2VkaXRvci5tb2Rlc1JlZ2lzdHJ5J1xufTtcblxuZXhwb3J0IGNsYXNzIEVkaXRvck1vZGVzUmVnaXN0cnkgZXh0ZW5kcyBEaXNwb3NhYmxlIHtcblxuXHRwcml2YXRlIHJlYWRvbmx5IF9sYW5ndWFnZXM6IElMYW5ndWFnZUV4dGVuc2lvblBvaW50W107XG5cblx0cHJpdmF0ZSByZWFkb25seSBfb25EaWRDaGFuZ2VMYW5ndWFnZXMgPSB0aGlzLl9yZWdpc3RlcihuZXcgRW1pdHRlcjx2b2lkPigpKTtcblx0cHVibGljIHJlYWRvbmx5IG9uRGlkQ2hhbmdlTGFuZ3VhZ2VzOiBFdmVudDx2b2lkPiA9IHRoaXMuX29uRGlkQ2hhbmdlTGFuZ3VhZ2VzLmV2ZW50O1xuXG5cdGNvbnN0cnVjdG9yKCkge1xuXHRcdHN1cGVyKCk7XG5cdFx0dGhpcy5fbGFuZ3VhZ2VzID0gW107XG5cdH1cblxuXHRwdWJsaWMgcmVnaXN0ZXJMYW5ndWFnZShkZWY6IElMYW5ndWFnZUV4dGVuc2lvblBvaW50KTogSURpc3Bvc2FibGUge1xuXHRcdHRoaXMuX2xhbmd1YWdlcy5wdXNoKGRlZik7XG5cdFx0dGhpcy5fb25EaWRDaGFuZ2VMYW5ndWFnZXMuZmlyZSh1bmRlZmluZWQpO1xuXHRcdHJldHVybiB7XG5cdFx0XHRkaXNwb3NlOiAoKSA9PiB7XG5cdFx0XHRcdGZvciAobGV0IGkgPSAwLCBsZW4gPSB0aGlzLl9sYW5ndWFnZXMubGVuZ3RoOyBpIDwgbGVuOyBpKyspIHtcblx0XHRcdFx0XHRpZiAodGhpcy5fbGFuZ3VhZ2VzW2ldID09PSBkZWYpIHtcblx0XHRcdFx0XHRcdHRoaXMuX2xhbmd1YWdlcy5zcGxpY2UoaSwgMSk7XG5cdFx0XHRcdFx0XHRyZXR1cm47XG5cdFx0XHRcdFx0fVxuXHRcdFx0XHR9XG5cdFx0XHR9XG5cdFx0fTtcblx0fVxuXG5cdHB1YmxpYyBnZXRMYW5ndWFnZXMoKTogUmVhZG9ubHlBcnJheTxJTGFuZ3VhZ2VFeHRlbnNpb25Qb2ludD4ge1xuXHRcdHJldHVybiB0aGlzLl9sYW5ndWFnZXM7XG5cdH1cbn1cblxuZXhwb3J0IGNvbnN0IE1vZGVzUmVnaXN0cnkgPSBuZXcgRWRpdG9yTW9kZXNSZWdpc3RyeSgpO1xuUmVnaXN0cnkuYWRkKEV4dGVuc2lvbnMuTW9kZXNSZWdpc3RyeSwgTW9kZXNSZWdpc3RyeSk7XG5cbmV4cG9ydCBjb25zdCBQTEFJTlRFWFRfTEFOR1VBR0VfSUQgPSAncGxhaW50ZXh0JztcbmV4cG9ydCBjb25zdCBQTEFJTlRFWFRfRVhURU5TSU9OID0gJy50eHQnO1xuXG5Nb2Rlc1JlZ2lzdHJ5LnJlZ2lzdGVyTGFuZ3VhZ2Uoe1xuXHRpZDogUExBSU5URVhUX0xBTkdVQUdFX0lELFxuXHRleHRlbnNpb25zOiBbUExBSU5URVhUX0VYVEVOU0lPTl0sXG5cdGFsaWFzZXM6IFtubHMubG9jYWxpemUoJ3BsYWluVGV4dC5hbGlhcycsIFwiUGxhaW4gVGV4dFwiKSwgJ3RleHQnXSxcblx0bWltZXR5cGVzOiBbTWltZXMudGV4dF1cbn0pO1xuXG5SZWdpc3RyeS5hczxJQ29uZmlndXJhdGlvblJlZ2lzdHJ5PihDb25maWd1cmF0aW9uRXh0ZW5zaW9ucy5Db25maWd1cmF0aW9uKVxuXHQucmVnaXN0ZXJEZWZhdWx0Q29uZmlndXJhdGlvbnMoW3tcblx0XHRvdmVycmlkZXM6IHtcblx0XHRcdCdbcGxhaW50ZXh0XSc6IHtcblx0XHRcdFx0J2VkaXRvci51bmljb2RlSGlnaGxpZ2h0LmFtYmlndW91c0NoYXJhY3RlcnMnOiBmYWxzZSxcblx0XHRcdFx0J2VkaXRvci51bmljb2RlSGlnaGxpZ2h0LmludmlzaWJsZUNoYXJhY3RlcnMnOiBmYWxzZVxuXHRcdFx0fSxcblx0XHRcdC8vIFRPRE86IEJlbG93IGlzIGEgd29ya2Fyb3VuZCBmb3I6IGh0dHBzOi8vZ2l0aHViLmNvbS9taWNyb3NvZnQvdnNjb2RlL2lzc3Vlcy8yNDA1Njdcblx0XHRcdCdbZ29dJzoge1xuXHRcdFx0XHQnZWRpdG9yLmluc2VydFNwYWNlcyc6IGZhbHNlXG5cdFx0XHR9LFxuXHRcdFx0J1ttYWtlZmlsZV0nOiB7XG5cdFx0XHRcdCdlZGl0b3IuaW5zZXJ0U3BhY2VzJzogZmFsc2UsXG5cdFx0XHR9LFxuXHRcdFx0J1tzaGVsbHNjcmlwdF0nOiB7XG5cdFx0XHRcdCdmaWxlcy5lb2wnOiAnXFxuJ1xuXHRcdFx0fSxcblx0XHRcdCdbeWFtbF0nOiB7XG5cdFx0XHRcdCdlZGl0b3IuaW5zZXJ0U3BhY2VzJzogdHJ1ZSxcblx0XHRcdFx0J2VkaXRvci50YWJTaXplJzogMlxuXHRcdFx0fVxuXHRcdH1cblx0fV0pO1xuIl0sCiAgIm1hcHBpbmdzIjogIkFBS0EsWUFBWSxTQUFTO0FBQ3JCLFNBQVMsZUFBc0I7QUFFL0IsU0FBUyxnQkFBZ0I7QUFDekIsU0FBUyxrQkFBK0I7QUFDeEMsU0FBUyxhQUFhO0FBQ3RCLFNBQWlDLGNBQWMsK0JBQStCO0FBR3ZFLE1BQU0sYUFBYTtBQUFBLEVBQ3pCLGVBQWU7QUFDaEI7QUFFTyxNQUFNLDRCQUE0QixXQUFXO0FBQUEsRUFPbkQsY0FBYztBQUNiLFVBQU07QUFKUCxTQUFpQix3QkFBd0IsS0FBSyxVQUFVLElBQUksUUFBYyxDQUFDO0FBQzNFLFNBQWdCLHVCQUFvQyxLQUFLLHNCQUFzQjtBQUk5RSxTQUFLLGFBQWEsQ0FBQztBQUFBLEVBQ3BCO0FBQUEsRUFFTyxpQkFBaUIsS0FBMkM7QUFDbEUsU0FBSyxXQUFXLEtBQUssR0FBRztBQUN4QixTQUFLLHNCQUFzQixLQUFLLE1BQVM7QUFDekMsV0FBTztBQUFBLE1BQ04sU0FBUyxNQUFNO0FBQ2QsaUJBQVMsSUFBSSxHQUFHLE1BQU0sS0FBSyxXQUFXLFFBQVEsSUFBSSxLQUFLLEtBQUs7QUFDM0QsY0FBSSxLQUFLLFdBQVcsQ0FBQyxNQUFNLEtBQUs7QUFDL0IsaUJBQUssV0FBVyxPQUFPLEdBQUcsQ0FBQztBQUMzQjtBQUFBLFVBQ0Q7QUFBQSxRQUNEO0FBQUEsTUFDRDtBQUFBLElBQ0Q7QUFBQSxFQUNEO0FBQUEsRUFFTyxlQUF1RDtBQUM3RCxXQUFPLEtBQUs7QUFBQSxFQUNiO0FBQ0Q7QUFFTyxNQUFNLGdCQUFnQixJQUFJLG9CQUFvQjtBQUNyRCxTQUFTLElBQUksV0FBVyxlQUFlLGFBQWE7QUFFN0MsTUFBTSx3QkFBd0I7QUFDOUIsTUFBTSxzQkFBc0I7QUFFbkMsY0FBYyxpQkFBaUI7QUFBQSxFQUM5QixJQUFJO0FBQUEsRUFDSixZQUFZLENBQUMsbUJBQW1CO0FBQUEsRUFDaEMsU0FBUyxDQUFDLElBQUksU0FBUyxtQkFBbUIsWUFBWSxHQUFHLE1BQU07QUFBQSxFQUMvRCxXQUFXLENBQUMsTUFBTSxJQUFJO0FBQ3ZCLENBQUM7QUFFRCxTQUFTLEdBQTJCLHdCQUF3QixhQUFhLEVBQ3ZFLDhCQUE4QixDQUFDO0FBQUEsRUFDL0IsV0FBVztBQUFBLElBQ1YsZUFBZTtBQUFBLE1BQ2QsK0NBQStDO0FBQUEsTUFDL0MsK0NBQStDO0FBQUEsSUFDaEQ7QUFBQTtBQUFBLElBRUEsUUFBUTtBQUFBLE1BQ1AsdUJBQXVCO0FBQUEsSUFDeEI7QUFBQSxJQUNBLGNBQWM7QUFBQSxNQUNiLHVCQUF1QjtBQUFBLElBQ3hCO0FBQUEsSUFDQSxpQkFBaUI7QUFBQSxNQUNoQixhQUFhO0FBQUEsSUFDZDtBQUFBLElBQ0EsVUFBVTtBQUFBLE1BQ1QsdUJBQXVCO0FBQUEsTUFDdkIsa0JBQWtCO0FBQUEsSUFDbkI7QUFBQSxFQUNEO0FBQ0QsQ0FBQyxDQUFDOyIsCiAgIm5hbWVzIjogW10KfQo=

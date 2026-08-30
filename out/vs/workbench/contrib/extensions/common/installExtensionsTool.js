@@ -1,0 +1,75 @@
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __decorateClass = (decorators, target, key, kind) => {
+  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc(target, key) : target;
+  for (var i = decorators.length - 1, decorator; i >= 0; i--)
+    if (decorator = decorators[i])
+      result = (kind ? decorator(target, key, result) : decorator(result)) || result;
+  if (kind && result) __defProp(target, key, result);
+  return result;
+};
+var __decorateParam = (index, decorator) => (target, key) => decorator(target, key, index);
+import { MarkdownString } from "../../../../base/common/htmlContent.js";
+import { localize } from "../../../../nls.js";
+import { areSameExtensions } from "../../../../platform/extensionManagement/common/extensionManagementUtil.js";
+import { ToolDataSource } from "../../chat/common/tools/languageModelToolsService.js";
+import { IExtensionsWorkbenchService } from "./extensions.js";
+const InstallExtensionsToolId = "vscode_installExtensions";
+const InstallExtensionsToolData = {
+  id: InstallExtensionsToolId,
+  toolReferenceName: "installExtensions",
+  canBeReferencedInPrompt: true,
+  displayName: localize("installExtensionsTool.displayName", "Install Extensions"),
+  modelDescription: "This is a tool for installing extensions in Visual Studio Code. You should provide the list of extension ids to install. The identifier of an extension is '${ publisher }.${ name }' for example: 'vscode.csharp'.",
+  userDescription: localize("installExtensionsTool.userDescription", "Tool for installing extensions"),
+  source: ToolDataSource.Internal,
+  inputSchema: {
+    type: "object",
+    properties: {
+      ids: {
+        type: "array",
+        items: {
+          type: "string"
+        },
+        description: "The ids of the extensions to search for. The identifier of an extension is '${ publisher }.${ name }' for example: 'vscode.csharp'."
+      }
+    }
+  }
+};
+let InstallExtensionsTool = class {
+  constructor(extensionsWorkbenchService) {
+    this.extensionsWorkbenchService = extensionsWorkbenchService;
+  }
+  async prepareToolInvocation(context, token) {
+    const parameters = context.parameters;
+    return {
+      confirmationMessages: {
+        title: localize("installExtensionsTool.confirmationTitle", "Install Extensions"),
+        message: new MarkdownString(localize("installExtensionsTool.confirmationMessage", "Review the suggested extensions and click the **Install** button for each extension you wish to add. Once you have finished installing the selected extensions, click **Continue** to proceed."))
+      },
+      toolSpecificData: {
+        kind: "extensions",
+        extensions: parameters.ids
+      }
+    };
+  }
+  async invoke(invocation, _countTokens, _progress, token) {
+    const input = invocation.parameters;
+    const installed = this.extensionsWorkbenchService.local.filter((e) => input.ids.some((id) => areSameExtensions({ id }, e.identifier)));
+    return {
+      content: [{
+        kind: "text",
+        value: installed.length ? localize("installExtensionsTool.resultMessage", "Following extensions are installed: {0}", installed.map((e) => e.identifier.id).join(", ")) : localize("installExtensionsTool.noResultMessage", "No extensions were installed.")
+      }]
+    };
+  }
+};
+InstallExtensionsTool = __decorateClass([
+  __decorateParam(0, IExtensionsWorkbenchService)
+], InstallExtensionsTool);
+export {
+  InstallExtensionsTool,
+  InstallExtensionsToolData,
+  InstallExtensionsToolId
+};
+//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsiQzpcXFByb2plY3RcXEZvcmdlX0R1cGxpY2F0ZTJcXGZvcmdlXFxzcmNcXHZzXFx3b3JrYmVuY2hcXGNvbnRyaWJcXGV4dGVuc2lvbnNcXGNvbW1vblxcaW5zdGFsbEV4dGVuc2lvbnNUb29sLnRzIl0sCiAgInNvdXJjZXNDb250ZW50IjogWyIvKi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLVxuICogIENvcHlyaWdodCAoYykgTWljcm9zb2Z0IENvcnBvcmF0aW9uLiBBbGwgcmlnaHRzIHJlc2VydmVkLlxuICogIExpY2Vuc2VkIHVuZGVyIHRoZSBNSVQgTGljZW5zZS4gU2VlIExpY2Vuc2UudHh0IGluIHRoZSBwcm9qZWN0IHJvb3QgZm9yIGxpY2Vuc2UgaW5mb3JtYXRpb24uXG4gKi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tKi9cblxuaW1wb3J0IHsgQ2FuY2VsbGF0aW9uVG9rZW4gfSBmcm9tICcuLi8uLi8uLi8uLi9iYXNlL2NvbW1vbi9jYW5jZWxsYXRpb24uanMnO1xuaW1wb3J0IHsgTWFya2Rvd25TdHJpbmcgfSBmcm9tICcuLi8uLi8uLi8uLi9iYXNlL2NvbW1vbi9odG1sQ29udGVudC5qcyc7XG5pbXBvcnQgeyBsb2NhbGl6ZSB9IGZyb20gJy4uLy4uLy4uLy4uL25scy5qcyc7XG5pbXBvcnQgeyBhcmVTYW1lRXh0ZW5zaW9ucyB9IGZyb20gJy4uLy4uLy4uLy4uL3BsYXRmb3JtL2V4dGVuc2lvbk1hbmFnZW1lbnQvY29tbW9uL2V4dGVuc2lvbk1hbmFnZW1lbnRVdGlsLmpzJztcbmltcG9ydCB7IENvdW50VG9rZW5zQ2FsbGJhY2ssIElQcmVwYXJlZFRvb2xJbnZvY2F0aW9uLCBJVG9vbERhdGEsIElUb29sSW1wbCwgSVRvb2xJbnZvY2F0aW9uLCBJVG9vbEludm9jYXRpb25QcmVwYXJhdGlvbkNvbnRleHQsIElUb29sUmVzdWx0LCBUb29sRGF0YVNvdXJjZSwgVG9vbFByb2dyZXNzIH0gZnJvbSAnLi4vLi4vY2hhdC9jb21tb24vdG9vbHMvbGFuZ3VhZ2VNb2RlbFRvb2xzU2VydmljZS5qcyc7XG5pbXBvcnQgeyBJRXh0ZW5zaW9uc1dvcmtiZW5jaFNlcnZpY2UgfSBmcm9tICcuL2V4dGVuc2lvbnMuanMnO1xuXG5leHBvcnQgY29uc3QgSW5zdGFsbEV4dGVuc2lvbnNUb29sSWQgPSAndnNjb2RlX2luc3RhbGxFeHRlbnNpb25zJztcblxuZXhwb3J0IGNvbnN0IEluc3RhbGxFeHRlbnNpb25zVG9vbERhdGE6IElUb29sRGF0YSA9IHtcblx0aWQ6IEluc3RhbGxFeHRlbnNpb25zVG9vbElkLFxuXHR0b29sUmVmZXJlbmNlTmFtZTogJ2luc3RhbGxFeHRlbnNpb25zJyxcblx0Y2FuQmVSZWZlcmVuY2VkSW5Qcm9tcHQ6IHRydWUsXG5cdGRpc3BsYXlOYW1lOiBsb2NhbGl6ZSgnaW5zdGFsbEV4dGVuc2lvbnNUb29sLmRpc3BsYXlOYW1lJywgJ0luc3RhbGwgRXh0ZW5zaW9ucycpLFxuXHRtb2RlbERlc2NyaXB0aW9uOiAnVGhpcyBpcyBhIHRvb2wgZm9yIGluc3RhbGxpbmcgZXh0ZW5zaW9ucyBpbiBWaXN1YWwgU3R1ZGlvIENvZGUuIFlvdSBzaG91bGQgcHJvdmlkZSB0aGUgbGlzdCBvZiBleHRlbnNpb24gaWRzIHRvIGluc3RhbGwuIFRoZSBpZGVudGlmaWVyIG9mIGFuIGV4dGVuc2lvbiBpcyBcXCdcXCR7IHB1Ymxpc2hlciB9LlxcJHsgbmFtZSB9XFwnIGZvciBleGFtcGxlOiBcXCd2c2NvZGUuY3NoYXJwXFwnLicsXG5cdHVzZXJEZXNjcmlwdGlvbjogbG9jYWxpemUoJ2luc3RhbGxFeHRlbnNpb25zVG9vbC51c2VyRGVzY3JpcHRpb24nLCAnVG9vbCBmb3IgaW5zdGFsbGluZyBleHRlbnNpb25zJyksXG5cdHNvdXJjZTogVG9vbERhdGFTb3VyY2UuSW50ZXJuYWwsXG5cdGlucHV0U2NoZW1hOiB7XG5cdFx0dHlwZTogJ29iamVjdCcsXG5cdFx0cHJvcGVydGllczoge1xuXHRcdFx0aWRzOiB7XG5cdFx0XHRcdHR5cGU6ICdhcnJheScsXG5cdFx0XHRcdGl0ZW1zOiB7XG5cdFx0XHRcdFx0dHlwZTogJ3N0cmluZycsXG5cdFx0XHRcdH0sXG5cdFx0XHRcdGRlc2NyaXB0aW9uOiAnVGhlIGlkcyBvZiB0aGUgZXh0ZW5zaW9ucyB0byBzZWFyY2ggZm9yLiBUaGUgaWRlbnRpZmllciBvZiBhbiBleHRlbnNpb24gaXMgXFwnXFwkeyBwdWJsaXNoZXIgfS5cXCR7IG5hbWUgfVxcJyBmb3IgZXhhbXBsZTogXFwndnNjb2RlLmNzaGFycFxcJy4nLFxuXHRcdFx0fSxcblx0XHR9XG5cdH1cbn07XG5cbnR5cGUgSW5wdXRQYXJhbXMgPSB7XG5cdGlkczogc3RyaW5nW107XG59O1xuXG5leHBvcnQgY2xhc3MgSW5zdGFsbEV4dGVuc2lvbnNUb29sIGltcGxlbWVudHMgSVRvb2xJbXBsIHtcblxuXHRjb25zdHJ1Y3Rvcihcblx0XHRASUV4dGVuc2lvbnNXb3JrYmVuY2hTZXJ2aWNlIHByaXZhdGUgcmVhZG9ubHkgZXh0ZW5zaW9uc1dvcmtiZW5jaFNlcnZpY2U6IElFeHRlbnNpb25zV29ya2JlbmNoU2VydmljZSxcblx0KSB7IH1cblxuXHRhc3luYyBwcmVwYXJlVG9vbEludm9jYXRpb24oY29udGV4dDogSVRvb2xJbnZvY2F0aW9uUHJlcGFyYXRpb25Db250ZXh0LCB0b2tlbjogQ2FuY2VsbGF0aW9uVG9rZW4pOiBQcm9taXNlPElQcmVwYXJlZFRvb2xJbnZvY2F0aW9uIHwgdW5kZWZpbmVkPiB7XG5cdFx0Y29uc3QgcGFyYW1ldGVycyA9IGNvbnRleHQucGFyYW1ldGVycyBhcyBJbnB1dFBhcmFtcztcblx0XHRyZXR1cm4ge1xuXHRcdFx0Y29uZmlybWF0aW9uTWVzc2FnZXM6IHtcblx0XHRcdFx0dGl0bGU6IGxvY2FsaXplKCdpbnN0YWxsRXh0ZW5zaW9uc1Rvb2wuY29uZmlybWF0aW9uVGl0bGUnLCAnSW5zdGFsbCBFeHRlbnNpb25zJyksXG5cdFx0XHRcdG1lc3NhZ2U6IG5ldyBNYXJrZG93blN0cmluZyhsb2NhbGl6ZSgnaW5zdGFsbEV4dGVuc2lvbnNUb29sLmNvbmZpcm1hdGlvbk1lc3NhZ2UnLCBcIlJldmlldyB0aGUgc3VnZ2VzdGVkIGV4dGVuc2lvbnMgYW5kIGNsaWNrIHRoZSAqKkluc3RhbGwqKiBidXR0b24gZm9yIGVhY2ggZXh0ZW5zaW9uIHlvdSB3aXNoIHRvIGFkZC4gT25jZSB5b3UgaGF2ZSBmaW5pc2hlZCBpbnN0YWxsaW5nIHRoZSBzZWxlY3RlZCBleHRlbnNpb25zLCBjbGljayAqKkNvbnRpbnVlKiogdG8gcHJvY2VlZC5cIikpLFxuXHRcdFx0fSxcblx0XHRcdHRvb2xTcGVjaWZpY0RhdGE6IHtcblx0XHRcdFx0a2luZDogJ2V4dGVuc2lvbnMnLFxuXHRcdFx0XHRleHRlbnNpb25zOiBwYXJhbWV0ZXJzLmlkc1xuXHRcdFx0fVxuXHRcdH07XG5cdH1cblxuXHRhc3luYyBpbnZva2UoaW52b2NhdGlvbjogSVRvb2xJbnZvY2F0aW9uLCBfY291bnRUb2tlbnM6IENvdW50VG9rZW5zQ2FsbGJhY2ssIF9wcm9ncmVzczogVG9vbFByb2dyZXNzLCB0b2tlbjogQ2FuY2VsbGF0aW9uVG9rZW4pOiBQcm9taXNlPElUb29sUmVzdWx0PiB7XG5cdFx0Y29uc3QgaW5wdXQgPSBpbnZvY2F0aW9uLnBhcmFtZXRlcnMgYXMgSW5wdXRQYXJhbXM7XG5cdFx0Y29uc3QgaW5zdGFsbGVkID0gdGhpcy5leHRlbnNpb25zV29ya2JlbmNoU2VydmljZS5sb2NhbC5maWx0ZXIoZSA9PiBpbnB1dC5pZHMuc29tZShpZCA9PiBhcmVTYW1lRXh0ZW5zaW9ucyh7IGlkIH0sIGUuaWRlbnRpZmllcikpKTtcblx0XHRyZXR1cm4ge1xuXHRcdFx0Y29udGVudDogW3tcblx0XHRcdFx0a2luZDogJ3RleHQnLFxuXHRcdFx0XHR2YWx1ZTogaW5zdGFsbGVkLmxlbmd0aCA/IGxvY2FsaXplKCdpbnN0YWxsRXh0ZW5zaW9uc1Rvb2wucmVzdWx0TWVzc2FnZScsICdGb2xsb3dpbmcgZXh0ZW5zaW9ucyBhcmUgaW5zdGFsbGVkOiB7MH0nLCBpbnN0YWxsZWQubWFwKGUgPT4gZS5pZGVudGlmaWVyLmlkKS5qb2luKCcsICcpKSA6IGxvY2FsaXplKCdpbnN0YWxsRXh0ZW5zaW9uc1Rvb2wubm9SZXN1bHRNZXNzYWdlJywgJ05vIGV4dGVuc2lvbnMgd2VyZSBpbnN0YWxsZWQuJyksXG5cdFx0XHR9XVxuXHRcdH07XG5cdH1cbn1cbiJdLAogICJtYXBwaW5ncyI6ICI7Ozs7Ozs7Ozs7O0FBTUEsU0FBUyxzQkFBc0I7QUFDL0IsU0FBUyxnQkFBZ0I7QUFDekIsU0FBUyx5QkFBeUI7QUFDbEMsU0FBOEksc0JBQW9DO0FBQ2xMLFNBQVMsbUNBQW1DO0FBRXJDLE1BQU0sMEJBQTBCO0FBRWhDLE1BQU0sNEJBQXVDO0FBQUEsRUFDbkQsSUFBSTtBQUFBLEVBQ0osbUJBQW1CO0FBQUEsRUFDbkIseUJBQXlCO0FBQUEsRUFDekIsYUFBYSxTQUFTLHFDQUFxQyxvQkFBb0I7QUFBQSxFQUMvRSxrQkFBa0I7QUFBQSxFQUNsQixpQkFBaUIsU0FBUyx5Q0FBeUMsZ0NBQWdDO0FBQUEsRUFDbkcsUUFBUSxlQUFlO0FBQUEsRUFDdkIsYUFBYTtBQUFBLElBQ1osTUFBTTtBQUFBLElBQ04sWUFBWTtBQUFBLE1BQ1gsS0FBSztBQUFBLFFBQ0osTUFBTTtBQUFBLFFBQ04sT0FBTztBQUFBLFVBQ04sTUFBTTtBQUFBLFFBQ1A7QUFBQSxRQUNBLGFBQWE7QUFBQSxNQUNkO0FBQUEsSUFDRDtBQUFBLEVBQ0Q7QUFDRDtBQU1PLElBQU0sd0JBQU4sTUFBaUQ7QUFBQSxFQUV2RCxZQUMrQyw0QkFDN0M7QUFENkM7QUFBQSxFQUMzQztBQUFBLEVBRUosTUFBTSxzQkFBc0IsU0FBNEMsT0FBd0U7QUFDL0ksVUFBTSxhQUFhLFFBQVE7QUFDM0IsV0FBTztBQUFBLE1BQ04sc0JBQXNCO0FBQUEsUUFDckIsT0FBTyxTQUFTLDJDQUEyQyxvQkFBb0I7QUFBQSxRQUMvRSxTQUFTLElBQUksZUFBZSxTQUFTLDZDQUE2QyxnTUFBZ00sQ0FBQztBQUFBLE1BQ3BSO0FBQUEsTUFDQSxrQkFBa0I7QUFBQSxRQUNqQixNQUFNO0FBQUEsUUFDTixZQUFZLFdBQVc7QUFBQSxNQUN4QjtBQUFBLElBQ0Q7QUFBQSxFQUNEO0FBQUEsRUFFQSxNQUFNLE9BQU8sWUFBNkIsY0FBbUMsV0FBeUIsT0FBZ0Q7QUFDckosVUFBTSxRQUFRLFdBQVc7QUFDekIsVUFBTSxZQUFZLEtBQUssMkJBQTJCLE1BQU0sT0FBTyxPQUFLLE1BQU0sSUFBSSxLQUFLLFFBQU0sa0JBQWtCLEVBQUUsR0FBRyxHQUFHLEVBQUUsVUFBVSxDQUFDLENBQUM7QUFDakksV0FBTztBQUFBLE1BQ04sU0FBUyxDQUFDO0FBQUEsUUFDVCxNQUFNO0FBQUEsUUFDTixPQUFPLFVBQVUsU0FBUyxTQUFTLHVDQUF1QywyQ0FBMkMsVUFBVSxJQUFJLE9BQUssRUFBRSxXQUFXLEVBQUUsRUFBRSxLQUFLLElBQUksQ0FBQyxJQUFJLFNBQVMseUNBQXlDLCtCQUErQjtBQUFBLE1BQ3pQLENBQUM7QUFBQSxJQUNGO0FBQUEsRUFDRDtBQUNEO0FBOUJhLHdCQUFOO0FBQUEsRUFHSjtBQUFBLEdBSFU7IiwKICAibmFtZXMiOiBbXQp9Cg==

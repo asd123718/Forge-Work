@@ -1,0 +1,107 @@
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __decorateClass = (decorators, target, key, kind) => {
+  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc(target, key) : target;
+  for (var i = decorators.length - 1, decorator; i >= 0; i--)
+    if (decorator = decorators[i])
+      result = (kind ? decorator(target, key, result) : decorator(result)) || result;
+  if (kind && result) __defProp(target, key, result);
+  return result;
+};
+var __decorateParam = (index, decorator) => (target, key) => decorator(target, key, index);
+import "./media/sessionsSetUp.css";
+import { Button } from "../../base/browser/ui/button/button.js";
+import { Dialog, DialogContentsAlignment } from "../../base/browser/ui/dialog/dialog.js";
+import { Codicon } from "../../base/common/codicons.js";
+import { onUnexpectedError } from "../../base/common/errors.js";
+import { Disposable, DisposableStore, toDisposable } from "../../base/common/lifecycle.js";
+import { localize } from "../../nls.js";
+import { IKeybindingService } from "../../platform/keybinding/common/keybinding.js";
+import { createWorkbenchDialogOptions } from "../../workbench/browser/parts/dialogs/dialog.js";
+import { IHostService } from "../../workbench/services/host/browser/host.js";
+import { IWorkbenchLayoutService } from "../../workbench/services/layout/browser/layoutService.js";
+import { RETURN_TO_VSCODE_EDITOR_COMMAND_ID } from "../common/sessionCommands.js";
+function createSessionsSignInDialogOptions(commandService, showReturnToVSCodeEditor, allowContinueWithoutSignIn = false, onContinueWithoutSignIn = () => {
+}) {
+  return {
+    forceSignInDialog: true,
+    dialogIcon: Codicon.agent,
+    dialogTitle: localize("sessions.signIn", "Sign in to use Agents"),
+    disableCloseButton: !allowContinueWithoutSignIn,
+    dialogExtraClasses: ["sessions-welcome-dialog"],
+    allowContinueWithoutSignIn,
+    renderDialogFooter: showReturnToVSCodeEditor ? (footer) => createDialogAction(
+      footer,
+      localize("sessions.returnToVSCodeEditor", "Return to VS Code Editor"),
+      () => {
+        void commandService.executeCommand(RETURN_TO_VSCODE_EDITOR_COMMAND_ID).catch(onUnexpectedError);
+      }
+    ) : void 0,
+    onDidDismissDialog: allowContinueWithoutSignIn ? onContinueWithoutSignIn : void 0
+  };
+}
+let SessionsSigningInDialog = class extends Disposable {
+  constructor(onCancel, keybindingService, layoutService, hostService) {
+    super();
+    this.onCancel = onCancel;
+    this.isDisposed = false;
+    this.didCancel = false;
+    this.dialog = this._register(new Dialog(
+      layoutService.activeContainer,
+      localize("sessions.signingIn", "Signing in\u2026"),
+      [],
+      createWorkbenchDialogOptions({
+        type: "none",
+        extraClasses: ["chat-setup-dialog", "sessions-welcome-dialog"],
+        modalBlockExtraClasses: ["sessions-signing-in-dialog-modal-block"],
+        detail: localize("sessions.signingIn.detail", "Please complete sign-in in the browser."),
+        icon: Codicon.agent,
+        alignment: DialogContentsAlignment.Vertical,
+        cancelId: 0,
+        disableCloseAction: true,
+        disableCloseButton: true,
+        disableDefaultAction: true,
+        isExternalFocusAllowed: (target) => !!target.closest(".quick-input-widget")
+      }, keybindingService, layoutService, hostService, void 0, (commandId) => commandId.startsWith("quickInput."))
+    ));
+    const activeContainer = layoutService.activeContainer;
+    activeContainer.classList.add("sessions-signing-in-dialog-visible");
+    this._register(toDisposable(() => activeContainer.classList.remove("sessions-signing-in-dialog-visible")));
+    void this.show();
+  }
+  async show() {
+    await this.dialog.show();
+    if (!this.isDisposed) {
+      this.cancel();
+    }
+  }
+  cancel() {
+    if (this.didCancel) {
+      return;
+    }
+    this.didCancel = true;
+    this.onCancel();
+  }
+  dispose() {
+    this.isDisposed = true;
+    super.dispose();
+  }
+};
+SessionsSigningInDialog = __decorateClass([
+  __decorateParam(1, IKeybindingService),
+  __decorateParam(2, IWorkbenchLayoutService),
+  __decorateParam(3, IHostService)
+], SessionsSigningInDialog);
+function createDialogAction(container, label, run) {
+  const disposables = new DisposableStore();
+  const action = disposables.add(new Button(container, {}));
+  action.element.classList.add("sessions-sign-in-dialog-action");
+  action.label = label;
+  disposables.add(action.onDidClick(run));
+  return disposables;
+}
+export {
+  SessionsSigningInDialog,
+  createSessionsSignInDialogOptions
+};
+//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsiQzpcXFByb2plY3RcXEZvcmdlX0R1cGxpY2F0ZTJcXGZvcmdlXFxzcmNcXHZzXFxzZXNzaW9uc1xcYnJvd3Nlclxcc2Vzc2lvbnNTaWduSW5EaWFsb2cudHMiXSwKICAic291cmNlc0NvbnRlbnQiOiBbIi8qLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXG4gKiAgQ29weXJpZ2h0IChjKSBNaWNyb3NvZnQgQ29ycG9yYXRpb24uIEFsbCByaWdodHMgcmVzZXJ2ZWQuXG4gKiAgTGljZW5zZWQgdW5kZXIgdGhlIE1JVCBMaWNlbnNlLiBTZWUgTGljZW5zZS50eHQgaW4gdGhlIHByb2plY3Qgcm9vdCBmb3IgbGljZW5zZSBpbmZvcm1hdGlvbi5cbiAqLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0qL1xuXG5pbXBvcnQgJy4vbWVkaWEvc2Vzc2lvbnNTZXRVcC5jc3MnO1xuaW1wb3J0IHsgQnV0dG9uIH0gZnJvbSAnLi4vLi4vYmFzZS9icm93c2VyL3VpL2J1dHRvbi9idXR0b24uanMnO1xuaW1wb3J0IHsgRGlhbG9nLCBEaWFsb2dDb250ZW50c0FsaWdubWVudCB9IGZyb20gJy4uLy4uL2Jhc2UvYnJvd3Nlci91aS9kaWFsb2cvZGlhbG9nLmpzJztcbmltcG9ydCB7IENvZGljb24gfSBmcm9tICcuLi8uLi9iYXNlL2NvbW1vbi9jb2RpY29ucy5qcyc7XG5pbXBvcnQgeyBvblVuZXhwZWN0ZWRFcnJvciB9IGZyb20gJy4uLy4uL2Jhc2UvY29tbW9uL2Vycm9ycy5qcyc7XG5pbXBvcnQgeyBEaXNwb3NhYmxlLCBEaXNwb3NhYmxlU3RvcmUsIElEaXNwb3NhYmxlLCB0b0Rpc3Bvc2FibGUgfSBmcm9tICcuLi8uLi9iYXNlL2NvbW1vbi9saWZlY3ljbGUuanMnO1xuaW1wb3J0IHsgbG9jYWxpemUgfSBmcm9tICcuLi8uLi9ubHMuanMnO1xuaW1wb3J0IHsgSUNvbW1hbmRTZXJ2aWNlIH0gZnJvbSAnLi4vLi4vcGxhdGZvcm0vY29tbWFuZHMvY29tbW9uL2NvbW1hbmRzLmpzJztcbmltcG9ydCB7IElLZXliaW5kaW5nU2VydmljZSB9IGZyb20gJy4uLy4uL3BsYXRmb3JtL2tleWJpbmRpbmcvY29tbW9uL2tleWJpbmRpbmcuanMnO1xuaW1wb3J0IHsgY3JlYXRlV29ya2JlbmNoRGlhbG9nT3B0aW9ucyB9IGZyb20gJy4uLy4uL3dvcmtiZW5jaC9icm93c2VyL3BhcnRzL2RpYWxvZ3MvZGlhbG9nLmpzJztcbmltcG9ydCB7IElIb3N0U2VydmljZSB9IGZyb20gJy4uLy4uL3dvcmtiZW5jaC9zZXJ2aWNlcy9ob3N0L2Jyb3dzZXIvaG9zdC5qcyc7XG5pbXBvcnQgeyBJV29ya2JlbmNoTGF5b3V0U2VydmljZSB9IGZyb20gJy4uLy4uL3dvcmtiZW5jaC9zZXJ2aWNlcy9sYXlvdXQvYnJvd3Nlci9sYXlvdXRTZXJ2aWNlLmpzJztcbmltcG9ydCB7IFJFVFVSTl9UT19WU0NPREVfRURJVE9SX0NPTU1BTkRfSUQgfSBmcm9tICcuLi9jb21tb24vc2Vzc2lvbkNvbW1hbmRzLmpzJztcblxuZXhwb3J0IGZ1bmN0aW9uIGNyZWF0ZVNlc3Npb25zU2lnbkluRGlhbG9nT3B0aW9ucyhcblx0Y29tbWFuZFNlcnZpY2U6IElDb21tYW5kU2VydmljZSxcblx0c2hvd1JldHVyblRvVlNDb2RlRWRpdG9yOiBib29sZWFuLFxuXHRhbGxvd0NvbnRpbnVlV2l0aG91dFNpZ25JbiA9IGZhbHNlLFxuXHRvbkNvbnRpbnVlV2l0aG91dFNpZ25JbjogKCkgPT4gdm9pZCA9ICgpID0+IHsgfSxcbikge1xuXHRyZXR1cm4ge1xuXHRcdGZvcmNlU2lnbkluRGlhbG9nOiB0cnVlLFxuXHRcdGRpYWxvZ0ljb246IENvZGljb24uYWdlbnQsXG5cdFx0ZGlhbG9nVGl0bGU6IGxvY2FsaXplKCdzZXNzaW9ucy5zaWduSW4nLCBcIlNpZ24gaW4gdG8gdXNlIEFnZW50c1wiKSxcblx0XHRkaXNhYmxlQ2xvc2VCdXR0b246ICFhbGxvd0NvbnRpbnVlV2l0aG91dFNpZ25Jbixcblx0XHRkaWFsb2dFeHRyYUNsYXNzZXM6IFsnc2Vzc2lvbnMtd2VsY29tZS1kaWFsb2cnXSxcblx0XHRhbGxvd0NvbnRpbnVlV2l0aG91dFNpZ25Jbixcblx0XHRyZW5kZXJEaWFsb2dGb290ZXI6IHNob3dSZXR1cm5Ub1ZTQ29kZUVkaXRvciA/IChmb290ZXI6IEhUTUxFbGVtZW50KSA9PiBjcmVhdGVEaWFsb2dBY3Rpb24oXG5cdFx0XHRmb290ZXIsXG5cdFx0XHRsb2NhbGl6ZSgnc2Vzc2lvbnMucmV0dXJuVG9WU0NvZGVFZGl0b3InLCBcIlJldHVybiB0byBWUyBDb2RlIEVkaXRvclwiKSxcblx0XHRcdCgpID0+IHtcblx0XHRcdFx0dm9pZCBjb21tYW5kU2VydmljZS5leGVjdXRlQ29tbWFuZDx2b2lkPihSRVRVUk5fVE9fVlNDT0RFX0VESVRPUl9DT01NQU5EX0lEKS5jYXRjaChvblVuZXhwZWN0ZWRFcnJvcik7XG5cdFx0XHR9XG5cdFx0KSA6IHVuZGVmaW5lZCxcblx0XHRvbkRpZERpc21pc3NEaWFsb2c6IGFsbG93Q29udGludWVXaXRob3V0U2lnbkluID8gb25Db250aW51ZVdpdGhvdXRTaWduSW4gOiB1bmRlZmluZWQsXG5cdH07XG59XG5cbmV4cG9ydCBjbGFzcyBTZXNzaW9uc1NpZ25pbmdJbkRpYWxvZyBleHRlbmRzIERpc3Bvc2FibGUge1xuXG5cdHByaXZhdGUgcmVhZG9ubHkgZGlhbG9nOiBEaWFsb2c7XG5cdHByaXZhdGUgaXNEaXNwb3NlZCA9IGZhbHNlO1xuXHRwcml2YXRlIGRpZENhbmNlbCA9IGZhbHNlO1xuXG5cdGNvbnN0cnVjdG9yKFxuXHRcdHByaXZhdGUgcmVhZG9ubHkgb25DYW5jZWw6ICgpID0+IHZvaWQsXG5cdFx0QElLZXliaW5kaW5nU2VydmljZSBrZXliaW5kaW5nU2VydmljZTogSUtleWJpbmRpbmdTZXJ2aWNlLFxuXHRcdEBJV29ya2JlbmNoTGF5b3V0U2VydmljZSBsYXlvdXRTZXJ2aWNlOiBJV29ya2JlbmNoTGF5b3V0U2VydmljZSxcblx0XHRASUhvc3RTZXJ2aWNlIGhvc3RTZXJ2aWNlOiBJSG9zdFNlcnZpY2UsXG5cdCkge1xuXHRcdHN1cGVyKCk7XG5cblx0XHR0aGlzLmRpYWxvZyA9IHRoaXMuX3JlZ2lzdGVyKG5ldyBEaWFsb2coXG5cdFx0XHRsYXlvdXRTZXJ2aWNlLmFjdGl2ZUNvbnRhaW5lcixcblx0XHRcdGxvY2FsaXplKCdzZXNzaW9ucy5zaWduaW5nSW4nLCBcIlNpZ25pbmcgaW5cdTIwMjZcIiksXG5cdFx0XHRbXSxcblx0XHRcdGNyZWF0ZVdvcmtiZW5jaERpYWxvZ09wdGlvbnMoe1xuXHRcdFx0XHR0eXBlOiAnbm9uZScsXG5cdFx0XHRcdGV4dHJhQ2xhc3NlczogWydjaGF0LXNldHVwLWRpYWxvZycsICdzZXNzaW9ucy13ZWxjb21lLWRpYWxvZyddLFxuXHRcdFx0XHRtb2RhbEJsb2NrRXh0cmFDbGFzc2VzOiBbJ3Nlc3Npb25zLXNpZ25pbmctaW4tZGlhbG9nLW1vZGFsLWJsb2NrJ10sXG5cdFx0XHRcdGRldGFpbDogbG9jYWxpemUoJ3Nlc3Npb25zLnNpZ25pbmdJbi5kZXRhaWwnLCBcIlBsZWFzZSBjb21wbGV0ZSBzaWduLWluIGluIHRoZSBicm93c2VyLlwiKSxcblx0XHRcdFx0aWNvbjogQ29kaWNvbi5hZ2VudCxcblx0XHRcdFx0YWxpZ25tZW50OiBEaWFsb2dDb250ZW50c0FsaWdubWVudC5WZXJ0aWNhbCxcblx0XHRcdFx0Y2FuY2VsSWQ6IDAsXG5cdFx0XHRcdGRpc2FibGVDbG9zZUFjdGlvbjogdHJ1ZSxcblx0XHRcdFx0ZGlzYWJsZUNsb3NlQnV0dG9uOiB0cnVlLFxuXHRcdFx0XHRkaXNhYmxlRGVmYXVsdEFjdGlvbjogdHJ1ZSxcblx0XHRcdFx0aXNFeHRlcm5hbEZvY3VzQWxsb3dlZDogdGFyZ2V0ID0+ICEhdGFyZ2V0LmNsb3Nlc3QoJy5xdWljay1pbnB1dC13aWRnZXQnKSxcblx0XHRcdH0sIGtleWJpbmRpbmdTZXJ2aWNlLCBsYXlvdXRTZXJ2aWNlLCBob3N0U2VydmljZSwgdW5kZWZpbmVkLCBjb21tYW5kSWQgPT4gY29tbWFuZElkLnN0YXJ0c1dpdGgoJ3F1aWNrSW5wdXQuJykpXG5cdFx0KSk7XG5cblx0XHRjb25zdCBhY3RpdmVDb250YWluZXIgPSBsYXlvdXRTZXJ2aWNlLmFjdGl2ZUNvbnRhaW5lcjtcblx0XHRhY3RpdmVDb250YWluZXIuY2xhc3NMaXN0LmFkZCgnc2Vzc2lvbnMtc2lnbmluZy1pbi1kaWFsb2ctdmlzaWJsZScpO1xuXHRcdHRoaXMuX3JlZ2lzdGVyKHRvRGlzcG9zYWJsZSgoKSA9PiBhY3RpdmVDb250YWluZXIuY2xhc3NMaXN0LnJlbW92ZSgnc2Vzc2lvbnMtc2lnbmluZy1pbi1kaWFsb2ctdmlzaWJsZScpKSk7XG5cblx0XHR2b2lkIHRoaXMuc2hvdygpO1xuXHR9XG5cblx0cHJpdmF0ZSBhc3luYyBzaG93KCk6IFByb21pc2U8dm9pZD4ge1xuXHRcdGF3YWl0IHRoaXMuZGlhbG9nLnNob3coKTtcblx0XHRpZiAoIXRoaXMuaXNEaXNwb3NlZCkge1xuXHRcdFx0dGhpcy5jYW5jZWwoKTtcblx0XHR9XG5cdH1cblxuXHRwcml2YXRlIGNhbmNlbCgpOiB2b2lkIHtcblx0XHRpZiAodGhpcy5kaWRDYW5jZWwpIHtcblx0XHRcdHJldHVybjtcblx0XHR9XG5cdFx0dGhpcy5kaWRDYW5jZWwgPSB0cnVlO1xuXHRcdHRoaXMub25DYW5jZWwoKTtcblx0fVxuXG5cdG92ZXJyaWRlIGRpc3Bvc2UoKTogdm9pZCB7XG5cdFx0dGhpcy5pc0Rpc3Bvc2VkID0gdHJ1ZTtcblx0XHRzdXBlci5kaXNwb3NlKCk7XG5cdH1cbn1cblxuZnVuY3Rpb24gY3JlYXRlRGlhbG9nQWN0aW9uKGNvbnRhaW5lcjogSFRNTEVsZW1lbnQsIGxhYmVsOiBzdHJpbmcsIHJ1bjogKCkgPT4gdm9pZCk6IElEaXNwb3NhYmxlIHtcblx0Y29uc3QgZGlzcG9zYWJsZXMgPSBuZXcgRGlzcG9zYWJsZVN0b3JlKCk7XG5cdGNvbnN0IGFjdGlvbiA9IGRpc3Bvc2FibGVzLmFkZChuZXcgQnV0dG9uKGNvbnRhaW5lciwge30pKTtcblx0YWN0aW9uLmVsZW1lbnQuY2xhc3NMaXN0LmFkZCgnc2Vzc2lvbnMtc2lnbi1pbi1kaWFsb2ctYWN0aW9uJyk7XG5cdGFjdGlvbi5sYWJlbCA9IGxhYmVsO1xuXHRkaXNwb3NhYmxlcy5hZGQoYWN0aW9uLm9uRGlkQ2xpY2socnVuKSk7XG5cdHJldHVybiBkaXNwb3NhYmxlcztcbn1cbiJdLAogICJtYXBwaW5ncyI6ICI7Ozs7Ozs7Ozs7O0FBS0EsT0FBTztBQUNQLFNBQVMsY0FBYztBQUN2QixTQUFTLFFBQVEsK0JBQStCO0FBQ2hELFNBQVMsZUFBZTtBQUN4QixTQUFTLHlCQUF5QjtBQUNsQyxTQUFTLFlBQVksaUJBQThCLG9CQUFvQjtBQUN2RSxTQUFTLGdCQUFnQjtBQUV6QixTQUFTLDBCQUEwQjtBQUNuQyxTQUFTLG9DQUFvQztBQUM3QyxTQUFTLG9CQUFvQjtBQUM3QixTQUFTLCtCQUErQjtBQUN4QyxTQUFTLDBDQUEwQztBQUU1QyxTQUFTLGtDQUNmLGdCQUNBLDBCQUNBLDZCQUE2QixPQUM3QiwwQkFBc0MsTUFBTTtBQUFFLEdBQzdDO0FBQ0QsU0FBTztBQUFBLElBQ04sbUJBQW1CO0FBQUEsSUFDbkIsWUFBWSxRQUFRO0FBQUEsSUFDcEIsYUFBYSxTQUFTLG1CQUFtQix1QkFBdUI7QUFBQSxJQUNoRSxvQkFBb0IsQ0FBQztBQUFBLElBQ3JCLG9CQUFvQixDQUFDLHlCQUF5QjtBQUFBLElBQzlDO0FBQUEsSUFDQSxvQkFBb0IsMkJBQTJCLENBQUMsV0FBd0I7QUFBQSxNQUN2RTtBQUFBLE1BQ0EsU0FBUyxpQ0FBaUMsMEJBQTBCO0FBQUEsTUFDcEUsTUFBTTtBQUNMLGFBQUssZUFBZSxlQUFxQixrQ0FBa0MsRUFBRSxNQUFNLGlCQUFpQjtBQUFBLE1BQ3JHO0FBQUEsSUFDRCxJQUFJO0FBQUEsSUFDSixvQkFBb0IsNkJBQTZCLDBCQUEwQjtBQUFBLEVBQzVFO0FBQ0Q7QUFFTyxJQUFNLDBCQUFOLGNBQXNDLFdBQVc7QUFBQSxFQU12RCxZQUNrQixVQUNHLG1CQUNLLGVBQ1gsYUFDYjtBQUNELFVBQU07QUFMVztBQUpsQixTQUFRLGFBQWE7QUFDckIsU0FBUSxZQUFZO0FBVW5CLFNBQUssU0FBUyxLQUFLLFVBQVUsSUFBSTtBQUFBLE1BQ2hDLGNBQWM7QUFBQSxNQUNkLFNBQVMsc0JBQXNCLGtCQUFhO0FBQUEsTUFDNUMsQ0FBQztBQUFBLE1BQ0QsNkJBQTZCO0FBQUEsUUFDNUIsTUFBTTtBQUFBLFFBQ04sY0FBYyxDQUFDLHFCQUFxQix5QkFBeUI7QUFBQSxRQUM3RCx3QkFBd0IsQ0FBQyx3Q0FBd0M7QUFBQSxRQUNqRSxRQUFRLFNBQVMsNkJBQTZCLHlDQUF5QztBQUFBLFFBQ3ZGLE1BQU0sUUFBUTtBQUFBLFFBQ2QsV0FBVyx3QkFBd0I7QUFBQSxRQUNuQyxVQUFVO0FBQUEsUUFDVixvQkFBb0I7QUFBQSxRQUNwQixvQkFBb0I7QUFBQSxRQUNwQixzQkFBc0I7QUFBQSxRQUN0Qix3QkFBd0IsWUFBVSxDQUFDLENBQUMsT0FBTyxRQUFRLHFCQUFxQjtBQUFBLE1BQ3pFLEdBQUcsbUJBQW1CLGVBQWUsYUFBYSxRQUFXLGVBQWEsVUFBVSxXQUFXLGFBQWEsQ0FBQztBQUFBLElBQzlHLENBQUM7QUFFRCxVQUFNLGtCQUFrQixjQUFjO0FBQ3RDLG9CQUFnQixVQUFVLElBQUksb0NBQW9DO0FBQ2xFLFNBQUssVUFBVSxhQUFhLE1BQU0sZ0JBQWdCLFVBQVUsT0FBTyxvQ0FBb0MsQ0FBQyxDQUFDO0FBRXpHLFNBQUssS0FBSyxLQUFLO0FBQUEsRUFDaEI7QUFBQSxFQUVBLE1BQWMsT0FBc0I7QUFDbkMsVUFBTSxLQUFLLE9BQU8sS0FBSztBQUN2QixRQUFJLENBQUMsS0FBSyxZQUFZO0FBQ3JCLFdBQUssT0FBTztBQUFBLElBQ2I7QUFBQSxFQUNEO0FBQUEsRUFFUSxTQUFlO0FBQ3RCLFFBQUksS0FBSyxXQUFXO0FBQ25CO0FBQUEsSUFDRDtBQUNBLFNBQUssWUFBWTtBQUNqQixTQUFLLFNBQVM7QUFBQSxFQUNmO0FBQUEsRUFFUyxVQUFnQjtBQUN4QixTQUFLLGFBQWE7QUFDbEIsVUFBTSxRQUFRO0FBQUEsRUFDZjtBQUNEO0FBM0RhLDBCQUFOO0FBQUEsRUFRSjtBQUFBLEVBQ0E7QUFBQSxFQUNBO0FBQUEsR0FWVTtBQTZEYixTQUFTLG1CQUFtQixXQUF3QixPQUFlLEtBQThCO0FBQ2hHLFFBQU0sY0FBYyxJQUFJLGdCQUFnQjtBQUN4QyxRQUFNLFNBQVMsWUFBWSxJQUFJLElBQUksT0FBTyxXQUFXLENBQUMsQ0FBQyxDQUFDO0FBQ3hELFNBQU8sUUFBUSxVQUFVLElBQUksZ0NBQWdDO0FBQzdELFNBQU8sUUFBUTtBQUNmLGNBQVksSUFBSSxPQUFPLFdBQVcsR0FBRyxDQUFDO0FBQ3RDLFNBQU87QUFDUjsiLAogICJuYW1lcyI6IFtdCn0K

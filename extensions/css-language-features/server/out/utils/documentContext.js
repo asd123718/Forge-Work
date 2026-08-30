@@ -1,0 +1,34 @@
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+import { endsWith, startsWith } from '../utils/strings.js';
+import { Utils, URI } from 'vscode-uri';
+export function getDocumentContext(documentUri, workspaceFolders) {
+    function getRootFolder() {
+        for (const folder of workspaceFolders) {
+            let folderURI = folder.uri;
+            if (!endsWith(folderURI, '/')) {
+                folderURI = folderURI + '/';
+            }
+            if (startsWith(documentUri, folderURI)) {
+                return folderURI;
+            }
+        }
+        return undefined;
+    }
+    return {
+        resolveReference: (ref, base = documentUri) => {
+            if (ref[0] === '/') { // resolve absolute path against the current workspace folder
+                const folderUri = getRootFolder();
+                if (folderUri) {
+                    return folderUri + ref.substring(1);
+                }
+            }
+            const baseUri = URI.parse(base);
+            const baseUriDir = baseUri.path.endsWith('/') ? baseUri : Utils.dirname(baseUri);
+            return Utils.resolvePath(baseUriDir, ref).toString(true);
+        },
+    };
+}
+//# sourceMappingURL=documentContext.js.map

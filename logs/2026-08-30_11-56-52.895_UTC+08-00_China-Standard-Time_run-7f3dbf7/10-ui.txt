@@ -1,0 +1,197 @@
+2026-08-30 11:57:20.471 [info] 2026-08-30 11:57:20.216 +08:00 Asia/Shanghai | +0ms | R-renderer-000001 | UI.READY | window=1
+2026-08-30 11:57:22.012 [info] 2026-08-30 11:57:22.012 +08:00 Asia/Shanghai | +1796ms | R-renderer-000020 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.012 [info] 2026-08-30 11:57:22.012 +08:00 Asia/Shanghai | +1796ms | R-renderer-000021 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.210 [info] 2026-08-30 11:57:22.210 +08:00 Asia/Shanghai | +1994ms | R-renderer-000025 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.211 [info] 2026-08-30 11:57:22.210 +08:00 Asia/Shanghai | +1994ms | R-renderer-000026 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.262 [info] 2026-08-30 11:57:22.211 +08:00 Asia/Shanghai | +1995ms | R-renderer-000027 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.262 [info] 2026-08-30 11:57:22.211 +08:00 Asia/Shanghai | +1995ms | R-renderer-000028 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.263 [info] 2026-08-30 11:57:22.211 +08:00 Asia/Shanghai | +1995ms | R-renderer-000029 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.263 [info] 2026-08-30 11:57:22.211 +08:00 Asia/Shanghai | +1995ms | R-renderer-000030 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.263 [info] 2026-08-30 11:57:22.211 +08:00 Asia/Shanghai | +1995ms | R-renderer-000031 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.263 [info] 2026-08-30 11:57:22.212 +08:00 Asia/Shanghai | +1996ms | R-renderer-000032 | COMMAND.DID | id=_setContext duration=1ms
+2026-08-30 11:57:22.264 [info] 2026-08-30 11:57:22.212 +08:00 Asia/Shanghai | +1996ms | R-renderer-000033 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.264 [info] 2026-08-30 11:57:22.212 +08:00 Asia/Shanghai | +1996ms | R-renderer-000034 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.265 [info] 2026-08-30 11:57:22.238 +08:00 Asia/Shanghai | +2022ms | R-renderer-000035 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.265 [info] 2026-08-30 11:57:22.238 +08:00 Asia/Shanghai | +2022ms | R-renderer-000036 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.334 [info] 2026-08-30 11:57:22.333 +08:00 Asia/Shanghai | +2117ms | R-renderer-000038 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.334 [info] 2026-08-30 11:57:22.334 +08:00 Asia/Shanghai | +2118ms | R-renderer-000039 | COMMAND.DID | id=_setContext duration=1ms
+2026-08-30 11:57:22.341 [info] 2026-08-30 11:57:22.341 +08:00 Asia/Shanghai | +2125ms | R-renderer-000040 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.342 [info] 2026-08-30 11:57:22.341 +08:00 Asia/Shanghai | +2125ms | R-renderer-000041 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.345 [info] 2026-08-30 11:57:22.345 +08:00 Asia/Shanghai | +2129ms | R-renderer-000042 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.345 [info] 2026-08-30 11:57:22.345 +08:00 Asia/Shanghai | +2129ms | R-renderer-000043 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.346 [info] 2026-08-30 11:57:22.345 +08:00 Asia/Shanghai | +2129ms | R-renderer-000044 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.346 [info] 2026-08-30 11:57:22.345 +08:00 Asia/Shanghai | +2129ms | R-renderer-000045 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.346 [info] 2026-08-30 11:57:22.345 +08:00 Asia/Shanghai | +2129ms | R-renderer-000046 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.346 [info] 2026-08-30 11:57:22.346 +08:00 Asia/Shanghai | +2130ms | R-renderer-000047 | COMMAND.DID | id=_setContext duration=1ms
+2026-08-30 11:57:22.346 [info] 2026-08-30 11:57:22.346 +08:00 Asia/Shanghai | +2130ms | R-renderer-000048 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.346 [info] 2026-08-30 11:57:22.346 +08:00 Asia/Shanghai | +2130ms | R-renderer-000049 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.351 [info] 2026-08-30 11:57:22.350 +08:00 Asia/Shanghai | +2134ms | R-renderer-000050 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.351 [info] 2026-08-30 11:57:22.351 +08:00 Asia/Shanghai | +2135ms | R-renderer-000051 | COMMAND.DID | id=_setContext duration=1ms
+2026-08-30 11:57:22.351 [info] 2026-08-30 11:57:22.351 +08:00 Asia/Shanghai | +2135ms | R-renderer-000052 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.351 [info] 2026-08-30 11:57:22.351 +08:00 Asia/Shanghai | +2135ms | R-renderer-000053 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.351 [info] 2026-08-30 11:57:22.351 +08:00 Asia/Shanghai | +2135ms | R-renderer-000054 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.352 [info] 2026-08-30 11:57:22.351 +08:00 Asia/Shanghai | +2135ms | R-renderer-000055 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.352 [info] 2026-08-30 11:57:22.352 +08:00 Asia/Shanghai | +2136ms | R-renderer-000056 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.352 [info] 2026-08-30 11:57:22.352 +08:00 Asia/Shanghai | +2136ms | R-renderer-000057 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.353 [info] 2026-08-30 11:57:22.352 +08:00 Asia/Shanghai | +2136ms | R-renderer-000058 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.353 [info] 2026-08-30 11:57:22.352 +08:00 Asia/Shanghai | +2136ms | R-renderer-000059 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.353 [info] 2026-08-30 11:57:22.353 +08:00 Asia/Shanghai | +2137ms | R-renderer-000060 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.353 [info] 2026-08-30 11:57:22.353 +08:00 Asia/Shanghai | +2137ms | R-renderer-000061 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.356 [info] 2026-08-30 11:57:22.356 +08:00 Asia/Shanghai | +2140ms | R-renderer-000062 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.356 [info] 2026-08-30 11:57:22.356 +08:00 Asia/Shanghai | +2140ms | R-renderer-000063 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.356 [info] 2026-08-30 11:57:22.356 +08:00 Asia/Shanghai | +2140ms | R-renderer-000064 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.356 [info] 2026-08-30 11:57:22.356 +08:00 Asia/Shanghai | +2140ms | R-renderer-000065 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.369 [info] 2026-08-30 11:57:22.369 +08:00 Asia/Shanghai | +2153ms | R-renderer-000066 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.369 [info] 2026-08-30 11:57:22.369 +08:00 Asia/Shanghai | +2153ms | R-renderer-000067 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.377 [info] 2026-08-30 11:57:22.377 +08:00 Asia/Shanghai | +2161ms | R-renderer-000068 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.377 [info] 2026-08-30 11:57:22.377 +08:00 Asia/Shanghai | +2161ms | R-renderer-000069 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.535 [info] 2026-08-30 11:57:22.535 +08:00 Asia/Shanghai | +2319ms | R-renderer-000070 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.535 [info] 2026-08-30 11:57:22.535 +08:00 Asia/Shanghai | +2319ms | R-renderer-000071 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.549 [info] 2026-08-30 11:57:22.549 +08:00 Asia/Shanghai | +2333ms | R-renderer-000072 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.549 [info] 2026-08-30 11:57:22.549 +08:00 Asia/Shanghai | +2333ms | R-renderer-000073 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.584 [info] 2026-08-30 11:57:22.583 +08:00 Asia/Shanghai | +2367ms | R-renderer-000074 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.584 [info] 2026-08-30 11:57:22.583 +08:00 Asia/Shanghai | +2367ms | R-renderer-000075 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.584 [info] 2026-08-30 11:57:22.584 +08:00 Asia/Shanghai | +2368ms | R-renderer-000076 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.584 [info] 2026-08-30 11:57:22.584 +08:00 Asia/Shanghai | +2368ms | R-renderer-000077 | COMMAND.DID | id=_setContext duration=1ms
+2026-08-30 11:57:22.585 [info] 2026-08-30 11:57:22.584 +08:00 Asia/Shanghai | +2368ms | R-renderer-000078 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.585 [info] 2026-08-30 11:57:22.584 +08:00 Asia/Shanghai | +2368ms | R-renderer-000079 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.585 [info] 2026-08-30 11:57:22.584 +08:00 Asia/Shanghai | +2368ms | R-renderer-000080 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.586 [info] 2026-08-30 11:57:22.584 +08:00 Asia/Shanghai | +2368ms | R-renderer-000081 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.586 [info] 2026-08-30 11:57:22.585 +08:00 Asia/Shanghai | +2369ms | R-renderer-000082 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.586 [info] 2026-08-30 11:57:22.585 +08:00 Asia/Shanghai | +2369ms | R-renderer-000083 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.586 [info] 2026-08-30 11:57:22.586 +08:00 Asia/Shanghai | +2370ms | R-renderer-000084 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.587 [info] 2026-08-30 11:57:22.586 +08:00 Asia/Shanghai | +2370ms | R-renderer-000085 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.587 [info] 2026-08-30 11:57:22.586 +08:00 Asia/Shanghai | +2370ms | R-renderer-000086 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.587 [info] 2026-08-30 11:57:22.586 +08:00 Asia/Shanghai | +2370ms | R-renderer-000087 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.587 [info] 2026-08-30 11:57:22.587 +08:00 Asia/Shanghai | +2371ms | R-renderer-000088 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.587 [info] 2026-08-30 11:57:22.587 +08:00 Asia/Shanghai | +2371ms | R-renderer-000089 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.606 [info] 2026-08-30 11:57:22.606 +08:00 Asia/Shanghai | +2390ms | R-renderer-000090 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.606 [info] 2026-08-30 11:57:22.606 +08:00 Asia/Shanghai | +2390ms | R-renderer-000091 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.606 [info] 2026-08-30 11:57:22.606 +08:00 Asia/Shanghai | +2390ms | R-renderer-000092 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.607 [info] 2026-08-30 11:57:22.606 +08:00 Asia/Shanghai | +2390ms | R-renderer-000093 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.607 [info] 2026-08-30 11:57:22.607 +08:00 Asia/Shanghai | +2391ms | R-renderer-000094 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.607 [info] 2026-08-30 11:57:22.607 +08:00 Asia/Shanghai | +2391ms | R-renderer-000095 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.609 [info] 2026-08-30 11:57:22.609 +08:00 Asia/Shanghai | +2393ms | R-renderer-000096 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.609 [info] 2026-08-30 11:57:22.609 +08:00 Asia/Shanghai | +2393ms | R-renderer-000097 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.618 [info] 2026-08-30 11:57:22.618 +08:00 Asia/Shanghai | +2402ms | R-renderer-000098 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.618 [info] 2026-08-30 11:57:22.618 +08:00 Asia/Shanghai | +2402ms | R-renderer-000099 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.619 [info] 2026-08-30 11:57:22.619 +08:00 Asia/Shanghai | +2403ms | R-renderer-000100 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.620 [info] 2026-08-30 11:57:22.619 +08:00 Asia/Shanghai | +2403ms | R-renderer-000101 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.621 [info] 2026-08-30 11:57:22.621 +08:00 Asia/Shanghai | +2405ms | R-renderer-000102 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.622 [info] 2026-08-30 11:57:22.621 +08:00 Asia/Shanghai | +2405ms | R-renderer-000103 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.632 [info] 2026-08-30 11:57:22.632 +08:00 Asia/Shanghai | +2416ms | R-renderer-000104 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.632 [info] 2026-08-30 11:57:22.632 +08:00 Asia/Shanghai | +2416ms | R-renderer-000105 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.633 [info] 2026-08-30 11:57:22.632 +08:00 Asia/Shanghai | +2416ms | R-renderer-000106 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.633 [info] 2026-08-30 11:57:22.632 +08:00 Asia/Shanghai | +2416ms | R-renderer-000107 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.634 [info] 2026-08-30 11:57:22.633 +08:00 Asia/Shanghai | +2417ms | R-renderer-000108 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.634 [info] 2026-08-30 11:57:22.633 +08:00 Asia/Shanghai | +2417ms | R-renderer-000109 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.634 [info] 2026-08-30 11:57:22.633 +08:00 Asia/Shanghai | +2417ms | R-renderer-000110 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.634 [info] 2026-08-30 11:57:22.633 +08:00 Asia/Shanghai | +2417ms | R-renderer-000111 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.635 [info] 2026-08-30 11:57:22.634 +08:00 Asia/Shanghai | +2418ms | R-renderer-000112 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.635 [info] 2026-08-30 11:57:22.634 +08:00 Asia/Shanghai | +2418ms | R-renderer-000113 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.635 [info] 2026-08-30 11:57:22.634 +08:00 Asia/Shanghai | +2418ms | R-renderer-000114 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.635 [info] 2026-08-30 11:57:22.634 +08:00 Asia/Shanghai | +2418ms | R-renderer-000115 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.636 [info] 2026-08-30 11:57:22.635 +08:00 Asia/Shanghai | +2419ms | R-renderer-000116 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.636 [info] 2026-08-30 11:57:22.635 +08:00 Asia/Shanghai | +2419ms | R-renderer-000117 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.636 [info] 2026-08-30 11:57:22.635 +08:00 Asia/Shanghai | +2419ms | R-renderer-000118 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.637 [info] 2026-08-30 11:57:22.635 +08:00 Asia/Shanghai | +2419ms | R-renderer-000119 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.637 [info] 2026-08-30 11:57:22.636 +08:00 Asia/Shanghai | +2420ms | R-renderer-000120 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.637 [info] 2026-08-30 11:57:22.636 +08:00 Asia/Shanghai | +2420ms | R-renderer-000121 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.637 [info] 2026-08-30 11:57:22.636 +08:00 Asia/Shanghai | +2420ms | R-renderer-000122 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.637 [info] 2026-08-30 11:57:22.636 +08:00 Asia/Shanghai | +2420ms | R-renderer-000123 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.638 [info] 2026-08-30 11:57:22.636 +08:00 Asia/Shanghai | +2420ms | R-renderer-000124 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.638 [info] 2026-08-30 11:57:22.637 +08:00 Asia/Shanghai | +2421ms | R-renderer-000125 | COMMAND.DID | id=_setContext duration=1ms
+2026-08-30 11:57:22.638 [info] 2026-08-30 11:57:22.637 +08:00 Asia/Shanghai | +2421ms | R-renderer-000126 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.638 [info] 2026-08-30 11:57:22.637 +08:00 Asia/Shanghai | +2421ms | R-renderer-000127 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.652 [info] 2026-08-30 11:57:22.652 +08:00 Asia/Shanghai | +2436ms | R-renderer-000128 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.652 [info] 2026-08-30 11:57:22.652 +08:00 Asia/Shanghai | +2436ms | R-renderer-000129 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.723 [info] 2026-08-30 11:57:22.723 +08:00 Asia/Shanghai | +2507ms | R-renderer-000133 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.723 [info] 2026-08-30 11:57:22.723 +08:00 Asia/Shanghai | +2507ms | R-renderer-000134 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.724 [info] 2026-08-30 11:57:22.723 +08:00 Asia/Shanghai | +2507ms | R-renderer-000135 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.724 [info] 2026-08-30 11:57:22.724 +08:00 Asia/Shanghai | +2508ms | R-renderer-000136 | COMMAND.DID | id=_setContext duration=1ms
+2026-08-30 11:57:22.729 [info] 2026-08-30 11:57:22.729 +08:00 Asia/Shanghai | +2513ms | R-renderer-000137 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.729 [info] 2026-08-30 11:57:22.729 +08:00 Asia/Shanghai | +2513ms | R-renderer-000138 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.730 [info] 2026-08-30 11:57:22.729 +08:00 Asia/Shanghai | +2513ms | R-renderer-000139 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.730 [info] 2026-08-30 11:57:22.729 +08:00 Asia/Shanghai | +2513ms | R-renderer-000140 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.731 [info] 2026-08-30 11:57:22.730 +08:00 Asia/Shanghai | +2514ms | R-renderer-000141 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.731 [info] 2026-08-30 11:57:22.730 +08:00 Asia/Shanghai | +2514ms | R-renderer-000142 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.731 [info] 2026-08-30 11:57:22.731 +08:00 Asia/Shanghai | +2515ms | R-renderer-000143 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.731 [info] 2026-08-30 11:57:22.731 +08:00 Asia/Shanghai | +2515ms | R-renderer-000144 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.736 [info] 2026-08-30 11:57:22.735 +08:00 Asia/Shanghai | +2519ms | R-renderer-000145 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.736 [info] 2026-08-30 11:57:22.736 +08:00 Asia/Shanghai | +2520ms | R-renderer-000146 | COMMAND.DID | id=_setContext duration=1ms
+2026-08-30 11:57:22.736 [info] 2026-08-30 11:57:22.736 +08:00 Asia/Shanghai | +2520ms | R-renderer-000147 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.736 [info] 2026-08-30 11:57:22.736 +08:00 Asia/Shanghai | +2520ms | R-renderer-000148 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.737 [info] 2026-08-30 11:57:22.737 +08:00 Asia/Shanghai | +2521ms | R-renderer-000149 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.737 [info] 2026-08-30 11:57:22.737 +08:00 Asia/Shanghai | +2521ms | R-renderer-000150 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.738 [info] 2026-08-30 11:57:22.738 +08:00 Asia/Shanghai | +2522ms | R-renderer-000151 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.738 [info] 2026-08-30 11:57:22.738 +08:00 Asia/Shanghai | +2522ms | R-renderer-000152 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.873 [info] 2026-08-30 11:57:22.873 +08:00 Asia/Shanghai | +2657ms | R-renderer-000153 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.873 [info] 2026-08-30 11:57:22.873 +08:00 Asia/Shanghai | +2657ms | R-renderer-000154 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:22.959 [info] 2026-08-30 11:57:22.958 +08:00 Asia/Shanghai | +2742ms | R-renderer-000155 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:22.959 [info] 2026-08-30 11:57:22.959 +08:00 Asia/Shanghai | +2743ms | R-renderer-000156 | COMMAND.DID | id=_setContext duration=1ms
+2026-08-30 11:57:23.217 [info] 2026-08-30 11:57:23.217 +08:00 Asia/Shanghai | +3001ms | R-renderer-000158 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:23.218 [info] 2026-08-30 11:57:23.217 +08:00 Asia/Shanghai | +3001ms | R-renderer-000159 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:23.218 [info] 2026-08-30 11:57:23.218 +08:00 Asia/Shanghai | +3002ms | R-renderer-000160 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:23.218 [info] 2026-08-30 11:57:23.218 +08:00 Asia/Shanghai | +3002ms | R-renderer-000161 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:23.231 [info] 2026-08-30 11:57:23.230 +08:00 Asia/Shanghai | +3014ms | R-renderer-000162 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:23.231 [info] 2026-08-30 11:57:23.231 +08:00 Asia/Shanghai | +3015ms | R-renderer-000163 | COMMAND.DID | id=_setContext duration=1ms
+2026-08-30 11:57:23.231 [info] 2026-08-30 11:57:23.231 +08:00 Asia/Shanghai | +3015ms | R-renderer-000164 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:23.231 [info] 2026-08-30 11:57:23.231 +08:00 Asia/Shanghai | +3015ms | R-renderer-000165 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:23.232 [info] 2026-08-30 11:57:23.232 +08:00 Asia/Shanghai | +3016ms | R-renderer-000166 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:23.232 [info] 2026-08-30 11:57:23.232 +08:00 Asia/Shanghai | +3016ms | R-renderer-000167 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:23.232 [info] 2026-08-30 11:57:23.232 +08:00 Asia/Shanghai | +3016ms | R-renderer-000168 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:23.232 [info] 2026-08-30 11:57:23.232 +08:00 Asia/Shanghai | +3016ms | R-renderer-000169 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:23.233 [info] 2026-08-30 11:57:23.233 +08:00 Asia/Shanghai | +3017ms | R-renderer-000170 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:23.233 [info] 2026-08-30 11:57:23.233 +08:00 Asia/Shanghai | +3017ms | R-renderer-000171 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:23.233 [info] 2026-08-30 11:57:23.233 +08:00 Asia/Shanghai | +3017ms | R-renderer-000172 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:23.234 [info] 2026-08-30 11:57:23.233 +08:00 Asia/Shanghai | +3017ms | R-renderer-000173 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:23.234 [info] 2026-08-30 11:57:23.234 +08:00 Asia/Shanghai | +3018ms | R-renderer-000174 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:23.234 [info] 2026-08-30 11:57:23.234 +08:00 Asia/Shanghai | +3018ms | R-renderer-000175 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:23.234 [info] 2026-08-30 11:57:23.234 +08:00 Asia/Shanghai | +3018ms | R-renderer-000176 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:23.235 [info] 2026-08-30 11:57:23.234 +08:00 Asia/Shanghai | +3018ms | R-renderer-000177 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:23.401 [info] 2026-08-30 11:57:23.400 +08:00 Asia/Shanghai | +3184ms | R-renderer-000179 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:23.401 [info] 2026-08-30 11:57:23.400 +08:00 Asia/Shanghai | +3184ms | R-renderer-000180 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:23.401 [info] 2026-08-30 11:57:23.401 +08:00 Asia/Shanghai | +3185ms | R-renderer-000181 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:23.402 [info] 2026-08-30 11:57:23.401 +08:00 Asia/Shanghai | +3185ms | R-renderer-000182 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:23.468 [info] 2026-08-30 11:57:23.468 +08:00 Asia/Shanghai | +3252ms | R-renderer-000183 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:23.469 [info] 2026-08-30 11:57:23.468 +08:00 Asia/Shanghai | +3252ms | R-renderer-000184 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:23.469 [info] 2026-08-30 11:57:23.469 +08:00 Asia/Shanghai | +3253ms | R-renderer-000185 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:23.469 [info] 2026-08-30 11:57:23.469 +08:00 Asia/Shanghai | +3253ms | R-renderer-000186 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:23.470 [info] 2026-08-30 11:57:23.470 +08:00 Asia/Shanghai | +3254ms | R-renderer-000187 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:23.470 [info] 2026-08-30 11:57:23.470 +08:00 Asia/Shanghai | +3254ms | R-renderer-000188 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:23.471 [info] 2026-08-30 11:57:23.471 +08:00 Asia/Shanghai | +3255ms | R-renderer-000189 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:23.471 [info] 2026-08-30 11:57:23.471 +08:00 Asia/Shanghai | +3255ms | R-renderer-000190 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:23.471 [info] 2026-08-30 11:57:23.471 +08:00 Asia/Shanghai | +3255ms | R-renderer-000191 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:23.471 [info] 2026-08-30 11:57:23.471 +08:00 Asia/Shanghai | +3255ms | R-renderer-000192 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:23.472 [info] 2026-08-30 11:57:23.472 +08:00 Asia/Shanghai | +3256ms | R-renderer-000193 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:23.472 [info] 2026-08-30 11:57:23.472 +08:00 Asia/Shanghai | +3256ms | R-renderer-000194 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:23.473 [info] 2026-08-30 11:57:23.472 +08:00 Asia/Shanghai | +3256ms | R-renderer-000195 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:23.473 [info] 2026-08-30 11:57:23.473 +08:00 Asia/Shanghai | +3257ms | R-renderer-000196 | COMMAND.DID | id=_setContext duration=1ms
+2026-08-30 11:57:23.473 [info] 2026-08-30 11:57:23.473 +08:00 Asia/Shanghai | +3257ms | R-renderer-000197 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:23.473 [info] 2026-08-30 11:57:23.473 +08:00 Asia/Shanghai | +3257ms | R-renderer-000198 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:23.636 [info] 2026-08-30 11:57:23.636 +08:00 Asia/Shanghai | +3420ms | R-renderer-000199 | COMMAND.WILL | id=_setContext args.count=2
+2026-08-30 11:57:23.636 [info] 2026-08-30 11:57:23.636 +08:00 Asia/Shanghai | +3420ms | R-renderer-000200 | COMMAND.DID | id=_setContext duration=0ms
+2026-08-30 11:57:24.301 [info] 2026-08-30 11:57:24.301 +08:00 Asia/Shanghai | +4085ms | R-renderer-000203 | UI.CLICK | window=1 target=div.monaco-mouse-cursor-text label=presentation via=mouse button=0 trace=UI-000001
+2026-08-30 11:57:24.716 [info] 2026-08-30 11:57:24.715 +08:00 Asia/Shanghai | +4499ms | R-renderer-000204 | UI.CLICK | window=1 target=div.action-label.forge-logos-agent label=Agent，Grok Build，qwen3.5:9b-q4_k_m/button via=mouse button=0 trace=UI-000002
+2026-08-30 11:57:26.233 [info] 2026-08-30 11:57:26.233 +08:00 Asia/Shanghai | +6017ms | R-renderer-000206 | UI.CLICK | window=1 target=div.action-label.forge-logos-agent label=Agent，Grok Build，qwen3.5:9b-q4_k_m/button via=mouse button=0 trace=UI-000003
+2026-08-30 11:57:26.637 [info] 2026-08-30 11:57:26.637 +08:00 Asia/Shanghai | +6421ms | R-renderer-000207 | UI.CLICK | window=1 target=div.monaco-mouse-cursor-text label=presentation via=mouse button=0 trace=UI-000004
+2026-08-30 11:57:28.023 [info] 2026-08-30 11:57:28.023 +08:00 Asia/Shanghai | +7807ms | R-renderer-000208 | COMMAND.WILL | id=workbench.action.chat.submit args.count=0
+2026-08-30 11:57:28.026 [info] 2026-08-30 11:57:28.026 +08:00 Asia/Shanghai | +7810ms | R-renderer-000209 | COMMAND.DID | id=workbench.action.chat.submit duration=3ms
+2026-08-30 11:57:58.327 [info] 2026-08-30 11:57:58.327 +08:00 Asia/Shanghai | +38111ms | R-renderer-000226 | UI.CLICK | window=1 target=div.action-label.forge-logos-agent label=Agent，Grok Build，qwen3.5:9b-q4_k_m/button via=mouse button=0 trace=UI-000005
+2026-08-30 11:57:58.783 [info] 2026-08-30 11:57:58.783 +08:00 Asia/Shanghai | +38567ms | R-renderer-000227 | COMMAND.WILL | id=_setContext args.count=2 trace=UI-000005
+2026-08-30 11:57:58.784 [info] 2026-08-30 11:57:58.783 +08:00 Asia/Shanghai | +38567ms | R-renderer-000228 | COMMAND.DID | id=_setContext duration=0ms trace=UI-000005
+2026-08-30 11:57:59.016 [info] 2026-08-30 11:57:59.015 +08:00 Asia/Shanghai | +38799ms | R-renderer-000229 | UI.CLICK | window=1 target=button.forge-orch-choice label=option via=mouse button=0 trace=UI-000006
+2026-08-30 11:57:59.661 [info] 2026-08-30 11:57:59.660 +08:00 Asia/Shanghai | +39444ms | R-renderer-000231 | UI.CLICK | window=1 target=div.monaco-mouse-cursor-text label=presentation via=mouse button=0 trace=UI-000007
+2026-08-30 11:58:00.832 [info] 2026-08-30 11:58:00.832 +08:00 Asia/Shanghai | +40616ms | R-renderer-000234 | COMMAND.WILL | id=workbench.action.chat.submit args.count=0
+2026-08-30 11:58:00.834 [info] 2026-08-30 11:58:00.834 +08:00 Asia/Shanghai | +40618ms | R-renderer-000235 | COMMAND.DID | id=workbench.action.chat.submit duration=2ms
+2026-08-30 11:59:05.149 [info] 2026-08-30 11:59:05.148 +08:00 Asia/Shanghai | +104932ms | R-renderer-000264 | UI.CLICK | window=1 target=div.monaco-list-row label=npm notice run npx npm notice run dsh --profile headless You are a Forge coding agent. Work directly in this workspace to fulfill the user request.  Inspect this in the accessible view with Alt+F2/listitem via=mouse button=0 trace=UI-000008
+2026-08-30 11:59:05.658 [info] 2026-08-30 11:59:05.657 +08:00 Asia/Shanghai | +105441ms | R-renderer-000265 | COMMAND.WILL | id=_setContext args.count=2 trace=UI-000008
+2026-08-30 11:59:05.658 [info] 2026-08-30 11:59:05.657 +08:00 Asia/Shanghai | +105441ms | R-renderer-000266 | COMMAND.DID | id=_setContext duration=0ms trace=UI-000008
+2026-08-30 12:00:16.883 [info] 2026-08-30 12:00:16.882 +08:00 Asia/Shanghai | +176666ms | R-renderer-000295 | UI.CLICK | window=1 target=button.forge-orch-btn via=mouse button=0 trace=UI-000009
+2026-08-30 12:00:16.884 [info] 2026-08-30 12:00:16.883 +08:00 Asia/Shanghai | +176667ms | R-renderer-000296 | COMMAND.WILL | id=forge.orchestration.command args.count=1 trace=UI-000009
+2026-08-30 12:00:16.884 [info] 2026-08-30 12:00:16.883 +08:00 Asia/Shanghai | +176667ms | R-renderer-000297 | COMMAND.DID | id=forge.orchestration.command duration=0ms trace=UI-000009
+2026-08-30 12:00:17.402 [info] 2026-08-30 12:00:17.400 +08:00 Asia/Shanghai | +177184ms | R-renderer-000300 | COMMAND.WILL | id=_setContext args.count=2 trace=UI-000009
+2026-08-30 12:00:17.417 [info] 2026-08-30 12:00:17.400 +08:00 Asia/Shanghai | +177184ms | R-renderer-000301 | COMMAND.DID | id=_setContext duration=0ms trace=UI-000009
+2026-08-30 12:00:17.939 [info] 2026-08-30 12:00:17.938 +08:00 Asia/Shanghai | +177722ms | R-renderer-000302 | UI.CLICK | window=1 target=a.action-label.codicon.codicon-stop-circle label=Cancel (Alt+Backspace)/button via=mouse button=0 trace=UI-000010
+2026-08-30 12:00:17.939 [info] 2026-08-30 12:00:17.939 +08:00 Asia/Shanghai | +177723ms | R-renderer-000303 | COMMAND.WILL | id=workbench.action.chat.cancel args.count=1 trace=UI-000010
+2026-08-30 12:00:17.943 [info] 2026-08-30 12:00:17.941 +08:00 Asia/Shanghai | +177725ms | R-renderer-000304 | COMMAND.DID | id=workbench.action.chat.cancel duration=2ms trace=UI-000010

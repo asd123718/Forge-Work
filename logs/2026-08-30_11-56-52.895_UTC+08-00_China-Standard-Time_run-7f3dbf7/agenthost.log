@@ -1,0 +1,233 @@
+2026-08-30 11:57:20.912 [info] Agent Host process started successfully
+2026-08-30 11:57:20.918 [info] AgentService initialized
+2026-08-30 11:57:20.937 [info] [Codex] model cards: C:\Users\Admin\.forge\codex\forge-models.json
+2026-08-30 11:57:20.938 [info] Registering agent provider: codex
+2026-08-30 11:57:20.951 [info] [Codex] resolving SDK from repo node_modules (dev fallback): c:\Project\Forge_Duplicate2\forge
+2026-08-30 11:57:20.953 [info] [Codex] resolving SDK from repo node_modules (dev fallback): c:\Project\Forge_Duplicate2\forge
+2026-08-30 11:57:20.956 [info] [CodexProxyService] listening on http://127.0.0.1:53595
+2026-08-30 11:57:20.971 [info] [Codex] spawning with additive model providers c:\Project\Forge_Duplicate2\forge\node_modules\@openai\codex-win32-x64\vendor\x86_64-pc-windows-msvc\bin\codex.exe app-server -c model_providers.vscode-proxy.name="VS Code Proxy" -c model_providers.vscode-proxy.base_url="http://127.0.0.1:53595/v1" -c model_providers.vscode-proxy.wire_api="responses" -c model_providers.vscode-proxy.env_key="OPENAI_API_KEY" -c model_providers.vscode-proxy.requires_openai_auth=false -c model_providers.vscode-proxy.supports_websockets=false -c shell_environment_policy.set.AI_AGENT="github_copilot_vscode_agent" -c features.tool_call_mcp_elicitation=false -c features.apply_patch_streaming_events=true -c features.image_generation=false -c analytics.enabled=false -c feedback.enabled=false -c otel.log_user_prompt=false -c otel.trace_exporter="none" -c otel.exporter="none" -c otel.metrics_exporter="none"
+2026-08-30 11:57:21.001 [info] [CommandAutoApprover] Tree-sitter initialized (bash=available, powershell=available)
+2026-08-30 11:57:21.005 [info] [ProtocolServer] Initialize: clientId=f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf, protocolVersions=[0.8.0, 0.7.0, 0.6.0, 0.5.2, 0.5.1]
+2026-08-30 11:57:21.109 [info] [WebSocketProtocol] Server listening on socket \\.\pipe\vscode-agent-host-5616aabaa00f032e63c23a0c3c2d8b311c98f383645558f431cdaa367fbc6bc2-2TPg-j0mI8Ce8wVR_Qf-SQ
+2026-08-30 11:57:21.453 [warning] [agentHostGitService] > git rev-parse --show-toplevel failed; full stderr:
+fatal: not a git repository (or any of the parent directories): .git
+
+2026-08-30 11:57:21.530 [warning] [agentHostGitService] > git rev-parse --show-toplevel failed; full stderr:
+fatal: not a git repository (or any of the parent directories): .git
+
+2026-08-30 11:57:21.559 [warning] [agentHostGitService] > git rev-parse --show-toplevel failed; full stderr:
+fatal: not a git repository (or any of the parent directories): .git
+
+2026-08-30 11:57:21.588 [warning] [agentHostGitService] > git rev-parse --show-toplevel failed; full stderr:
+fatal: not a git repository (or any of the parent directories): .git
+
+2026-08-30 11:57:21.619 [warning] [agentHostGitService] > git rev-parse --show-toplevel failed; full stderr:
+fatal: not a git repository (or any of the parent directories): .git
+
+2026-08-30 11:57:21.649 [warning] [agentHostGitService] > git rev-parse --show-toplevel failed; full stderr:
+fatal: not a git repository (or any of the parent directories): .git
+
+2026-08-30 11:57:21.650 [info] [Codex DEBUG] createChat accountStatus=unknown session=codex:/f43109ff-508c-418b-b6fd-6c8e71befb6a chat=ahp-chat://default/Y29kZXg6L2Y0MzEwOWZmLTUwOGMtNDE4Yi1iNmZkLTZjOGU3MWJlZmI2YQ model=(none) cwd=file:///d%3A/Test
+2026-08-30 11:57:21.650 [info] [Codex] created chat ahp-chat://default/Y29kZXg6L2Y0MzEwOWZmLTUwOGMtNDE4Yi1iNmZkLTZjOGU3MWJlZmI2YQ backed by codex:/f43109ff-508c-418b-b6fd-6c8e71befb6a thread=(deferred) (session codex:/f43109ff-508c-418b-b6fd-6c8e71befb6a)
+2026-08-30 11:57:21.680 [info] [Codex] active client f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf tools=[(none)] chat=ahp-chat://default/Y29kZXg6L2Y0MzEwOWZmLTUwOGMtNDE4Yi1iNmZkLTZjOGU3MWJlZmI2YQ
+2026-08-30 11:57:21.701 [warning] [agentHostGitService] > git rev-parse --show-toplevel failed; full stderr:
+fatal: not a git repository (or any of the parent directories): .git
+
+2026-08-30 11:57:21.730 [warning] [agentHostGitService] > git rev-parse --show-toplevel failed; full stderr:
+fatal: not a git repository (or any of the parent directories): .git
+
+2026-08-30 11:57:21.761 [warning] [agentHostGitService] > git rev-parse --show-toplevel failed; full stderr:
+fatal: not a git repository (or any of the parent directories): .git
+
+2026-08-30 11:57:21.792 [warning] [agentHostGitService] > git rev-parse --show-toplevel failed; full stderr:
+fatal: not a git repository (or any of the parent directories): .git
+
+2026-08-30 11:57:22.066 [info] [Codex] Auth token cleared
+2026-08-30 11:57:22.197 [info] [Codex] API key cleared for model provider forge-official-deepseek
+2026-08-30 11:57:22.198 [info] [Codex] API key cleared for model provider forge-official-grok
+2026-08-30 11:57:23.105 [info] [Codex] active client f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf tools=[(none)] chat=ahp-chat://default/Y29kZXg6L2Y0MzEwOWZmLTUwOGMtNDE4Yi1iNmZkLTZjOGU3MWJlZmI2YQ
+2026-08-30 11:57:23.106 [info] [Codex] active client f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf tools=[(none)] chat=ahp-chat://default/Y29kZXg6L2Y0MzEwOWZmLTUwOGMtNDE4Yi1iNmZkLTZjOGU3MWJlZmI2YQ
+2026-08-30 11:57:23.106 [info] [Codex] active client f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf tools=[createAndRunTask] chat=ahp-chat://default/Y29kZXg6L2Y0MzEwOWZmLTUwOGMtNDE4Yi1iNmZkLTZjOGU3MWJlZmI2YQ
+2026-08-30 11:57:23.106 [info] [Codex] active client f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf tools=[runTask, createAndRunTask] chat=ahp-chat://default/Y29kZXg6L2Y0MzEwOWZmLTUwOGMtNDE4Yi1iNmZkLTZjOGU3MWJlZmI2YQ
+2026-08-30 11:57:23.107 [info] [Codex] active client f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf tools=[runTask, getTaskOutput, createAndRunTask] chat=ahp-chat://default/Y29kZXg6L2Y0MzEwOWZmLTUwOGMtNDE4Yi1iNmZkLTZjOGU3MWJlZmI2YQ
+2026-08-30 11:57:23.107 [info] [Codex] active client f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf tools=[problems, runTask, getTaskOutput, createAndRunTask] chat=ahp-chat://default/Y29kZXg6L2Y0MzEwOWZmLTUwOGMtNDE4Yi1iNmZkLTZjOGU3MWJlZmI2YQ
+2026-08-30 11:57:23.107 [info] [Codex] active client f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf tools=[problems, runTask, getTaskOutput, createAndRunTask] chat=ahp-chat://default/Y29kZXg6L2Y0MzEwOWZmLTUwOGMtNDE4Yi1iNmZkLTZjOGU3MWJlZmI2YQ
+2026-08-30 11:57:23.108 [info] [Codex] active client f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf tools=[problems, runTask, getTaskOutput, createAndRunTask, openBrowserPage] chat=ahp-chat://default/Y29kZXg6L2Y0MzEwOWZmLTUwOGMtNDE4Yi1iNmZkLTZjOGU3MWJlZmI2YQ
+2026-08-30 11:57:23.108 [info] [Codex] active client f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf tools=[problems, runTask, getTaskOutput, createAndRunTask, openBrowserPage, readPage] chat=ahp-chat://default/Y29kZXg6L2Y0MzEwOWZmLTUwOGMtNDE4Yi1iNmZkLTZjOGU3MWJlZmI2YQ
+2026-08-30 11:57:23.108 [info] [Codex] active client f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf tools=[problems, runTask, getTaskOutput, createAndRunTask, openBrowserPage, readPage, screenshotPage] chat=ahp-chat://default/Y29kZXg6L2Y0MzEwOWZmLTUwOGMtNDE4Yi1iNmZkLTZjOGU3MWJlZmI2YQ
+2026-08-30 11:57:23.109 [info] [Codex] active client f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf tools=[problems, runTask, getTaskOutput, createAndRunTask, openBrowserPage, readPage, screenshotPage, navigatePage] chat=ahp-chat://default/Y29kZXg6L2Y0MzEwOWZmLTUwOGMtNDE4Yi1iNmZkLTZjOGU3MWJlZmI2YQ
+2026-08-30 11:57:23.109 [info] [Codex] active client f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf tools=[problems, runTask, getTaskOutput, createAndRunTask, openBrowserPage, readPage, screenshotPage, navigatePage, clickElement] chat=ahp-chat://default/Y29kZXg6L2Y0MzEwOWZmLTUwOGMtNDE4Yi1iNmZkLTZjOGU3MWJlZmI2YQ
+2026-08-30 11:57:23.109 [info] [Codex] active client f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf tools=[problems, runTask, getTaskOutput, createAndRunTask, openBrowserPage, readPage, screenshotPage, navigatePage, clickElement, typeInPage] chat=ahp-chat://default/Y29kZXg6L2Y0MzEwOWZmLTUwOGMtNDE4Yi1iNmZkLTZjOGU3MWJlZmI2YQ
+2026-08-30 11:57:23.110 [info] [Codex] active client f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf tools=[problems, runTask, getTaskOutput, createAndRunTask, openBrowserPage, readPage, screenshotPage, navigatePage, clickElement, hoverElement, typeInPage] chat=ahp-chat://default/Y29kZXg6L2Y0MzEwOWZmLTUwOGMtNDE4Yi1iNmZkLTZjOGU3MWJlZmI2YQ
+2026-08-30 11:57:23.110 [info] [Codex] active client f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf tools=[problems, runTask, getTaskOutput, createAndRunTask, openBrowserPage, readPage, screenshotPage, navigatePage, clickElement, dragElement, hoverElement, typeInPage] chat=ahp-chat://default/Y29kZXg6L2Y0MzEwOWZmLTUwOGMtNDE4Yi1iNmZkLTZjOGU3MWJlZmI2YQ
+2026-08-30 11:57:23.110 [info] [Codex] active client f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf tools=[problems, runTask, getTaskOutput, createAndRunTask, openBrowserPage, readPage, screenshotPage, navigatePage, clickElement, dragElement, hoverElement, typeInPage, handleDialog] chat=ahp-chat://default/Y29kZXg6L2Y0MzEwOWZmLTUwOGMtNDE4Yi1iNmZkLTZjOGU3MWJlZmI2YQ
+2026-08-30 11:57:23.111 [info] [Codex] active client f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf tools=[problems, runTask, getTaskOutput, createAndRunTask, openBrowserPage, readPage, screenshotPage, navigatePage, clickElement, dragElement, hoverElement, typeInPage, runPlaywrightCode, handleDialog] chat=ahp-chat://default/Y29kZXg6L2Y0MzEwOWZmLTUwOGMtNDE4Yi1iNmZkLTZjOGU3MWJlZmI2YQ
+2026-08-30 11:57:23.111 [info] [Codex] active client f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf tools=[problems, runTask, getTaskOutput, createAndRunTask, openBrowserPage, readPage, screenshotPage, navigatePage, clickElement, dragElement, hoverElement, typeInPage, runPlaywrightCode, handleDialog] chat=ahp-chat://default/Y29kZXg6L2Y0MzEwOWZmLTUwOGMtNDE4Yi1iNmZkLTZjOGU3MWJlZmI2YQ
+2026-08-30 11:57:23.111 [info] [Codex] active client f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf tools=[rename, problems, runTask, getTaskOutput, createAndRunTask, openBrowserPage, readPage, screenshotPage, navigatePage, clickElement, dragElement, hoverElement, typeInPage, runPlaywrightCode, handleDialog] chat=ahp-chat://default/Y29kZXg6L2Y0MzEwOWZmLTUwOGMtNDE4Yi1iNmZkLTZjOGU3MWJlZmI2YQ
+2026-08-30 11:57:23.111 [info] [Codex] active client f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf tools=[usages, rename, problems, runTask, getTaskOutput, createAndRunTask, openBrowserPage, readPage, screenshotPage, navigatePage, clickElement, dragElement, hoverElement, typeInPage, runPlaywrightCode, handleDialog] chat=ahp-chat://default/Y29kZXg6L2Y0MzEwOWZmLTUwOGMtNDE4Yi1iNmZkLTZjOGU3MWJlZmI2YQ
+2026-08-30 11:57:23.112 [info] [Codex] active client f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf tools=[usages, rename, problems, runTask, getTaskOutput, createAndRunTask, openBrowserPage, readPage, screenshotPage, navigatePage, clickElement, dragElement, hoverElement, typeInPage, runPlaywrightCode, handleDialog, toolSearch] chat=ahp-chat://default/Y29kZXg6L2Y0MzEwOWZmLTUwOGMtNDE4Yi1iNmZkLTZjOGU3MWJlZmI2YQ
+2026-08-30 11:57:23.112 [info] [Codex] active client f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf tools=[usages, rename, problems, runTask, getTaskOutput, createAndRunTask, openBrowserPage, readPage, screenshotPage, navigatePage, clickElement, dragElement, hoverElement, typeInPage, runPlaywrightCode, handleDialog, toolSearch] chat=ahp-chat://default/Y29kZXg6L2Y0MzEwOWZmLTUwOGMtNDE4Yi1iNmZkLTZjOGU3MWJlZmI2YQ
+2026-08-30 11:57:23.113 [info] [Codex] active client f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf tools=[usages, rename, problems, createJupyterNotebook, runTask, getTaskOutput, createAndRunTask, openBrowserPage, readPage, screenshotPage, navigatePage, clickElement, dragElement, hoverElement, typeInPage, runPlaywrightCode, handleDialog, toolSearch] chat=ahp-chat://default/Y29kZXg6L2Y0MzEwOWZmLTUwOGMtNDE4Yi1iNmZkLTZjOGU3MWJlZmI2YQ
+2026-08-30 11:57:23.113 [info] [Codex] active client f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf tools=[usages, rename, problems, createJupyterNotebook, editNotebook, runTask, getTaskOutput, createAndRunTask, openBrowserPage, readPage, screenshotPage, navigatePage, clickElement, dragElement, hoverElement, typeInPage, runPlaywrightCode, handleDialog, toolSearch] chat=ahp-chat://default/Y29kZXg6L2Y0MzEwOWZmLTUwOGMtNDE4Yi1iNmZkLTZjOGU3MWJlZmI2YQ
+2026-08-30 11:57:23.113 [info] [Codex] active client f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf tools=[usages, rename, problems, createJupyterNotebook, editNotebook, runNotebookCell, runTask, getTaskOutput, createAndRunTask, openBrowserPage, readPage, screenshotPage, navigatePage, clickElement, dragElement, hoverElement, typeInPage, runPlaywrightCode, handleDialog, toolSearch] chat=ahp-chat://default/Y29kZXg6L2Y0MzEwOWZmLTUwOGMtNDE4Yi1iNmZkLTZjOGU3MWJlZmI2YQ
+2026-08-30 11:57:23.114 [info] [Codex] active client f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf tools=[usages, rename, problems, createJupyterNotebook, editNotebook, runNotebookCell, getNotebookSummary, runTask, getTaskOutput, createAndRunTask, openBrowserPage, readPage, screenshotPage, navigatePage, clickElement, dragElement, hoverElement, typeInPage, runPlaywrightCode, handleDialog, toolSearch] chat=ahp-chat://default/Y29kZXg6L2Y0MzEwOWZmLTUwOGMtNDE4Yi1iNmZkLTZjOGU3MWJlZmI2YQ
+2026-08-30 11:57:23.114 [info] [Codex] active client f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf tools=[usages, rename, problems, createJupyterNotebook, editNotebook, runNotebookCell, getNotebookSummary, readNotebookCellOutput, runTask, getTaskOutput, createAndRunTask, openBrowserPage, readPage, screenshotPage, navigatePage, clickElement, dragElement, hoverElement, typeInPage, runPlaywrightCode, handleDialog, toolSearch] chat=ahp-chat://default/Y29kZXg6L2Y0MzEwOWZmLTUwOGMtNDE4Yi1iNmZkLTZjOGU3MWJlZmI2YQ
+2026-08-30 11:57:24.132 [info] [Codex] active client f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf tools=[usages, rename, problems, createJupyterNotebook, editNotebook, runNotebookCell, getNotebookSummary, readNotebookCellOutput, runTask, getTaskOutput, createAndRunTask, openBrowserPage, readPage, screenshotPage, navigatePage, clickElement, dragElement, hoverElement, typeInPage, runPlaywrightCode, handleDialog, toolSearch] chat=ahp-chat://default/Y29kZXg6L2Y0MzEwOWZmLTUwOGMtNDE4Yi1iNmZkLTZjOGU3MWJlZmI2YQ
+2026-08-30 11:57:24.133 [info] [Codex] active client f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf tools=[usages, rename, problems, createJupyterNotebook, editNotebook, runNotebookCell, getNotebookSummary, readNotebookCellOutput, runTask, getTaskOutput, createAndRunTask, openBrowserPage, readPage, screenshotPage, navigatePage, clickElement, dragElement, hoverElement, typeInPage, runPlaywrightCode, handleDialog, toolSearch, runTests] chat=ahp-chat://default/Y29kZXg6L2Y0MzEwOWZmLTUwOGMtNDE4Yi1iNmZkLTZjOGU3MWJlZmI2YQ
+2026-08-30 11:57:24.133 [info] [Codex] active client f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf tools=[usages, rename, problems, createJupyterNotebook, editNotebook, runNotebookCell, getNotebookSummary, readNotebookCellOutput, runTask, getTaskOutput, createAndRunTask, openBrowserPage, readPage, screenshotPage, navigatePage, clickElement, dragElement, hoverElement, typeInPage, runPlaywrightCode, handleDialog, toolSearch, runTests, testFailure] chat=ahp-chat://default/Y29kZXg6L2Y0MzEwOWZmLTUwOGMtNDE4Yi1iNmZkLTZjOGU3MWJlZmI2YQ
+2026-08-30 11:57:24.740 [info] [CodexClient warn] dropping unhandled notification: remoteControl/status/changed
+2026-08-30 11:57:24.747 [info] [Codex] account/read accountType=chatgpt requiresOpenaiAuth=true planType=plus
+2026-08-30 11:57:24.749 [info] [Codex] wrote C:\Users\Admin\.forge\codex\forge-models.json providers=3
+2026-08-30 11:57:24.754 [warning] [Codex] Failed to list MCP servers: Canceled
+2026-08-30 11:57:24.754 [warning] [Codex] account/rateLimits/read failed: Canceled
+2026-08-30 11:57:24.754 [warning] [Codex] thread/list failed: Canceled
+2026-08-30 11:57:24.754 [warning] [Codex:a1ce8298-e146-4f48-92d2-42bed9b0d494] thread/read failed: Canceled
+2026-08-30 11:57:24.754 [warning] [Codex:1c445437-a24d-4c97-81cd-76354b068ba8] thread/read failed: Canceled
+2026-08-30 11:57:24.754 [warning] [Codex:eec53a16-dc83-4e02-92ee-5ef6383c8908] thread/read failed: Canceled
+2026-08-30 11:57:24.755 [warning] [Codex:80b159d7-58c6-41e3-8fea-687ee0ee6a5b] thread/read failed: Canceled
+2026-08-30 11:57:24.755 [warning] [Codex] prewarm failed session=codex:/f43109ff-508c-418b-b6fd-6c8e71befb6a: Canceled
+2026-08-30 11:57:24.759 [info] [Codex] resolving SDK from repo node_modules (dev fallback): c:\Project\Forge_Duplicate2\forge
+2026-08-30 11:57:24.760 [info] [CodexProxyService] listening on http://127.0.0.1:63022
+2026-08-30 11:57:24.760 [info] [Codex] spawning with additive model providers c:\Project\Forge_Duplicate2\forge\node_modules\@openai\codex-win32-x64\vendor\x86_64-pc-windows-msvc\bin\codex.exe app-server -c model_providers.vscode-proxy.name="VS Code Proxy" -c model_providers.vscode-proxy.base_url="http://127.0.0.1:63022/v1" -c model_providers.vscode-proxy.wire_api="responses" -c model_providers.vscode-proxy.env_key="OPENAI_API_KEY" -c model_providers.vscode-proxy.requires_openai_auth=false -c model_providers.vscode-proxy.supports_websockets=false -c shell_environment_policy.set.AI_AGENT="github_copilot_vscode_agent" -c features.tool_call_mcp_elicitation=false -c features.apply_patch_streaming_events=true -c features.image_generation=false -c analytics.enabled=false -c feedback.enabled=false -c otel.log_user_prompt=false -c otel.trace_exporter="none" -c otel.exporter="none" -c otel.metrics_exporter="none"
+2026-08-30 11:57:26.739 [warning] [agentHostGitService] > git rev-parse --show-toplevel failed; full stderr:
+fatal: not a git repository (or any of the parent directories): .git
+
+2026-08-30 11:57:26.766 [warning] [agentHostGitService] > git rev-parse --show-toplevel failed; full stderr:
+fatal: not a git repository (or any of the parent directories): .git
+
+2026-08-30 11:57:29.768 [info] [Codex] resolving SDK from repo node_modules (dev fallback): c:\Project\Forge_Duplicate2\forge
+2026-08-30 11:57:39.969 [info] [Codex stderr] [2m2026-08-30T03:57:39.969173Z[0m [31mERROR[0m [2mcodex_app_server[0m[2m:[0m Invalid configuration; using defaults. timed out waiting for cloud config bundle after 15s
+2026-08-30 11:57:39.971 [info] [CodexClient warn] dropping unhandled notification: configWarning
+2026-08-30 11:57:39.972 [warning] [Codex] Failed to list MCP servers: failed to reload config: timed out waiting for cloud config bundle after 15s
+2026-08-30 11:57:39.973 [warning] [Codex] Failed to read config.toml: failed to read configuration layers: timed out waiting for cloud config bundle after 15s
+2026-08-30 11:57:39.973 [info] [Codex] account/read accountType=chatgpt requiresOpenaiAuth=true planType=plus
+2026-08-30 11:57:40.011 [info] [Codex:39494405-85a6-4094-b654-d2a33a4bcf69] thread/read: not loaded yet (will resume on first send)
+2026-08-30 11:57:40.011 [info] [Codex:2d42cf5f-1da2-45e9-8408-cdca073fc7f8] thread/read: not loaded yet (will resume on first send)
+2026-08-30 11:57:40.026 [info] [Codex:53d731f5-4b50-4e88-8e42-73457554ed33] thread/read: not loaded yet (will resume on first send)
+2026-08-30 11:57:40.042 [info] [Codex:51fa2ccd-40f3-4b3d-8bf5-ab69472147ff] thread/read: not loaded yet (will resume on first send)
+2026-08-30 11:57:40.057 [info] [Codex:e1160a51-ebf5-4a39-a350-f2d625ab2c39] thread/read: not loaded yet (will resume on first send)
+2026-08-30 11:57:40.104 [info] [Codex:c7e3ba29-6e73-46c8-8640-5d1f8e7e7752] thread/read: not loaded yet (will resume on first send)
+2026-08-30 11:57:40.104 [info] [Codex:fbffa695-b2f7-48f0-ad90-8421dc6a8a6b] thread/read: not loaded yet (will resume on first send)
+2026-08-30 11:57:40.119 [info] [Codex:84c21e61-6ab9-4ed5-a61c-295b02b449e1] thread/read: not loaded yet (will resume on first send)
+2026-08-30 11:57:40.150 [info] [Codex:edc9a97c-e00e-4638-9077-42fb3098dce3] thread/read: not loaded yet (will resume on first send)
+2026-08-30 11:57:40.151 [info] [Codex:5e6f5a0b-83a8-4457-ad0f-55486e730783] thread/read: not loaded yet (will resume on first send)
+2026-08-30 11:57:40.151 [info] [Codex:925601bf-8752-49e1-b629-171e90a1689c] thread/read: not loaded yet (will resume on first send)
+2026-08-30 11:57:40.198 [info] [Codex:308e8556-21c5-4d8d-a981-eb16c015290e] thread/read: not loaded yet (will resume on first send)
+2026-08-30 11:57:40.198 [info] [Codex:1f3a65be-47b1-47ba-9903-6216fe6b174a] thread/read: not loaded yet (will resume on first send)
+2026-08-30 11:57:40.198 [info] [Codex:89a7af3a-459d-4eb8-b7eb-511673b51c59] thread/read: not loaded yet (will resume on first send)
+2026-08-30 11:57:40.244 [info] [Codex:53c13f63-df6f-4c65-af1e-cffbe68dd14c] thread/read: not loaded yet (will resume on first send)
+2026-08-30 11:57:40.244 [info] [Codex:b5e28336-083d-4a0b-ab3f-b38df758f158] thread/read: not loaded yet (will resume on first send)
+2026-08-30 11:57:40.244 [info] [Codex:a53af23a-e54f-4827-b0dd-cc3f52accd1f] thread/read: not loaded yet (will resume on first send)
+2026-08-30 11:57:40.244 [info] [Codex:fd04d639-e824-4b19-ba5b-3de7470628f7] thread/read: not loaded yet (will resume on first send)
+2026-08-30 11:57:40.291 [info] [Codex:5f9e8c9e-2aab-49e0-ab3c-076945c8df36] thread/read: not loaded yet (will resume on first send)
+2026-08-30 11:57:40.291 [info] [Codex:a32ea853-0f5f-45ca-94d9-679d3caeb287] thread/read: not loaded yet (will resume on first send)
+2026-08-30 11:57:40.291 [info] [Codex:fd4d1562-9249-47b8-b75d-ab5b59b34aba] thread/read: not loaded yet (will resume on first send)
+2026-08-30 11:57:40.291 [info] [Codex:1f4459a2-4c79-4590-bf06-3ce14be9a6e4] thread/read: not loaded yet (will resume on first send)
+2026-08-30 11:57:40.339 [info] [Codex:672cc74b-9df6-4315-be2f-118a1b4e47d2] thread/read: not loaded yet (will resume on first send)
+2026-08-30 11:57:40.339 [info] [Codex:2390881b-0cb2-4aae-9164-d807e49cef27] thread/read: not loaded yet (will resume on first send)
+2026-08-30 11:57:40.339 [info] [Codex:1bb43a4c-6490-44f0-8255-ca40c4751ee5] thread/read: not loaded yet (will resume on first send)
+2026-08-30 11:57:40.339 [info] [Codex:db403ddb-adac-4028-ae92-ea1efe6c4b8e] thread/read: not loaded yet (will resume on first send)
+2026-08-30 11:57:40.386 [info] [Codex:657cde74-9e01-4113-8bc2-641d77dd345c] thread/read: not loaded yet (will resume on first send)
+2026-08-30 11:57:40.386 [info] [Codex:01724ba2-953c-4309-a611-af3c366ef2e9] thread/read: not loaded yet (will resume on first send)
+2026-08-30 11:57:40.386 [info] [Codex:edf08639-dd3a-4935-82cd-e8a79835481a] thread/read: not loaded yet (will resume on first send)
+2026-08-30 11:57:40.386 [info] [Codex:cf59740d-1ea2-4ebc-bcbf-90b6f6eccf83] thread/read: not loaded yet (will resume on first send)
+2026-08-30 11:57:40.433 [info] [Codex:578de2cb-27b7-4bc8-baf9-3039cacaad71] thread/read: not loaded yet (will resume on first send)
+2026-08-30 11:57:40.433 [info] [Codex:098449a5-05b7-4e43-a3f6-17d3b03ad8b6] thread/read: not loaded yet (will resume on first send)
+2026-08-30 11:57:40.433 [info] [Codex:87fb38e9-6c2f-4b20-b171-22c4d45693b3] thread/read: not loaded yet (will resume on first send)
+2026-08-30 11:57:40.433 [info] [Codex:4f3307b6-cc1b-46d9-babc-9e743a72d262] thread/read: not loaded yet (will resume on first send)
+2026-08-30 11:57:40.480 [info] [Codex:bf0b3b53-368d-45b5-ab73-cc3e95becfc1] thread/read: not loaded yet (will resume on first send)
+2026-08-30 11:57:40.480 [info] [Codex:1d6ba6ef-6ef2-4719-bcec-e7d535c0abb4] thread/read: not loaded yet (will resume on first send)
+2026-08-30 11:57:40.486 [info] [Codex:a23590c9-9343-4ec4-ab23-2a0c37c74e9f] replacing thread 01a046cd-2b51-7ac2-9b81-55236ff25d35 with a fresh ollama thread
+2026-08-30 11:57:40.526 [info] [Codex:663c8016-cb4c-41c7-8001-bf132f4abdc2] thread/read: not loaded yet (will resume on first send)
+2026-08-30 11:57:40.572 [info] [Codex:8d1927b8-ee88-4342-a700-420432d9cc80] thread/read: not loaded yet (will resume on first send)
+2026-08-30 11:57:40.572 [info] [Codex:d1363a6c-509e-4cad-9b38-01c61a7f5a11] thread/read: not loaded yet (will resume on first send)
+2026-08-30 11:57:40.572 [info] [Codex:cf9d31fa-9a27-40ca-b0d0-79183e3671bb] thread/read: not loaded yet (will resume on first send)
+2026-08-30 11:57:40.604 [info] [Codex:b19d404b-4164-4f55-87cf-9793b7e9e9f7] thread/read: not loaded yet (will resume on first send)
+2026-08-30 11:57:41.471 [info] [Codex stderr] [2m2026-08-30T03:57:41.471210Z[0m [31mERROR[0m [2mcodex_login::auth::manager[0m[2m:[0m Failed to refresh token: 401 Unauthorized: {
+  "error": {
+    "message": "Invalid refresh token.",
+    "type": "invalid_request_error",
+    "param": null,
+    "code": "invalid_refresh_token"
+  }
+}
+[2m2026-08-30T03:57:41.471283Z[0m [31mERROR[0m [2mcodex_login::auth::manager[0m[2m:[0m Failed to refresh token: Your access token could not be refreshed. Please log out and sign in again.
+2026-08-30 11:57:41.471 [info] [Codex stderr] [2m2026-08-30T03:57:41.471759Z[0m [31mERROR[0m [2mcodex_login::auth::manager[0m[2m:[0m Failed to refresh token: Your access token could not be refreshed. Please log out and sign in again.
+2026-08-30 11:57:41.472 [info] [Codex stderr] [2m2026-08-30T03:57:41.472050Z[0m [31mERROR[0m [2mcodex_login::auth::manager[0m[2m:[0m Failed to refresh token: Your access token could not be refreshed. Please log out and sign in again.
+2026-08-30 11:57:41.472 [info] [Codex stderr] [2m2026-08-30T03:57:41.472371Z[0m [31mERROR[0m [2mcodex_login::auth::manager[0m[2m:[0m Failed to refresh token: Your access token could not be refreshed. Please log out and sign in again.
+2026-08-30 11:57:41.473 [info] [Codex stderr] [2m2026-08-30T03:57:41.473043Z[0m [31mERROR[0m [2mcodex_login::auth::manager[0m[2m:[0m Failed to refresh token: Your access token could not be refreshed. Please log out and sign in again.
+2026-08-30 11:57:41.474 [info] [Codex stderr] [2m2026-08-30T03:57:41.474212Z[0m [31mERROR[0m [2mcodex_login::auth::manager[0m[2m:[0m Failed to refresh token: Your access token could not be refreshed. Please log out and sign in again.
+2026-08-30 11:57:42.132 [info] [Codex] wrote C:\Users\Admin\.forge\codex\forge-models.json providers=3
+2026-08-30 11:57:42.134 [error] [Codex] Failed to update config.toml: failed to load configuration: timed out waiting for cloud config bundle after 15s
+2026-08-30 11:57:42.233 [info] [Codex] wrote C:\Users\Admin\.forge\codex\forge-models.json providers=3
+2026-08-30 11:57:42.234 [error] [Codex] Failed to update config.toml: failed to load configuration: timed out waiting for cloud config bundle after 15s
+2026-08-30 11:57:43.199 [info] [Codex] wrote C:\Users\Admin\.forge\codex\forge-models.json providers=3
+2026-08-30 11:57:43.200 [error] [Codex] Failed to update config.toml: failed to load configuration: timed out waiting for cloud config bundle after 15s
+2026-08-30 11:57:44.950 [info] [Codex stderr] [2m2026-08-30T03:57:44.950086Z[0m [31mERROR[0m [2mcodex_models_manager::manager[0m[2m:[0m failed to refresh available models: unexpected status 401 Unauthorized: Provided authentication token is expired. Please try signing in again., url: https://chatgpt.com/backend-api/codex/models?client_version=0.147.0, cf-ray: a330df896ace6872-NRT, auth error: 401, auth error code: token_expired
+2026-08-30 11:57:45.011 [warning] [Codex] account/rateLimits/read failed: failed to fetch codex rate limits: GET https://chatgpt.com/backend-api/wham/usage failed: 401 Unauthorized; content-type=text/plain; body={
+  "error": {
+    "message": "Provided authentication token is expired. Please try signing in again.",
+    "type": null,
+    "code": "token_expired",
+    "param": null
+  },
+  "status": 401,
+  "detail": {
+    "code": "token_expired",
+    "message": "Provided authentication token is expired. Please try signing in again."
+  }
+}
+2026-08-30 11:57:54.744 [info] [Codex] wrote C:\Users\Admin\.forge\codex\forge-models.json providers=3
+2026-08-30 11:57:54.745 [error] [Codex] Failed to update config.toml: failed to load configuration: timed out waiting for cloud config bundle after 15s
+2026-08-30 11:57:54.757 [info] [Codex] wrote C:\Users\Admin\.forge\codex\forge-models.json providers=3
+2026-08-30 11:57:54.759 [error] [Codex] Failed to update config.toml: failed to load configuration: timed out waiting for cloud config bundle after 15s
+2026-08-30 11:57:54.759 [info] [Codex] wrote C:\Users\Admin\.forge\codex\forge-models.json providers=3
+2026-08-30 11:57:54.760 [error] [Codex] Failed to update config.toml: failed to load configuration: timed out waiting for cloud config bundle after 15s
+2026-08-30 11:57:54.760 [info] [Codex] wrote C:\Users\Admin\.forge\codex\forge-models.json providers=3
+2026-08-30 11:57:54.761 [error] [Codex] Failed to update config.toml: failed to load configuration: timed out waiting for cloud config bundle after 15s
+2026-08-30 11:58:00.837 [info] [Codex] wrote C:\Users\Admin\.forge\codex\forge-models.json providers=3
+2026-08-30 11:58:00.845 [warning] [Codex] skills/list failed: failed to reload config: timed out waiting for cloud config bundle after 15s
+2026-08-30 11:58:00.845 [info] [Codex stderr] [2m2026-08-30T03:58:00.845671Z[0m [31mERROR[0m [2mcodex_login::auth::manager[0m[2m:[0m Failed to refresh token: Your access token could not be refreshed. Please log out and sign in again.
+2026-08-30 11:58:00.846 [error] [Codex] Failed to update config.toml: failed to load configuration: timed out waiting for cloud config bundle after 15s
+2026-08-30 11:58:00.846 [info] [Codex] wrote C:\Users\Admin\.forge\codex\forge-models.json providers=3
+2026-08-30 11:58:00.847 [error] [Codex] Failed to update config.toml: failed to load configuration: timed out waiting for cloud config bundle after 15s
+2026-08-30 11:58:00.847 [info] [Codex] wrote C:\Users\Admin\.forge\codex\forge-models.json providers=3
+2026-08-30 11:58:00.848 [error] [Codex] Failed to update config.toml: failed to load configuration: timed out waiting for cloud config bundle after 15s
+2026-08-30 11:58:00.848 [info] [Codex] wrote C:\Users\Admin\.forge\codex\forge-models.json providers=3
+2026-08-30 11:58:00.848 [error] [Codex] Failed to update config.toml: failed to load configuration: timed out waiting for cloud config bundle after 15s
+2026-08-30 11:58:00.849 [info] [Codex] wrote C:\Users\Admin\.forge\codex\forge-models.json providers=3
+2026-08-30 11:58:00.849 [error] [Codex] Failed to update config.toml: failed to load configuration: timed out waiting for cloud config bundle after 15s
+2026-08-30 11:58:00.849 [info] [Codex] wrote C:\Users\Admin\.forge\codex\forge-models.json providers=3
+2026-08-30 11:58:00.850 [error] [Codex] Failed to update config.toml: failed to load configuration: timed out waiting for cloud config bundle after 15s
+2026-08-30 11:58:07.459 [info] [Codex] wrote C:\Users\Admin\.forge\codex\forge-models.json providers=3
+2026-08-30 11:58:07.460 [error] [Codex] Failed to update config.toml: failed to load configuration: timed out waiting for cloud config bundle after 15s
+2026-08-30 11:58:07.716 [info] [Codex] wrote C:\Users\Admin\.forge\codex\forge-models.json providers=3
+2026-08-30 11:58:07.716 [error] [Codex] Failed to update config.toml: failed to load configuration: timed out waiting for cloud config bundle after 15s
+2026-08-30 12:00:16.886 [info] [Codex] wrote C:\Users\Admin\.forge\codex\forge-models.json providers=3
+2026-08-30 12:00:16.890 [warning] [Codex] skills/list failed: failed to reload config: timed out waiting for cloud config bundle after 15s
+2026-08-30 12:00:16.891 [info] [Codex stderr] [2m2026-08-30T04:00:16.891484Z[0m [31mERROR[0m [2mcodex_login::auth::manager[0m[2m:[0m Failed to refresh token: Your access token could not be refreshed. Please log out and sign in again.
+2026-08-30 12:00:16.892 [error] [Codex] Failed to update config.toml: failed to load configuration: timed out waiting for cloud config bundle after 15s
+2026-08-30 12:00:16.894 [info] [Codex] wrote C:\Users\Admin\.forge\codex\forge-models.json providers=3
+2026-08-30 12:00:16.896 [error] [Codex] Failed to update config.toml: failed to load configuration: timed out waiting for cloud config bundle after 15s
+2026-08-30 12:00:16.898 [info] [Codex] wrote C:\Users\Admin\.forge\codex\forge-models.json providers=3
+2026-08-30 12:00:16.900 [error] [Codex] Failed to update config.toml: failed to load configuration: timed out waiting for cloud config bundle after 15s
+2026-08-30 12:00:20.434 [info] [Codex] active client f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf tools=[usages, rename, problems, createJupyterNotebook, editNotebook, runNotebookCell, getNotebookSummary, readNotebookCellOutput, runTask, getTaskOutput, createAndRunTask, openBrowserPage, readPage, screenshotPage, navigatePage, clickElement, dragElement, hoverElement, typeInPage, runPlaywrightCode, handleDialog, toolSearch, runTests, testFailure] chat=ahp-chat://default/Y29kZXg6L2Y0MzEwOWZmLTUwOGMtNDE4Yi1iNmZkLTZjOGU3MWJlZmI2YQ
+2026-08-30 12:00:20.435 [info] [Codex] active client f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf tools=[usages, rename, createJupyterNotebook, editNotebook, runNotebookCell, getNotebookSummary, readNotebookCellOutput, openBrowserPage, readPage, screenshotPage, navigatePage, clickElement, dragElement, hoverElement, typeInPage, runPlaywrightCode, handleDialog, toolSearch, runTests, testFailure] chat=ahp-chat://default/Y29kZXg6L2Y0MzEwOWZmLTUwOGMtNDE4Yi1iNmZkLTZjOGU3MWJlZmI2YQ
+2026-08-30 12:00:20.436 [info] [Codex] active client f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf tools=[usages, rename, createJupyterNotebook, editNotebook, runNotebookCell, getNotebookSummary, readNotebookCellOutput, openBrowserPage, readPage, screenshotPage, navigatePage, clickElement, dragElement, hoverElement, typeInPage, runPlaywrightCode, handleDialog, toolSearch, runTests, testFailure] chat=ahp-chat://default/Y29kZXg6L2Y0MzEwOWZmLTUwOGMtNDE4Yi1iNmZkLTZjOGU3MWJlZmI2YQ
+2026-08-30 12:00:20.436 [info] [Codex] active client f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf tools=[usages, rename, createJupyterNotebook, editNotebook, runNotebookCell, getNotebookSummary, readNotebookCellOutput, toolSearch, runTests, testFailure] chat=ahp-chat://default/Y29kZXg6L2Y0MzEwOWZmLTUwOGMtNDE4Yi1iNmZkLTZjOGU3MWJlZmI2YQ
+2026-08-30 12:00:20.436 [info] [Codex] active client f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf tools=[usages, rename, createJupyterNotebook, editNotebook, runNotebookCell, getNotebookSummary, readNotebookCellOutput, toolSearch, runTests, testFailure] chat=ahp-chat://default/Y29kZXg6L2Y0MzEwOWZmLTUwOGMtNDE4Yi1iNmZkLTZjOGU3MWJlZmI2YQ
+2026-08-30 12:00:20.437 [info] [Codex] active client f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf tools=[createJupyterNotebook, editNotebook, runNotebookCell, getNotebookSummary, readNotebookCellOutput] chat=ahp-chat://default/Y29kZXg6L2Y0MzEwOWZmLTUwOGMtNDE4Yi1iNmZkLTZjOGU3MWJlZmI2YQ
+2026-08-30 12:00:20.437 [info] [Codex] active client f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf tools=[createJupyterNotebook, editNotebook, runNotebookCell, getNotebookSummary, readNotebookCellOutput] chat=ahp-chat://default/Y29kZXg6L2Y0MzEwOWZmLTUwOGMtNDE4Yi1iNmZkLTZjOGU3MWJlZmI2YQ
+2026-08-30 12:00:20.437 [info] [Codex] active client f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf tools=[(none)] chat=ahp-chat://default/Y29kZXg6L2Y0MzEwOWZmLTUwOGMtNDE4Yi1iNmZkLTZjOGU3MWJlZmI2YQ
+2026-08-30 12:00:20.438 [info] [Codex] active client f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf tools=[(none)] chat=ahp-chat://default/Y29kZXg6L2Y0MzEwOWZmLTUwOGMtNDE4Yi1iNmZkLTZjOGU3MWJlZmI2YQ
+2026-08-30 12:00:20.438 [info] [CodexClient warn] dropping unhandled notification: skills/changed
+2026-08-30 12:00:20.438 [info] [CodexClient warn] dropping unhandled notification: skills/changed
+2026-08-30 12:00:20.439 [info] [CodexClient warn] dropping unhandled notification: skills/changed
+2026-08-30 12:00:20.439 [info] [CodexClient warn] dropping unhandled notification: skills/changed
+2026-08-30 12:00:20.439 [info] [CodexClient warn] dropping unhandled notification: skills/changed
+2026-08-30 12:00:20.439 [info] [CodexClient warn] dropping unhandled notification: skills/changed
+2026-08-30 12:00:20.439 [info] [CodexClient warn] dropping unhandled notification: skills/changed
+2026-08-30 12:00:20.440 [info] [CodexClient warn] dropping unhandled notification: skills/changed
+2026-08-30 12:00:20.440 [info] [CodexClient warn] dropping unhandled notification: skills/changed
+2026-08-30 12:00:20.472 [info] [ProtocolServer] Client disconnected: f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf, subscriptions=3
+2026-08-30 12:00:20.477 [info] AgentService: shutting down all providers...

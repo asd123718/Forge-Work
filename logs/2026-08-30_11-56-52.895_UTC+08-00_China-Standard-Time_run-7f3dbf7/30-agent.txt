@@ -1,0 +1,4 @@
+# FORGE AGENT LOG | source=agent-host | encoding=utf-8
+2026-08-30 11:57:20.935 +08:00 Asia/Shanghai | +10ms | R-agent-host-000002 | ACCOUNT.STATUS | data={"status":"unknown","hasAuthUrl":false}
+2026-08-30 11:57:24.745 +08:00 Asia/Shanghai | +3820ms | R-agent-host-000063 | ACCOUNT.STATUS | data={"status":"signedIn","email":"shimisiqiaozhi28@gmail.com","planType":"plus","requiresOpenaiAuth":true,"hasAuthUrl":false}
+2026-08-30 11:57:39.973 +08:00 Asia/Shanghai | +19048ms | R-agent-host-000093 | ACCOUNT.STATUS | data={"status":"signedIn","email":"shimisiqiaozhi28@gmail.com","planType":"plus","requiresOpenaiAuth":true,"hasAuthUrl":false}

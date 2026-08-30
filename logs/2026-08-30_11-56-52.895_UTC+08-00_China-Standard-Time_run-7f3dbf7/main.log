@@ -1,0 +1,11 @@
+2026-08-30 11:57:18.685 [info] StorageMainService: creating application shared storage
+2026-08-30 11:57:18.726 [info] [CSS_DEV] DONE, 450 css modules (45ms)
+2026-08-30 11:57:18.784 [info] update#setState disabled
+2026-08-30 11:57:18.793 [info] [shared storage] Creating shared storage database at 'c:\Users\Admin\.forge-ai-shared\sharedStorage\state.vscdb' (wasCreated: false)
+2026-08-30 11:57:18.795 [info] [shared storage] Initializing fallback application storage (path: c:\Users\Admin\AppData\Roaming\Forge\User\globalStorage\state.vscdb)
+2026-08-30 11:57:18.803 [info] [shared storage] Fallback application storage initialized with 78 items
+2026-08-30 11:57:20.230 [info] AgentHostProcessManager: agent host started
+2026-08-30 11:58:00.845 [error] [AgentHost:stderr] (node:204728) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `Forge --trace-deprecation ...` to show where the warning was created)
+
+2026-08-30 12:00:19.977 [info] Extension host with pid 210784 exited with code: 0, signal: unknown.

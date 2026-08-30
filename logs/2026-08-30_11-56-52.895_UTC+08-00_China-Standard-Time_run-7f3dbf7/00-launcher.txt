@@ -1,0 +1,10 @@
+﻿# FORGE SOURCE LAUNCHER
+[2026-08-30 11:56:52.915 +08:00] root=C:\Project\Forge_Duplicate2\forge
+[2026-08-30 11:56:52.918 +08:00] session=C:\Project\Forge_Duplicate2\forge\logs\2026-08-30_11-56-52.895_UTC+08-00_China-Standard-Time_run-7f3dbf7
+[2026-08-30 11:56:52.918 +08:00] node=C:\Project\Forge_Duplicate2\forge\resources\forge-runtime\win32-x64\node.exe
+[2026-08-30 11:56:52.919 +08:00] electron=C:\Project\Forge_Duplicate2\forge\.build\electron\Forge.exe
+[2026-08-30 11:56:52.946 +08:00] native-overlay=restored
+[2026-08-30 11:56:52.949 +08:00] compile=status:started task:gulp-compile
+[2026-08-30 11:57:18.179 +08:00] compile=status:completed exitCode=0
+[2026-08-30 11:57:18.189 +08:00] gui=status:starting
+[2026-08-30 11:57:20.017 +08:00] gui=status:running pid=229220

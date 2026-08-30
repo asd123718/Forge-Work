@@ -1,0 +1,58 @@
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __decorateClass = (decorators, target, key, kind) => {
+  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc(target, key) : target;
+  for (var i = decorators.length - 1, decorator; i >= 0; i--)
+    if (decorator = decorators[i])
+      result = (kind ? decorator(target, key, result) : decorator(result)) || result;
+  if (kind && result) __defProp(target, key, result);
+  return result;
+};
+var __decorateParam = (index, decorator) => (target, key) => decorator(target, key, index);
+import "../media/openInVSCode.css";
+import { $, append, EventHelper } from "../../../base/browser/dom.js";
+import { getDefaultHoverDelegate } from "../../../base/browser/ui/hover/hoverDelegateFactory.js";
+import { BaseActionViewItem } from "../../../base/browser/ui/actionbar/actionViewItems.js";
+import { localize } from "../../../nls.js";
+import { IHoverService } from "../../../platform/hover/browser/hover.js";
+import { IKeybindingService } from "../../../platform/keybinding/common/keybinding.js";
+import { IProductService } from "../../../platform/product/common/productService.js";
+let OpenInVSCodeTitleBarWidget = class extends BaseActionViewItem {
+  constructor(action, options, keybindingCommandId, productService, hoverService, keybindingService) {
+    super(void 0, action, options);
+    this.keybindingCommandId = keybindingCommandId;
+    this.productService = productService;
+    this.hoverService = hoverService;
+    this.keybindingService = keybindingService;
+  }
+  render(container) {
+    super.render(container);
+    container.classList.add("open-in-vscode-titlebar-widget");
+    container.setAttribute("role", "button");
+    const quality = this.productService.quality;
+    if (quality) {
+      container.setAttribute("data-product-quality", quality);
+    }
+    const label = this.action.label;
+    const hoverText = this.keybindingService.appendKeybinding(localize("openInVSCodeHover", "Open in VS Code Editor Window"), this.keybindingCommandId);
+    container.setAttribute("aria-label", hoverText);
+    this._register(this.hoverService.setupManagedHover(getDefaultHoverDelegate("element"), container, hoverText));
+    const icon = append(container, $("span.open-in-vscode-titlebar-widget-icon"));
+    icon.setAttribute("aria-hidden", "true");
+    const labelEl = append(container, $("span.open-in-vscode-titlebar-widget-label"));
+    labelEl.textContent = label;
+  }
+  onClick(event) {
+    EventHelper.stop(event, true);
+    this.action.run();
+  }
+};
+OpenInVSCodeTitleBarWidget = __decorateClass([
+  __decorateParam(3, IProductService),
+  __decorateParam(4, IHoverService),
+  __decorateParam(5, IKeybindingService)
+], OpenInVSCodeTitleBarWidget);
+export {
+  OpenInVSCodeTitleBarWidget
+};
+//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsiQzpcXFByb2plY3RcXEZvcmdlX0R1cGxpY2F0ZTJcXGZvcmdlXFxzcmNcXHZzXFxzZXNzaW9uc1xcYnJvd3Nlclxcd2lkZ2V0XFxvcGVuSW5WU0NvZGVXaWRnZXQudHMiXSwKICAic291cmNlc0NvbnRlbnQiOiBbIi8qLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXG4gKiAgQ29weXJpZ2h0IChjKSBNaWNyb3NvZnQgQ29ycG9yYXRpb24uIEFsbCByaWdodHMgcmVzZXJ2ZWQuXG4gKiAgTGljZW5zZWQgdW5kZXIgdGhlIE1JVCBMaWNlbnNlLiBTZWUgTGljZW5zZS50eHQgaW4gdGhlIHByb2plY3Qgcm9vdCBmb3IgbGljZW5zZSBpbmZvcm1hdGlvbi5cbiAqLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0qL1xuXG5pbXBvcnQgJy4uL21lZGlhL29wZW5JblZTQ29kZS5jc3MnO1xuaW1wb3J0IHsgJCwgYXBwZW5kLCBFdmVudEhlbHBlciwgRXZlbnRMaWtlIH0gZnJvbSAnLi4vLi4vLi4vYmFzZS9icm93c2VyL2RvbS5qcyc7XG5pbXBvcnQgeyBnZXREZWZhdWx0SG92ZXJEZWxlZ2F0ZSB9IGZyb20gJy4uLy4uLy4uL2Jhc2UvYnJvd3Nlci91aS9ob3Zlci9ob3ZlckRlbGVnYXRlRmFjdG9yeS5qcyc7XG5pbXBvcnQgeyBCYXNlQWN0aW9uVmlld0l0ZW0sIElCYXNlQWN0aW9uVmlld0l0ZW1PcHRpb25zIH0gZnJvbSAnLi4vLi4vLi4vYmFzZS9icm93c2VyL3VpL2FjdGlvbmJhci9hY3Rpb25WaWV3SXRlbXMuanMnO1xuaW1wb3J0IHsgSUFjdGlvbiB9IGZyb20gJy4uLy4uLy4uL2Jhc2UvY29tbW9uL2FjdGlvbnMuanMnO1xuaW1wb3J0IHsgbG9jYWxpemUgfSBmcm9tICcuLi8uLi8uLi9ubHMuanMnO1xuaW1wb3J0IHsgSUhvdmVyU2VydmljZSB9IGZyb20gJy4uLy4uLy4uL3BsYXRmb3JtL2hvdmVyL2Jyb3dzZXIvaG92ZXIuanMnO1xuaW1wb3J0IHsgSUtleWJpbmRpbmdTZXJ2aWNlIH0gZnJvbSAnLi4vLi4vLi4vcGxhdGZvcm0va2V5YmluZGluZy9jb21tb24va2V5YmluZGluZy5qcyc7XG5pbXBvcnQgeyBJUHJvZHVjdFNlcnZpY2UgfSBmcm9tICcuLi8uLi8uLi9wbGF0Zm9ybS9wcm9kdWN0L2NvbW1vbi9wcm9kdWN0U2VydmljZS5qcyc7XG5cbi8qKlxuICogUmVuZGVycyB0aGUgXCJPcGVuIGluIFZTIENvZGVcIiB0aXRsZWJhciBlbnRyeSBhcyBhbiBpY29uLW9ubHkgYnV0dG9uIHRoYXRcbiAqIGV4cGFuZHMgdG8gcmV2ZWFsIGEgbGFiZWwgb24gaG92ZXIgLyBrZXlib2FyZCBmb2N1cy5cbiAqL1xuZXhwb3J0IGNsYXNzIE9wZW5JblZTQ29kZVRpdGxlQmFyV2lkZ2V0IGV4dGVuZHMgQmFzZUFjdGlvblZpZXdJdGVtIHtcblxuXHRjb25zdHJ1Y3Rvcihcblx0XHRhY3Rpb246IElBY3Rpb24sXG5cdFx0b3B0aW9uczogSUJhc2VBY3Rpb25WaWV3SXRlbU9wdGlvbnMgfCB1bmRlZmluZWQsXG5cdFx0cHJpdmF0ZSByZWFkb25seSBrZXliaW5kaW5nQ29tbWFuZElkOiBzdHJpbmcsXG5cdFx0QElQcm9kdWN0U2VydmljZSBwcml2YXRlIHJlYWRvbmx5IHByb2R1Y3RTZXJ2aWNlOiBJUHJvZHVjdFNlcnZpY2UsXG5cdFx0QElIb3ZlclNlcnZpY2UgcHJpdmF0ZSByZWFkb25seSBob3ZlclNlcnZpY2U6IElIb3ZlclNlcnZpY2UsXG5cdFx0QElLZXliaW5kaW5nU2VydmljZSBwcml2YXRlIHJlYWRvbmx5IGtleWJpbmRpbmdTZXJ2aWNlOiBJS2V5YmluZGluZ1NlcnZpY2UsXG5cdCkge1xuXHRcdHN1cGVyKHVuZGVmaW5lZCwgYWN0aW9uLCBvcHRpb25zKTtcblx0fVxuXG5cdG92ZXJyaWRlIHJlbmRlcihjb250YWluZXI6IEhUTUxFbGVtZW50KTogdm9pZCB7XG5cdFx0c3VwZXIucmVuZGVyKGNvbnRhaW5lcik7XG5cblx0XHRjb250YWluZXIuY2xhc3NMaXN0LmFkZCgnb3Blbi1pbi12c2NvZGUtdGl0bGViYXItd2lkZ2V0Jyk7XG5cdFx0Y29udGFpbmVyLnNldEF0dHJpYnV0ZSgncm9sZScsICdidXR0b24nKTtcblxuXHRcdC8vIFNldCBxdWFsaXR5IGF0dHJpYnV0ZSBmb3IgZGlzdHJvIGljb24gc2VsZWN0aW9uLiBPbmx5IHNldCB3aGVuIHF1YWxpdHkgaXNcblx0XHQvLyBrbm93biBzbyB0aGF0IHRoZSBDU1MgZmFsbGJhY2sgaWNvbiBpcyB1c2VkIGluIGRldiBidWlsZHMuXG5cdFx0Y29uc3QgcXVhbGl0eSA9IHRoaXMucHJvZHVjdFNlcnZpY2UucXVhbGl0eTtcblx0XHRpZiAocXVhbGl0eSkge1xuXHRcdFx0Y29udGFpbmVyLnNldEF0dHJpYnV0ZSgnZGF0YS1wcm9kdWN0LXF1YWxpdHknLCBxdWFsaXR5KTtcblx0XHR9XG5cblx0XHRjb25zdCBsYWJlbCA9IHRoaXMuYWN0aW9uLmxhYmVsO1xuXHRcdGNvbnN0IGhvdmVyVGV4dCA9IHRoaXMua2V5YmluZGluZ1NlcnZpY2UuYXBwZW5kS2V5YmluZGluZyhsb2NhbGl6ZSgnb3BlbkluVlNDb2RlSG92ZXInLCBcIk9wZW4gaW4gVlMgQ29kZSBFZGl0b3IgV2luZG93XCIpLCB0aGlzLmtleWJpbmRpbmdDb21tYW5kSWQpO1xuXHRcdGNvbnRhaW5lci5zZXRBdHRyaWJ1dGUoJ2FyaWEtbGFiZWwnLCBob3ZlclRleHQpO1xuXHRcdHRoaXMuX3JlZ2lzdGVyKHRoaXMuaG92ZXJTZXJ2aWNlLnNldHVwTWFuYWdlZEhvdmVyKGdldERlZmF1bHRIb3ZlckRlbGVnYXRlKCdlbGVtZW50JyksIGNvbnRhaW5lciwgaG92ZXJUZXh0KSk7XG5cblx0XHRjb25zdCBpY29uID0gYXBwZW5kKGNvbnRhaW5lciwgJCgnc3Bhbi5vcGVuLWluLXZzY29kZS10aXRsZWJhci13aWRnZXQtaWNvbicpKTtcblx0XHRpY29uLnNldEF0dHJpYnV0ZSgnYXJpYS1oaWRkZW4nLCAndHJ1ZScpO1xuXG5cdFx0Y29uc3QgbGFiZWxFbCA9IGFwcGVuZChjb250YWluZXIsICQoJ3NwYW4ub3Blbi1pbi12c2NvZGUtdGl0bGViYXItd2lkZ2V0LWxhYmVsJykpO1xuXHRcdGxhYmVsRWwudGV4dENvbnRlbnQgPSBsYWJlbDtcblx0fVxuXG5cdG92ZXJyaWRlIG9uQ2xpY2soZXZlbnQ6IEV2ZW50TGlrZSk6IHZvaWQge1xuXHRcdEV2ZW50SGVscGVyLnN0b3AoZXZlbnQsIHRydWUpO1xuXHRcdHRoaXMuYWN0aW9uLnJ1bigpO1xuXHR9XG59XG4iXSwKICAibWFwcGluZ3MiOiAiOzs7Ozs7Ozs7OztBQUtBLE9BQU87QUFDUCxTQUFTLEdBQUcsUUFBUSxtQkFBOEI7QUFDbEQsU0FBUywrQkFBK0I7QUFDeEMsU0FBUywwQkFBc0Q7QUFFL0QsU0FBUyxnQkFBZ0I7QUFDekIsU0FBUyxxQkFBcUI7QUFDOUIsU0FBUywwQkFBMEI7QUFDbkMsU0FBUyx1QkFBdUI7QUFNekIsSUFBTSw2QkFBTixjQUF5QyxtQkFBbUI7QUFBQSxFQUVsRSxZQUNDLFFBQ0EsU0FDaUIscUJBQ2lCLGdCQUNGLGNBQ0ssbUJBQ3BDO0FBQ0QsVUFBTSxRQUFXLFFBQVEsT0FBTztBQUxmO0FBQ2lCO0FBQ0Y7QUFDSztBQUFBLEVBR3RDO0FBQUEsRUFFUyxPQUFPLFdBQThCO0FBQzdDLFVBQU0sT0FBTyxTQUFTO0FBRXRCLGNBQVUsVUFBVSxJQUFJLGdDQUFnQztBQUN4RCxjQUFVLGFBQWEsUUFBUSxRQUFRO0FBSXZDLFVBQU0sVUFBVSxLQUFLLGVBQWU7QUFDcEMsUUFBSSxTQUFTO0FBQ1osZ0JBQVUsYUFBYSx3QkFBd0IsT0FBTztBQUFBLElBQ3ZEO0FBRUEsVUFBTSxRQUFRLEtBQUssT0FBTztBQUMxQixVQUFNLFlBQVksS0FBSyxrQkFBa0IsaUJBQWlCLFNBQVMscUJBQXFCLCtCQUErQixHQUFHLEtBQUssbUJBQW1CO0FBQ2xKLGNBQVUsYUFBYSxjQUFjLFNBQVM7QUFDOUMsU0FBSyxVQUFVLEtBQUssYUFBYSxrQkFBa0Isd0JBQXdCLFNBQVMsR0FBRyxXQUFXLFNBQVMsQ0FBQztBQUU1RyxVQUFNLE9BQU8sT0FBTyxXQUFXLEVBQUUsMENBQTBDLENBQUM7QUFDNUUsU0FBSyxhQUFhLGVBQWUsTUFBTTtBQUV2QyxVQUFNLFVBQVUsT0FBTyxXQUFXLEVBQUUsMkNBQTJDLENBQUM7QUFDaEYsWUFBUSxjQUFjO0FBQUEsRUFDdkI7QUFBQSxFQUVTLFFBQVEsT0FBd0I7QUFDeEMsZ0JBQVksS0FBSyxPQUFPLElBQUk7QUFDNUIsU0FBSyxPQUFPLElBQUk7QUFBQSxFQUNqQjtBQUNEO0FBMUNhLDZCQUFOO0FBQUEsRUFNSjtBQUFBLEVBQ0E7QUFBQSxFQUNBO0FBQUEsR0FSVTsiLAogICJuYW1lcyI6IFtdCn0K

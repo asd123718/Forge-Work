@@ -1,0 +1,180 @@
+2026-08-30 11:57:20.227 [info] [AgentHost:renderer] Acquiring MessagePort to agent host...
+2026-08-30 11:57:20.514 [info] [AgentHost:renderer] MessagePort acquired, creating client...
+2026-08-30 11:57:20.572 [info] Started local extension host with pid 210784.
+2026-08-30 11:57:21.016 [info] [AgentHost:renderer] Protocol connection established; clientId=f3f03c2f-204a-4fe5-b22f-f8a6316fdcbf
+2026-08-30 11:57:21.366 [info] [AccountPolicyGate] apply: state=inactive, reason=undefined, isRestricted=false
+2026-08-30 11:57:21.370 [error] Unable to create workbench contribution 'chat.contextContributions'. [createInstance] SessionReferenceContextPickerPick depends on UNKNOWN service chatSessionRoutingProviderService.
+2026-08-30 11:57:21.382 [info] [ChatModelSelection] event=conversation-restore surface="workbench" sessionKey=undefined conversationKey="agent-host-codex:/untitled-a18fac22-b263-457e-a320-909c21e2ea8a" modelTarget="agent-host-codex" storageKey="chat.currentLanguageModel.panel.agent-host-codex" widgetViewKind="view" desiredModel="agent-host-codex:@provider=ollama:huihui_ai%2Fgemma-4-abliterated%3A12b" currentModel=undefined sessionType="agent-host-codex" action="apply"
+2026-08-30 11:57:21.388 [info] [ChatModelSelection] event=initialize surface="workbench" sessionKey="agent-host-codex" conversationKey="agent-host-codex:/untitled-a18fac22-b263-457e-a320-909c21e2ea8a" modelTarget="agent-host-codex" storageKey="chat.currentLanguageModel.panel.agent-host-codex" widgetViewKind="view" configuredModel=undefined rememberedModel="agent-host-codex:@provider=azure-openai:deepseek-v4-flash" availableModels="agent-host-codex:@provider=ollama:huihui_ai%2Fgemma-4-abliterated%3A12b,agent-host-codex:@provider=ollama:huihui_ai%2FQwen3.6-abliterated%3A27b,agent-host-codex:@provider=ollama:qwen3.5%3A9b-q4_k_m" selection="pending" resultModel=undefined resultReason=undefined pendingReference="agent-host-codex:@provider=azure-openai:deepseek-v4-flash"
+2026-08-30 11:57:22.066 [info] [AgentHost] No token resolved for resource: https://api.github.com
+2026-08-30 11:57:22.088 [info] [AgentHost] No token resolved for resource: https://api.github.com
+2026-08-30 11:57:22.088 [info] [AgentHost] Clearing authentication for resource: https://api.github.com
+2026-08-30 11:57:22.193 [info] [AgentHost] No token resolved for resource: https://api.github.com/repos
+2026-08-30 11:57:22.193 [info] [AgentHost] No token resolved for resource: https://api.github.com/repos
+2026-08-30 11:57:22.195 [info] [AgentHost] Clearing authentication for resource: https://api.github.com/repos
+2026-08-30 11:57:22.195 [info] [AgentHost] No token resolved for resource: https://forge.local/account/grok
+2026-08-30 11:57:22.196 [info] [AgentHost] No token resolved for resource: https://forge.local/account/grok
+2026-08-30 11:57:22.197 [info] [AgentHost] Clearing authentication for resource: https://forge.local/account/grok
+2026-08-30 11:57:22.198 [info] [AgentHost] No token resolved for resource: https://forge.local/account/deepseek
+2026-08-30 11:57:22.198 [info] [AgentHost] No token resolved for resource: https://forge.local/account/deepseek
+2026-08-30 11:57:22.200 [info] [AgentHost] Clearing authentication for resource: https://forge.local/account/deepseek
+2026-08-30 11:57:22.200 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-deepseek
+2026-08-30 11:57:22.200 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-deepseek
+2026-08-30 11:57:22.201 [info] [AgentHost] Clearing authentication for resource: https://forge.local/codex/model-provider/forge-official-deepseek
+2026-08-30 11:57:22.201 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-grok
+2026-08-30 11:57:22.202 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-grok
+2026-08-30 11:57:22.202 [info] [AgentHost] Clearing authentication for resource: https://forge.local/codex/model-provider/forge-official-grok
+2026-08-30 11:57:24.750 [info] [AgentHost] No token resolved for resource: https://api.github.com
+2026-08-30 11:57:24.751 [info] [AgentHost] No token resolved for resource: https://api.github.com/repos
+2026-08-30 11:57:24.803 [info] [AgentHost] No token resolved for resource: https://forge.local/account/grok
+2026-08-30 11:57:24.804 [info] [AgentHost] No token resolved for resource: https://forge.local/account/deepseek
+2026-08-30 11:57:24.806 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-deepseek
+2026-08-30 11:57:24.806 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-grok
+2026-08-30 11:57:26.365 [info] [AccountPolicyGate] apply: state=inactive, reason=undefined, isRestricted=false
+2026-08-30 11:57:28.097 [info] [AgentHost] No token resolved for resource: https://api.github.com
+2026-08-30 11:57:28.098 [info] [AgentHost] No token resolved for resource: https://api.github.com
+2026-08-30 11:57:28.098 [info] [AgentHost] No token resolved for resource: https://api.github.com
+2026-08-30 11:57:28.098 [info] [AgentHost] No token resolved for resource: https://api.github.com
+2026-08-30 11:57:28.099 [info] [AgentHost] No token resolved for resource: https://api.github.com
+2026-08-30 11:57:28.099 [info] [AgentHost] No token resolved for resource: https://api.github.com
+2026-08-30 11:57:28.101 [info] [AgentHost] No token resolved for resource: https://api.github.com/repos
+2026-08-30 11:57:28.102 [info] [AgentHost] No token resolved for resource: https://forge.local/account/grok
+2026-08-30 11:57:28.102 [info] [AgentHost] No token resolved for resource: https://forge.local/account/deepseek
+2026-08-30 11:57:28.102 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-deepseek
+2026-08-30 11:57:28.102 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-grok
+2026-08-30 11:57:28.103 [info] [AgentHost] No token resolved for resource: https://api.github.com/repos
+2026-08-30 11:57:28.103 [info] [AgentHost] No token resolved for resource: https://forge.local/account/grok
+2026-08-30 11:57:28.103 [info] [AgentHost] No token resolved for resource: https://forge.local/account/deepseek
+2026-08-30 11:57:28.104 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-deepseek
+2026-08-30 11:57:28.104 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-grok
+2026-08-30 11:57:28.104 [info] [AgentHost] No token resolved for resource: https://api.github.com/repos
+2026-08-30 11:57:28.105 [info] [AgentHost] No token resolved for resource: https://forge.local/account/grok
+2026-08-30 11:57:28.105 [info] [AgentHost] No token resolved for resource: https://forge.local/account/deepseek
+2026-08-30 11:57:28.105 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-deepseek
+2026-08-30 11:57:28.106 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-grok
+2026-08-30 11:57:28.106 [info] [AgentHost] No token resolved for resource: https://api.github.com/repos
+2026-08-30 11:57:28.106 [info] [AgentHost] No token resolved for resource: https://forge.local/account/grok
+2026-08-30 11:57:28.106 [info] [AgentHost] No token resolved for resource: https://forge.local/account/deepseek
+2026-08-30 11:57:28.107 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-deepseek
+2026-08-30 11:57:28.107 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-grok
+2026-08-30 11:57:28.107 [info] [AgentHost] No token resolved for resource: https://api.github.com/repos
+2026-08-30 11:57:28.107 [info] [AgentHost] No token resolved for resource: https://forge.local/account/grok
+2026-08-30 11:57:28.108 [info] [AgentHost] No token resolved for resource: https://forge.local/account/deepseek
+2026-08-30 11:57:28.108 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-deepseek
+2026-08-30 11:57:28.108 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-grok
+2026-08-30 11:57:28.109 [info] [AgentHost] No token resolved for resource: https://api.github.com/repos
+2026-08-30 11:57:28.109 [info] [AgentHost] No token resolved for resource: https://forge.local/account/grok
+2026-08-30 11:57:28.109 [info] [AgentHost] No token resolved for resource: https://forge.local/account/deepseek
+2026-08-30 11:57:28.109 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-deepseek
+2026-08-30 11:57:28.110 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-grok
+2026-08-30 11:57:42.139 [info] [AgentHost] No token resolved for resource: https://api.github.com
+2026-08-30 11:57:42.142 [info] [AgentHost] No token resolved for resource: https://api.github.com/repos
+2026-08-30 11:57:42.142 [info] [AgentHost] No token resolved for resource: https://forge.local/account/grok
+2026-08-30 11:57:42.142 [info] [AgentHost] No token resolved for resource: https://forge.local/account/deepseek
+2026-08-30 11:57:42.143 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-deepseek
+2026-08-30 11:57:42.143 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-grok
+2026-08-30 11:57:42.243 [info] [AgentHost] No token resolved for resource: https://api.github.com
+2026-08-30 11:57:42.244 [info] [AgentHost] No token resolved for resource: https://api.github.com/repos
+2026-08-30 11:57:42.244 [info] [AgentHost] No token resolved for resource: https://forge.local/account/grok
+2026-08-30 11:57:42.245 [info] [AgentHost] No token resolved for resource: https://forge.local/account/deepseek
+2026-08-30 11:57:42.245 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-deepseek
+2026-08-30 11:57:42.246 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-grok
+2026-08-30 11:57:43.218 [info] [AgentHost] No token resolved for resource: https://api.github.com
+2026-08-30 11:57:43.264 [info] [AgentHost] No token resolved for resource: https://api.github.com/repos
+2026-08-30 11:57:43.293 [info] [AgentHost] No token resolved for resource: https://forge.local/account/grok
+2026-08-30 11:57:43.294 [info] [AgentHost] No token resolved for resource: https://forge.local/account/deepseek
+2026-08-30 11:57:43.294 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-deepseek
+2026-08-30 11:57:43.294 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-grok
+2026-08-30 11:57:54.787 [info] [AgentHost] No token resolved for resource: https://api.github.com
+2026-08-30 11:57:54.867 [info] [AgentHost] No token resolved for resource: https://api.github.com
+2026-08-30 11:57:54.867 [info] [AgentHost] No token resolved for resource: https://api.github.com
+2026-08-30 11:57:54.867 [info] [AgentHost] No token resolved for resource: https://api.github.com
+2026-08-30 11:57:54.868 [info] [AgentHost] No token resolved for resource: https://api.github.com/repos
+2026-08-30 11:57:54.868 [info] [AgentHost] No token resolved for resource: https://forge.local/account/grok
+2026-08-30 11:57:54.868 [info] [AgentHost] No token resolved for resource: https://forge.local/account/deepseek
+2026-08-30 11:57:54.869 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-deepseek
+2026-08-30 11:57:54.869 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-grok
+2026-08-30 11:57:54.869 [info] [AgentHost] No token resolved for resource: https://api.github.com/repos
+2026-08-30 11:57:54.870 [info] [AgentHost] No token resolved for resource: https://forge.local/account/grok
+2026-08-30 11:57:54.870 [info] [AgentHost] No token resolved for resource: https://forge.local/account/deepseek
+2026-08-30 11:57:54.870 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-deepseek
+2026-08-30 11:57:54.871 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-grok
+2026-08-30 11:57:54.871 [info] [AgentHost] No token resolved for resource: https://api.github.com/repos
+2026-08-30 11:57:54.871 [info] [AgentHost] No token resolved for resource: https://forge.local/account/grok
+2026-08-30 11:57:54.872 [info] [AgentHost] No token resolved for resource: https://forge.local/account/deepseek
+2026-08-30 11:57:54.872 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-deepseek
+2026-08-30 11:57:54.872 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-grok
+2026-08-30 11:57:54.873 [info] [AgentHost] No token resolved for resource: https://api.github.com/repos
+2026-08-30 11:57:54.873 [info] [AgentHost] No token resolved for resource: https://forge.local/account/grok
+2026-08-30 11:57:54.873 [info] [AgentHost] No token resolved for resource: https://forge.local/account/deepseek
+2026-08-30 11:57:54.874 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-deepseek
+2026-08-30 11:57:54.874 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-grok
+2026-08-30 11:58:00.894 [info] [AgentHost] No token resolved for resource: https://api.github.com
+2026-08-30 11:58:00.894 [info] [AgentHost] No token resolved for resource: https://api.github.com
+2026-08-30 11:58:00.895 [info] [AgentHost] No token resolved for resource: https://api.github.com
+2026-08-30 11:58:00.895 [info] [AgentHost] No token resolved for resource: https://api.github.com
+2026-08-30 11:58:00.896 [info] [AgentHost] No token resolved for resource: https://api.github.com
+2026-08-30 11:58:00.896 [info] [AgentHost] No token resolved for resource: https://api.github.com
+2026-08-30 11:58:00.903 [info] [AgentHost] No token resolved for resource: https://api.github.com/repos
+2026-08-30 11:58:00.904 [info] [AgentHost] No token resolved for resource: https://forge.local/account/grok
+2026-08-30 11:58:00.904 [info] [AgentHost] No token resolved for resource: https://forge.local/account/deepseek
+2026-08-30 11:58:00.905 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-deepseek
+2026-08-30 11:58:00.905 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-grok
+2026-08-30 11:58:00.906 [info] [AgentHost] No token resolved for resource: https://api.github.com/repos
+2026-08-30 11:58:00.906 [info] [AgentHost] No token resolved for resource: https://forge.local/account/grok
+2026-08-30 11:58:00.906 [info] [AgentHost] No token resolved for resource: https://forge.local/account/deepseek
+2026-08-30 11:58:00.907 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-deepseek
+2026-08-30 11:58:00.907 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-grok
+2026-08-30 11:58:00.907 [info] [AgentHost] No token resolved for resource: https://api.github.com/repos
+2026-08-30 11:58:00.908 [info] [AgentHost] No token resolved for resource: https://forge.local/account/grok
+2026-08-30 11:58:00.908 [info] [AgentHost] No token resolved for resource: https://forge.local/account/deepseek
+2026-08-30 11:58:00.908 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-deepseek
+2026-08-30 11:58:00.909 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-grok
+2026-08-30 11:58:00.909 [info] [AgentHost] No token resolved for resource: https://api.github.com/repos
+2026-08-30 11:58:00.910 [info] [AgentHost] No token resolved for resource: https://forge.local/account/grok
+2026-08-30 11:58:00.910 [info] [AgentHost] No token resolved for resource: https://forge.local/account/deepseek
+2026-08-30 11:58:00.910 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-deepseek
+2026-08-30 11:58:00.911 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-grok
+2026-08-30 11:58:00.911 [info] [AgentHost] No token resolved for resource: https://api.github.com/repos
+2026-08-30 11:58:00.912 [info] [AgentHost] No token resolved for resource: https://forge.local/account/grok
+2026-08-30 11:58:00.912 [info] [AgentHost] No token resolved for resource: https://forge.local/account/deepseek
+2026-08-30 11:58:00.912 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-deepseek
+2026-08-30 11:58:00.913 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-grok
+2026-08-30 11:58:00.913 [info] [AgentHost] No token resolved for resource: https://api.github.com/repos
+2026-08-30 11:58:00.913 [info] [AgentHost] No token resolved for resource: https://forge.local/account/grok
+2026-08-30 11:58:00.914 [info] [AgentHost] No token resolved for resource: https://forge.local/account/deepseek
+2026-08-30 11:58:00.914 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-deepseek
+2026-08-30 11:58:00.914 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-grok
+2026-08-30 11:58:07.474 [info] [AgentHost] No token resolved for resource: https://api.github.com
+2026-08-30 11:58:07.587 [info] [AgentHost] No token resolved for resource: https://api.github.com/repos
+2026-08-30 11:58:07.588 [info] [AgentHost] No token resolved for resource: https://forge.local/account/grok
+2026-08-30 11:58:07.589 [info] [AgentHost] No token resolved for resource: https://forge.local/account/deepseek
+2026-08-30 11:58:07.589 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-deepseek
+2026-08-30 11:58:07.589 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-grok
+2026-08-30 11:58:07.727 [info] [AgentHost] No token resolved for resource: https://api.github.com
+2026-08-30 11:58:07.728 [info] [AgentHost] No token resolved for resource: https://api.github.com/repos
+2026-08-30 11:58:07.728 [info] [AgentHost] No token resolved for resource: https://forge.local/account/grok
+2026-08-30 11:58:07.728 [info] [AgentHost] No token resolved for resource: https://forge.local/account/deepseek
+2026-08-30 11:58:07.729 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-deepseek
+2026-08-30 11:58:07.729 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-grok
+2026-08-30 12:00:16.984 [info] [AgentHost] No token resolved for resource: https://api.github.com
+2026-08-30 12:00:16.986 [info] [AgentHost] No token resolved for resource: https://api.github.com
+2026-08-30 12:00:16.987 [info] [AgentHost] No token resolved for resource: https://api.github.com
+2026-08-30 12:00:16.989 [info] [AgentHost] No token resolved for resource: https://api.github.com/repos
+2026-08-30 12:00:16.990 [info] [AgentHost] No token resolved for resource: https://forge.local/account/grok
+2026-08-30 12:00:16.990 [info] [AgentHost] No token resolved for resource: https://forge.local/account/deepseek
+2026-08-30 12:00:16.990 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-deepseek
+2026-08-30 12:00:16.991 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-grok
+2026-08-30 12:00:16.991 [info] [AgentHost] No token resolved for resource: https://api.github.com/repos
+2026-08-30 12:00:16.992 [info] [AgentHost] No token resolved for resource: https://forge.local/account/grok
+2026-08-30 12:00:16.993 [info] [AgentHost] No token resolved for resource: https://forge.local/account/deepseek
+2026-08-30 12:00:16.993 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-deepseek
+2026-08-30 12:00:16.995 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-grok
+2026-08-30 12:00:16.996 [info] [AgentHost] No token resolved for resource: https://api.github.com/repos
+2026-08-30 12:00:16.997 [info] [AgentHost] No token resolved for resource: https://forge.local/account/grok
+2026-08-30 12:00:16.999 [info] [AgentHost] No token resolved for resource: https://forge.local/account/deepseek
+2026-08-30 12:00:17.001 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-deepseek
+2026-08-30 12:00:17.002 [info] [AgentHost] No token resolved for resource: https://forge.local/codex/model-provider/forge-official-grok
+2026-08-30 12:00:17.941 [info] ChatService#cancelCurrentRequestForSession: No pending request was found for session agent-host-codex:/untitled-a18fac22-b263-457e-a320-909c21e2ea8a. requestInProgress=false, pendingRequests=0
+2026-08-30 12:00:19.987 [warning] Attempted to report in-progress status for unknown chat session type 'copilot-cloud-agent'
+2026-08-30 12:00:19.987 [warning] Attempted to report in-progress status for unknown chat session type 'copilotcli'

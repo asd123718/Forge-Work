@@ -1,0 +1,7 @@
+version: v2
+inputs:
+  - proto_file: ./scip.proto
+plugins:
+  - local: protoc-gen-es
+    opt: target=ts
+    out: ./

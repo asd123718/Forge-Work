@@ -1,0 +1,46 @@
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __decorateClass = (decorators, target, key, kind) => {
+  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc(target, key) : target;
+  for (var i = decorators.length - 1, decorator; i >= 0; i--)
+    if (decorator = decorators[i])
+      result = (kind ? decorator(target, key, result) : decorator(result)) || result;
+  if (kind && result) __defProp(target, key, result);
+  return result;
+};
+var __decorateParam = (index, decorator) => (target, key) => decorator(target, key, index);
+import { Disposable, DisposableMap } from "../../../base/common/lifecycle.js";
+import { ExtHostContext, MainContext } from "../common/extHost.protocol.js";
+import { IAiEmbeddingVectorService } from "../../services/aiEmbeddingVector/common/aiEmbeddingVectorService.js";
+import { extHostNamedCustomer } from "../../services/extensions/common/extHostCustomers.js";
+let MainThreadAiEmbeddingVector = class extends Disposable {
+  constructor(context, _AiEmbeddingVectorService) {
+    super();
+    this._AiEmbeddingVectorService = _AiEmbeddingVectorService;
+    this._registrations = this._register(new DisposableMap());
+    this._proxy = context.getProxy(ExtHostContext.ExtHostAiEmbeddingVector);
+  }
+  $registerAiEmbeddingVectorProvider(model, handle) {
+    const provider = {
+      provideAiEmbeddingVector: (strings, token) => {
+        return this._proxy.$provideAiEmbeddingVector(
+          handle,
+          strings,
+          token
+        );
+      }
+    };
+    this._registrations.set(handle, this._AiEmbeddingVectorService.registerAiEmbeddingVectorProvider(model, provider));
+  }
+  $unregisterAiEmbeddingVectorProvider(handle) {
+    this._registrations.deleteAndDispose(handle);
+  }
+};
+MainThreadAiEmbeddingVector = __decorateClass([
+  extHostNamedCustomer(MainContext.MainThreadAiEmbeddingVector),
+  __decorateParam(1, IAiEmbeddingVectorService)
+], MainThreadAiEmbeddingVector);
+export {
+  MainThreadAiEmbeddingVector
+};
+//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsiQzpcXFByb2plY3RcXEZvcmdlX0R1cGxpY2F0ZTJcXGZvcmdlXFxzcmNcXHZzXFx3b3JrYmVuY2hcXGFwaVxcYnJvd3NlclxcbWFpblRocmVhZEFpRW1iZWRkaW5nVmVjdG9yLnRzIl0sCiAgInNvdXJjZXNDb250ZW50IjogWyIvKi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLVxuICogIENvcHlyaWdodCAoYykgTWljcm9zb2Z0IENvcnBvcmF0aW9uLiBBbGwgcmlnaHRzIHJlc2VydmVkLlxuICogIExpY2Vuc2VkIHVuZGVyIHRoZSBNSVQgTGljZW5zZS4gU2VlIExpY2Vuc2UudHh0IGluIHRoZSBwcm9qZWN0IHJvb3QgZm9yIGxpY2Vuc2UgaW5mb3JtYXRpb24uXG4gKi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tKi9cblxuaW1wb3J0IHsgQ2FuY2VsbGF0aW9uVG9rZW4gfSBmcm9tICcuLi8uLi8uLi9iYXNlL2NvbW1vbi9jYW5jZWxsYXRpb24uanMnO1xuaW1wb3J0IHsgRGlzcG9zYWJsZSwgRGlzcG9zYWJsZU1hcCB9IGZyb20gJy4uLy4uLy4uL2Jhc2UvY29tbW9uL2xpZmVjeWNsZS5qcyc7XG5pbXBvcnQgeyBFeHRIb3N0QWlFbWJlZGRpbmdWZWN0b3JTaGFwZSwgRXh0SG9zdENvbnRleHQsIE1haW5Db250ZXh0LCBNYWluVGhyZWFkQWlFbWJlZGRpbmdWZWN0b3JTaGFwZSB9IGZyb20gJy4uL2NvbW1vbi9leHRIb3N0LnByb3RvY29sLmpzJztcbmltcG9ydCB7IElBaUVtYmVkZGluZ1ZlY3RvclByb3ZpZGVyLCBJQWlFbWJlZGRpbmdWZWN0b3JTZXJ2aWNlIH0gZnJvbSAnLi4vLi4vc2VydmljZXMvYWlFbWJlZGRpbmdWZWN0b3IvY29tbW9uL2FpRW1iZWRkaW5nVmVjdG9yU2VydmljZS5qcyc7XG5pbXBvcnQgeyBJRXh0SG9zdENvbnRleHQsIGV4dEhvc3ROYW1lZEN1c3RvbWVyIH0gZnJvbSAnLi4vLi4vc2VydmljZXMvZXh0ZW5zaW9ucy9jb21tb24vZXh0SG9zdEN1c3RvbWVycy5qcyc7XG5cbkBleHRIb3N0TmFtZWRDdXN0b21lcihNYWluQ29udGV4dC5NYWluVGhyZWFkQWlFbWJlZGRpbmdWZWN0b3IpXG5leHBvcnQgY2xhc3MgTWFpblRocmVhZEFpRW1iZWRkaW5nVmVjdG9yIGV4dGVuZHMgRGlzcG9zYWJsZSBpbXBsZW1lbnRzIE1haW5UaHJlYWRBaUVtYmVkZGluZ1ZlY3RvclNoYXBlIHtcblx0cHJpdmF0ZSByZWFkb25seSBfcHJveHk6IEV4dEhvc3RBaUVtYmVkZGluZ1ZlY3RvclNoYXBlO1xuXHRwcml2YXRlIHJlYWRvbmx5IF9yZWdpc3RyYXRpb25zID0gdGhpcy5fcmVnaXN0ZXIobmV3IERpc3Bvc2FibGVNYXA8bnVtYmVyPigpKTtcblxuXHRjb25zdHJ1Y3Rvcihcblx0XHRjb250ZXh0OiBJRXh0SG9zdENvbnRleHQsXG5cdFx0QElBaUVtYmVkZGluZ1ZlY3RvclNlcnZpY2UgcHJpdmF0ZSByZWFkb25seSBfQWlFbWJlZGRpbmdWZWN0b3JTZXJ2aWNlOiBJQWlFbWJlZGRpbmdWZWN0b3JTZXJ2aWNlLFxuXHQpIHtcblx0XHRzdXBlcigpO1xuXHRcdHRoaXMuX3Byb3h5ID0gY29udGV4dC5nZXRQcm94eShFeHRIb3N0Q29udGV4dC5FeHRIb3N0QWlFbWJlZGRpbmdWZWN0b3IpO1xuXHR9XG5cblx0JHJlZ2lzdGVyQWlFbWJlZGRpbmdWZWN0b3JQcm92aWRlcihtb2RlbDogc3RyaW5nLCBoYW5kbGU6IG51bWJlcik6IHZvaWQge1xuXHRcdGNvbnN0IHByb3ZpZGVyOiBJQWlFbWJlZGRpbmdWZWN0b3JQcm92aWRlciA9IHtcblx0XHRcdHByb3ZpZGVBaUVtYmVkZGluZ1ZlY3RvcjogKHN0cmluZ3M6IHN0cmluZ1tdLCB0b2tlbjogQ2FuY2VsbGF0aW9uVG9rZW4pID0+IHtcblx0XHRcdFx0cmV0dXJuIHRoaXMuX3Byb3h5LiRwcm92aWRlQWlFbWJlZGRpbmdWZWN0b3IoXG5cdFx0XHRcdFx0aGFuZGxlLFxuXHRcdFx0XHRcdHN0cmluZ3MsXG5cdFx0XHRcdFx0dG9rZW5cblx0XHRcdFx0KTtcblx0XHRcdH0sXG5cdFx0fTtcblx0XHR0aGlzLl9yZWdpc3RyYXRpb25zLnNldChoYW5kbGUsIHRoaXMuX0FpRW1iZWRkaW5nVmVjdG9yU2VydmljZS5yZWdpc3RlckFpRW1iZWRkaW5nVmVjdG9yUHJvdmlkZXIobW9kZWwsIHByb3ZpZGVyKSk7XG5cdH1cblxuXHQkdW5yZWdpc3RlckFpRW1iZWRkaW5nVmVjdG9yUHJvdmlkZXIoaGFuZGxlOiBudW1iZXIpOiB2b2lkIHtcblx0XHR0aGlzLl9yZWdpc3RyYXRpb25zLmRlbGV0ZUFuZERpc3Bvc2UoaGFuZGxlKTtcblx0fVxufVxuIl0sCiAgIm1hcHBpbmdzIjogIjs7Ozs7Ozs7Ozs7QUFNQSxTQUFTLFlBQVkscUJBQXFCO0FBQzFDLFNBQXdDLGdCQUFnQixtQkFBcUQ7QUFDN0csU0FBcUMsaUNBQWlDO0FBQ3RFLFNBQTBCLDRCQUE0QjtBQUcvQyxJQUFNLDhCQUFOLGNBQTBDLFdBQXVEO0FBQUEsRUFJdkcsWUFDQyxTQUM0QywyQkFDM0M7QUFDRCxVQUFNO0FBRnNDO0FBSjdDLFNBQWlCLGlCQUFpQixLQUFLLFVBQVUsSUFBSSxjQUFzQixDQUFDO0FBTzNFLFNBQUssU0FBUyxRQUFRLFNBQVMsZUFBZSx3QkFBd0I7QUFBQSxFQUN2RTtBQUFBLEVBRUEsbUNBQW1DLE9BQWUsUUFBc0I7QUFDdkUsVUFBTSxXQUF1QztBQUFBLE1BQzVDLDBCQUEwQixDQUFDLFNBQW1CLFVBQTZCO0FBQzFFLGVBQU8sS0FBSyxPQUFPO0FBQUEsVUFDbEI7QUFBQSxVQUNBO0FBQUEsVUFDQTtBQUFBLFFBQ0Q7QUFBQSxNQUNEO0FBQUEsSUFDRDtBQUNBLFNBQUssZUFBZSxJQUFJLFFBQVEsS0FBSywwQkFBMEIsa0NBQWtDLE9BQU8sUUFBUSxDQUFDO0FBQUEsRUFDbEg7QUFBQSxFQUVBLHFDQUFxQyxRQUFzQjtBQUMxRCxTQUFLLGVBQWUsaUJBQWlCLE1BQU07QUFBQSxFQUM1QztBQUNEO0FBNUJhLDhCQUFOO0FBQUEsRUFETixxQkFBcUIsWUFBWSwyQkFBMkI7QUFBQSxFQU8xRDtBQUFBLEdBTlU7IiwKICAibmFtZXMiOiBbXQp9Cg==

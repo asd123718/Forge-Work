@@ -1,0 +1,54 @@
+import assert from "assert";
+import { ensureNoDisposablesAreLeakedInTestSuite } from "../../../../base/test/common/utils.js";
+import { CopilotCliConfigKey, copilotCliConfigSchema, normalizeModelFamilyAlias, normalizeToolSearchDeferThreshold, resolveModelCapabilityOverrideField } from "../../common/copilotCliConfig.js";
+import { reasoningEffortLevels } from "../../common/reasoningEffort.js";
+suite("copilotCliConfig", () => {
+  ensureNoDisposablesAreLeakedInTestSuite();
+  test("normalizeModelFamilyAlias accepts plausible model ids and rejects non-ids", () => {
+    assert.deepStrictEqual(
+      ["claude-opus-4.8", "openai/gpt-5", "", " padded ", "has\0nul", "x".repeat(129)].map(normalizeModelFamilyAlias),
+      ["claude-opus-4.8", "openai/gpt-5", void 0, void 0, void 0, void 0]
+    );
+  });
+  test("normalizeToolSearchDeferThreshold floors valid values and defaults invalid values", () => {
+    assert.deepStrictEqual(
+      [5.9, 0, -1, Number.NaN, Number.POSITIVE_INFINITY, void 0].map(normalizeToolSearchDeferThreshold),
+      [5, 0, 1, 1, 1, 1]
+    );
+  });
+  test("per-model reasoning effort schema uses the canonical effort levels", () => {
+    const overrideSchema = copilotCliConfigSchema.definition[CopilotCliConfigKey.ModelCapabilityOverrides].protocol;
+    assert.deepStrictEqual(
+      overrideSchema.additionalProperties?.properties?.reasoningEffort?.enum,
+      [...reasoningEffortLevels]
+    );
+  });
+  test("resolveModelCapabilityOverrideField prefers a usable specific value, then the wildcard", () => {
+    const isString = (value) => typeof value === "string";
+    const overrides = {
+      "*": { family: "gpt-5", reasoningEffort: "medium" },
+      "preview-model-x": { family: "claude-opus-4.8" },
+      "bad-model": { family: 42 }
+    };
+    const invalid = [];
+    assert.deepStrictEqual(
+      [
+        // specific wins over the wildcard
+        resolveModelCapabilityOverrideField(overrides, "preview-model-x", "family", isString),
+        // unset specific field falls back to the wildcard
+        resolveModelCapabilityOverrideField(overrides, "preview-model-x", "reasoningEffort", isString),
+        // an invalid specific value falls through instead of masking the wildcard
+        resolveModelCapabilityOverrideField(overrides, "bad-model", "family", isString, (value) => invalid.push(value)),
+        // no model id (server-side "Auto"): only the wildcard can match
+        resolveModelCapabilityOverrideField(overrides, void 0, "family", isString),
+        // no matching entry / no overrides / malformed entries
+        resolveModelCapabilityOverrideField({ "preview-model-x": { family: "claude-opus-4.8" } }, "other-model", "family", isString),
+        resolveModelCapabilityOverrideField(void 0, "preview-model-x", "family", isString),
+        resolveModelCapabilityOverrideField({ "preview-model-x": "oops", "*": 42 }, "preview-model-x", "family", isString),
+        invalid
+      ],
+      ["claude-opus-4.8", "medium", "gpt-5", "gpt-5", void 0, void 0, void 0, [42]]
+    );
+  });
+});
+//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsiQzpcXFByb2plY3RcXEZvcmdlX0R1cGxpY2F0ZTJcXGZvcmdlXFxzcmNcXHZzXFxwbGF0Zm9ybVxcYWdlbnRIb3N0XFx0ZXN0XFxjb21tb25cXGNvcGlsb3RDbGlDb25maWcudGVzdC50cyJdLAogICJzb3VyY2VzQ29udGVudCI6IFsiLyotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1cbiAqICBDb3B5cmlnaHQgKGMpIE1pY3Jvc29mdCBDb3Jwb3JhdGlvbi4gQWxsIHJpZ2h0cyByZXNlcnZlZC5cbiAqICBMaWNlbnNlZCB1bmRlciB0aGUgTUlUIExpY2Vuc2UuIFNlZSBMaWNlbnNlLnR4dCBpbiB0aGUgcHJvamVjdCByb290IGZvciBsaWNlbnNlIGluZm9ybWF0aW9uLlxuICotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLSovXG5cbmltcG9ydCBhc3NlcnQgZnJvbSAnYXNzZXJ0JztcbmltcG9ydCB7IGVuc3VyZU5vRGlzcG9zYWJsZXNBcmVMZWFrZWRJblRlc3RTdWl0ZSB9IGZyb20gJy4uLy4uLy4uLy4uL2Jhc2UvdGVzdC9jb21tb24vdXRpbHMuanMnO1xuaW1wb3J0IHsgQ29waWxvdENsaUNvbmZpZ0tleSwgY29waWxvdENsaUNvbmZpZ1NjaGVtYSwgbm9ybWFsaXplTW9kZWxGYW1pbHlBbGlhcywgbm9ybWFsaXplVG9vbFNlYXJjaERlZmVyVGhyZXNob2xkLCByZXNvbHZlTW9kZWxDYXBhYmlsaXR5T3ZlcnJpZGVGaWVsZCwgdHlwZSBDb3BpbG90Q2xpTW9kZWxDYXBhYmlsaXR5T3ZlcnJpZGVzIH0gZnJvbSAnLi4vLi4vY29tbW9uL2NvcGlsb3RDbGlDb25maWcuanMnO1xuaW1wb3J0IHsgcmVhc29uaW5nRWZmb3J0TGV2ZWxzIH0gZnJvbSAnLi4vLi4vY29tbW9uL3JlYXNvbmluZ0VmZm9ydC5qcyc7XG5cbnN1aXRlKCdjb3BpbG90Q2xpQ29uZmlnJywgKCkgPT4ge1xuXG5cdGVuc3VyZU5vRGlzcG9zYWJsZXNBcmVMZWFrZWRJblRlc3RTdWl0ZSgpO1xuXG5cdHRlc3QoJ25vcm1hbGl6ZU1vZGVsRmFtaWx5QWxpYXMgYWNjZXB0cyBwbGF1c2libGUgbW9kZWwgaWRzIGFuZCByZWplY3RzIG5vbi1pZHMnLCAoKSA9PiB7XG5cdFx0YXNzZXJ0LmRlZXBTdHJpY3RFcXVhbChcblx0XHRcdFsnY2xhdWRlLW9wdXMtNC44JywgJ29wZW5haS9ncHQtNScsICcnLCAnIHBhZGRlZCAnLCAnaGFzXFx1MDAwMG51bCcsICd4Jy5yZXBlYXQoMTI5KV0ubWFwKG5vcm1hbGl6ZU1vZGVsRmFtaWx5QWxpYXMpLFxuXHRcdFx0WydjbGF1ZGUtb3B1cy00LjgnLCAnb3BlbmFpL2dwdC01JywgdW5kZWZpbmVkLCB1bmRlZmluZWQsIHVuZGVmaW5lZCwgdW5kZWZpbmVkXVxuXHRcdCk7XG5cdH0pO1xuXG5cdHRlc3QoJ25vcm1hbGl6ZVRvb2xTZWFyY2hEZWZlclRocmVzaG9sZCBmbG9vcnMgdmFsaWQgdmFsdWVzIGFuZCBkZWZhdWx0cyBpbnZhbGlkIHZhbHVlcycsICgpID0+IHtcblx0XHRhc3NlcnQuZGVlcFN0cmljdEVxdWFsKFxuXHRcdFx0WzUuOSwgMCwgLTEsIE51bWJlci5OYU4sIE51bWJlci5QT1NJVElWRV9JTkZJTklUWSwgdW5kZWZpbmVkXS5tYXAobm9ybWFsaXplVG9vbFNlYXJjaERlZmVyVGhyZXNob2xkKSxcblx0XHRcdFs1LCAwLCAxLCAxLCAxLCAxXVxuXHRcdCk7XG5cdH0pO1xuXG5cdHRlc3QoJ3Blci1tb2RlbCByZWFzb25pbmcgZWZmb3J0IHNjaGVtYSB1c2VzIHRoZSBjYW5vbmljYWwgZWZmb3J0IGxldmVscycsICgpID0+IHtcblx0XHRjb25zdCBvdmVycmlkZVNjaGVtYSA9IGNvcGlsb3RDbGlDb25maWdTY2hlbWEuZGVmaW5pdGlvbltDb3BpbG90Q2xpQ29uZmlnS2V5Lk1vZGVsQ2FwYWJpbGl0eU92ZXJyaWRlc10ucHJvdG9jb2w7XG5cdFx0YXNzZXJ0LmRlZXBTdHJpY3RFcXVhbChcblx0XHRcdG92ZXJyaWRlU2NoZW1hLmFkZGl0aW9uYWxQcm9wZXJ0aWVzPy5wcm9wZXJ0aWVzPy5yZWFzb25pbmdFZmZvcnQ/LmVudW0sXG5cdFx0XHRbLi4ucmVhc29uaW5nRWZmb3J0TGV2ZWxzXVxuXHRcdCk7XG5cdH0pO1xuXG5cdHRlc3QoJ3Jlc29sdmVNb2RlbENhcGFiaWxpdHlPdmVycmlkZUZpZWxkIHByZWZlcnMgYSB1c2FibGUgc3BlY2lmaWMgdmFsdWUsIHRoZW4gdGhlIHdpbGRjYXJkJywgKCkgPT4ge1xuXHRcdGNvbnN0IGlzU3RyaW5nID0gKHZhbHVlOiB1bmtub3duKTogdmFsdWUgaXMgc3RyaW5nID0+IHR5cGVvZiB2YWx1ZSA9PT0gJ3N0cmluZyc7XG5cdFx0Y29uc3Qgb3ZlcnJpZGVzOiBDb3BpbG90Q2xpTW9kZWxDYXBhYmlsaXR5T3ZlcnJpZGVzID0ge1xuXHRcdFx0JyonOiB7IGZhbWlseTogJ2dwdC01JywgcmVhc29uaW5nRWZmb3J0OiAnbWVkaXVtJyB9LFxuXHRcdFx0J3ByZXZpZXctbW9kZWwteCc6IHsgZmFtaWx5OiAnY2xhdWRlLW9wdXMtNC44JyB9LFxuXHRcdFx0J2JhZC1tb2RlbCc6IHsgZmFtaWx5OiA0MiBhcyBuZXZlciB9LFxuXHRcdH07XG5cdFx0Y29uc3QgaW52YWxpZDogdW5rbm93bltdID0gW107XG5cdFx0YXNzZXJ0LmRlZXBTdHJpY3RFcXVhbChcblx0XHRcdFtcblx0XHRcdFx0Ly8gc3BlY2lmaWMgd2lucyBvdmVyIHRoZSB3aWxkY2FyZFxuXHRcdFx0XHRyZXNvbHZlTW9kZWxDYXBhYmlsaXR5T3ZlcnJpZGVGaWVsZChvdmVycmlkZXMsICdwcmV2aWV3LW1vZGVsLXgnLCAnZmFtaWx5JywgaXNTdHJpbmcpLFxuXHRcdFx0XHQvLyB1bnNldCBzcGVjaWZpYyBmaWVsZCBmYWxscyBiYWNrIHRvIHRoZSB3aWxkY2FyZFxuXHRcdFx0XHRyZXNvbHZlTW9kZWxDYXBhYmlsaXR5T3ZlcnJpZGVGaWVsZChvdmVycmlkZXMsICdwcmV2aWV3LW1vZGVsLXgnLCAncmVhc29uaW5nRWZmb3J0JywgaXNTdHJpbmcpLFxuXHRcdFx0XHQvLyBhbiBpbnZhbGlkIHNwZWNpZmljIHZhbHVlIGZhbGxzIHRocm91Z2ggaW5zdGVhZCBvZiBtYXNraW5nIHRoZSB3aWxkY2FyZFxuXHRcdFx0XHRyZXNvbHZlTW9kZWxDYXBhYmlsaXR5T3ZlcnJpZGVGaWVsZChvdmVycmlkZXMsICdiYWQtbW9kZWwnLCAnZmFtaWx5JywgaXNTdHJpbmcsIHZhbHVlID0+IGludmFsaWQucHVzaCh2YWx1ZSkpLFxuXHRcdFx0XHQvLyBubyBtb2RlbCBpZCAoc2VydmVyLXNpZGUgXCJBdXRvXCIpOiBvbmx5IHRoZSB3aWxkY2FyZCBjYW4gbWF0Y2hcblx0XHRcdFx0cmVzb2x2ZU1vZGVsQ2FwYWJpbGl0eU92ZXJyaWRlRmllbGQob3ZlcnJpZGVzLCB1bmRlZmluZWQsICdmYW1pbHknLCBpc1N0cmluZyksXG5cdFx0XHRcdC8vIG5vIG1hdGNoaW5nIGVudHJ5IC8gbm8gb3ZlcnJpZGVzIC8gbWFsZm9ybWVkIGVudHJpZXNcblx0XHRcdFx0cmVzb2x2ZU1vZGVsQ2FwYWJpbGl0eU92ZXJyaWRlRmllbGQoeyAncHJldmlldy1tb2RlbC14JzogeyBmYW1pbHk6ICdjbGF1ZGUtb3B1cy00LjgnIH0gfSwgJ290aGVyLW1vZGVsJywgJ2ZhbWlseScsIGlzU3RyaW5nKSxcblx0XHRcdFx0cmVzb2x2ZU1vZGVsQ2FwYWJpbGl0eU92ZXJyaWRlRmllbGQodW5kZWZpbmVkLCAncHJldmlldy1tb2RlbC14JywgJ2ZhbWlseScsIGlzU3RyaW5nKSxcblx0XHRcdFx0cmVzb2x2ZU1vZGVsQ2FwYWJpbGl0eU92ZXJyaWRlRmllbGQoeyAncHJldmlldy1tb2RlbC14JzogJ29vcHMnIGFzIG5ldmVyLCAnKic6IDQyIGFzIG5ldmVyIH0sICdwcmV2aWV3LW1vZGVsLXgnLCAnZmFtaWx5JywgaXNTdHJpbmcpLFxuXHRcdFx0XHRpbnZhbGlkLFxuXHRcdFx0XSxcblx0XHRcdFsnY2xhdWRlLW9wdXMtNC44JywgJ21lZGl1bScsICdncHQtNScsICdncHQtNScsIHVuZGVmaW5lZCwgdW5kZWZpbmVkLCB1bmRlZmluZWQsIFs0Ml1dXG5cdFx0KTtcblx0fSk7XG5cbn0pO1xuIl0sCiAgIm1hcHBpbmdzIjogIkFBS0EsT0FBTyxZQUFZO0FBQ25CLFNBQVMsK0NBQStDO0FBQ3hELFNBQVMscUJBQXFCLHdCQUF3QiwyQkFBMkIsbUNBQW1DLDJDQUFvRjtBQUN4TSxTQUFTLDZCQUE2QjtBQUV0QyxNQUFNLG9CQUFvQixNQUFNO0FBRS9CLDBDQUF3QztBQUV4QyxPQUFLLDZFQUE2RSxNQUFNO0FBQ3ZGLFdBQU87QUFBQSxNQUNOLENBQUMsbUJBQW1CLGdCQUFnQixJQUFJLFlBQVksWUFBZ0IsSUFBSSxPQUFPLEdBQUcsQ0FBQyxFQUFFLElBQUkseUJBQXlCO0FBQUEsTUFDbEgsQ0FBQyxtQkFBbUIsZ0JBQWdCLFFBQVcsUUFBVyxRQUFXLE1BQVM7QUFBQSxJQUMvRTtBQUFBLEVBQ0QsQ0FBQztBQUVELE9BQUsscUZBQXFGLE1BQU07QUFDL0YsV0FBTztBQUFBLE1BQ04sQ0FBQyxLQUFLLEdBQUcsSUFBSSxPQUFPLEtBQUssT0FBTyxtQkFBbUIsTUFBUyxFQUFFLElBQUksaUNBQWlDO0FBQUEsTUFDbkcsQ0FBQyxHQUFHLEdBQUcsR0FBRyxHQUFHLEdBQUcsQ0FBQztBQUFBLElBQ2xCO0FBQUEsRUFDRCxDQUFDO0FBRUQsT0FBSyxzRUFBc0UsTUFBTTtBQUNoRixVQUFNLGlCQUFpQix1QkFBdUIsV0FBVyxvQkFBb0Isd0JBQXdCLEVBQUU7QUFDdkcsV0FBTztBQUFBLE1BQ04sZUFBZSxzQkFBc0IsWUFBWSxpQkFBaUI7QUFBQSxNQUNsRSxDQUFDLEdBQUcscUJBQXFCO0FBQUEsSUFDMUI7QUFBQSxFQUNELENBQUM7QUFFRCxPQUFLLDBGQUEwRixNQUFNO0FBQ3BHLFVBQU0sV0FBVyxDQUFDLFVBQW9DLE9BQU8sVUFBVTtBQUN2RSxVQUFNLFlBQWdEO0FBQUEsTUFDckQsS0FBSyxFQUFFLFFBQVEsU0FBUyxpQkFBaUIsU0FBUztBQUFBLE1BQ2xELG1CQUFtQixFQUFFLFFBQVEsa0JBQWtCO0FBQUEsTUFDL0MsYUFBYSxFQUFFLFFBQVEsR0FBWTtBQUFBLElBQ3BDO0FBQ0EsVUFBTSxVQUFxQixDQUFDO0FBQzVCLFdBQU87QUFBQSxNQUNOO0FBQUE7QUFBQSxRQUVDLG9DQUFvQyxXQUFXLG1CQUFtQixVQUFVLFFBQVE7QUFBQTtBQUFBLFFBRXBGLG9DQUFvQyxXQUFXLG1CQUFtQixtQkFBbUIsUUFBUTtBQUFBO0FBQUEsUUFFN0Ysb0NBQW9DLFdBQVcsYUFBYSxVQUFVLFVBQVUsV0FBUyxRQUFRLEtBQUssS0FBSyxDQUFDO0FBQUE7QUFBQSxRQUU1RyxvQ0FBb0MsV0FBVyxRQUFXLFVBQVUsUUFBUTtBQUFBO0FBQUEsUUFFNUUsb0NBQW9DLEVBQUUsbUJBQW1CLEVBQUUsUUFBUSxrQkFBa0IsRUFBRSxHQUFHLGVBQWUsVUFBVSxRQUFRO0FBQUEsUUFDM0gsb0NBQW9DLFFBQVcsbUJBQW1CLFVBQVUsUUFBUTtBQUFBLFFBQ3BGLG9DQUFvQyxFQUFFLG1CQUFtQixRQUFpQixLQUFLLEdBQVksR0FBRyxtQkFBbUIsVUFBVSxRQUFRO0FBQUEsUUFDbkk7QUFBQSxNQUNEO0FBQUEsTUFDQSxDQUFDLG1CQUFtQixVQUFVLFNBQVMsU0FBUyxRQUFXLFFBQVcsUUFBVyxDQUFDLEVBQUUsQ0FBQztBQUFBLElBQ3RGO0FBQUEsRUFDRCxDQUFDO0FBRUYsQ0FBQzsiLAogICJuYW1lcyI6IFtdCn0K
