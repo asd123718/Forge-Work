@@ -1,0 +1,21 @@
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.monaco-editor .forge-live-edit-faded-line {
+	background-color: var(--vscode-editor-findMatchHighlightBackground, rgba(127, 127, 0, 0.12));
+	opacity: 0.45;
+}
+
+.monaco-editor .forge-live-edit-active-line {
+	background-color: var(--vscode-editor-findMatchBackground, rgba(127, 127, 0, 0.3));
+	opacity: 1;
+	box-shadow: inset 2px 0 0 var(--vscode-editor-findMatchBorder, var(--vscode-focusBorder));
+}
+
+.hc-black .monaco-editor .forge-live-edit-active-line,
+.hc-light .monaco-editor .forge-live-edit-active-line {
+	outline: 1px solid var(--vscode-contrastActiveBorder);
+	outline-offset: -1px;
+}

@@ -1,0 +1,5 @@
+**/node_modules/
+grok-build/target/
+grok-build/bin/*.exe
+deepseek-harness/.dsh-build/
+deepseek-harness/.pnpm-store/

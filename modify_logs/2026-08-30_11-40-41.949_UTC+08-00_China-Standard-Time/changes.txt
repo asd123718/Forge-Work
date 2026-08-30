@@ -1,0 +1,43 @@
+本轮对话时间：2026-08-30 11:40 UTC+08:00 China Standard Time
+
+本轮性质：把 Duplicate2 旁的 DeepSeek Harness / Grok Build 写入 forge 内部，修好 Windows 启动，测通后删掉旁路目录，并提交推送到 Forge-Work。
+
+被修改的文件：
+- C:\Project\Forge_Duplicate2\forge\third_party\deepseek-harness\
+  纯文字概括：把 DeepSeek Harness 源码放进 forge 仓库，不再依赖旁边的 deepseek-harness-master 目录。
+- C:\Project\Forge_Duplicate2\forge\third_party\grok-build\
+  纯文字概括：把 Grok Build 源码放进 forge 仓库；本机另外下载了 grok.exe 到 bin 里方便启动，exe 本身不进 git（超过 GitHub 单文件上限）。
+- C:\Project\Forge_Duplicate2\forge\third_party\.gitignore
+  纯文字概括：忽略 vendored 树里的 node_modules、Rust target 和 grok.exe，避免把安装产物推进仓库。
+- C:\Project\Forge_Duplicate2\forge\src\vs\platform\agentHost\node\orchestration\workerRuntime.ts
+  纯文字概括：从 appRoot 往上找 forge/third_party 里的 Harness 和 Grok；Grok 还会看 ~/.grok/bin。Windows 不再把 npx/grok 改写成 .cmd 后无 shell 启动。npx 改为走 node.exe + npx-cli.js。
+- C:\Project\Forge_Duplicate2\forge\src\vs\platform\agentHost\node\orchestration\workerAdapters.ts
+  纯文字概括：本地 Harness 没装依赖时退回 npx；有 node 入口就直接跑。可用性检查不再把光秃秃的 grok 命令当成已安装。
+- C:\Project\Forge_Duplicate2\forge\src\vs\platform\agentHost\node\orchestration\forgeVendorAccountHost.ts
+  纯文字概括：Grok 登录/登出改走仓库内的 grok.exe，并用同一套 Windows 启动修正。
+- C:\Project\Forge_Duplicate2\forge\src\vs\platform\agentHost\test\node\orchestration\workerRuntime.test.ts
+  纯文字概括：补上 third_party 发现、裸命令不能当可执行文件、以及 Windows 不 spawn .cmd 的测试。
+- C:\Project\Forge_Duplicate2\forge\src\vs\platform\agentHost\test\node\orchestration\workerAdapters.test.ts
+  纯文字概括：DeepSeek 解析结果允许 node.exe + npx-cli，不再写死只能是 pnpm/npx。
+- C:\Project\Forge_Duplicate2\forge\docs\FORGE-ORCHESTRATION.md
+  纯文字概括：文档改成说明 CLI 在 forge/third_party 内部，不再写旁边的 sibling 目录。
+- C:\Project\Forge_Duplicate2\forge\src\vs\platform\agentHost\common\orchestration\leaderPrompts.ts
+- C:\Project\Forge_Duplicate2\forge\src\vs\platform\agentHost\common\orchestration\orchestrationTypes.ts
+- C:\Project\Forge_Duplicate2\forge\src\vs\platform\agentHost\node\orchestration\cliLeader.ts
+- C:\Project\Forge_Duplicate2\forge\src\vs\platform\agentHost\node\orchestration\codexLeader.ts
+- C:\Project\Forge_Duplicate2\forge\src\vs\platform\agentHost\node\orchestration\orchestrator.ts
+- C:\Project\Forge_Duplicate2\forge\src\vs\workbench\contrib\forge\common\forgeAgentSetup.ts
+- C:\Project\Forge_Duplicate2\forge\src\vs\workbench\contrib\forge\electron-browser\forgeAgentSetup.contribution.ts
+- C:\Project\Forge_Duplicate2\forge\src\vs\platform\agentHost\test\node\orchestration\orchestrator.test.ts
+- C:\Project\Forge_Duplicate2\forge\src\vs\workbench\contrib\forge\test\common\forgeAgentSetup.test.ts
+  纯文字概括：这些是上一轮已改、本轮一并提交的 Logos 单智能体路径：Logos 只用选中的 agent.chat，不会带上 Dialectic 工人，也不再为 Logos 建 git worktree。
+- C:\Project\Forge_Duplicate2\forge\modify_logs\2026-08-30_11-40-41.949_UTC+08-00_China-Standard-Time\changes.txt
+  纯文字概括：本轮修改记录。
+
+测试：
+- workerRuntime / workerAdapters / orchestrator 单测全部通过。
+- 从 forge/out 解析到 third_party 里的 Harness 源码和 grok.exe。
+- grok.exe --version 成功；node + npx-cli 跑 @deepseek-ai/dsh --help 成功。没有再出现 spawn EINVAL 或 runtime probe failed。
+
+清理：
+- 测通后删除 C:\Project\Forge_Duplicate2\deepseek-harness-master 和 C:\Project\Forge_Duplicate2\grok-build-main。
