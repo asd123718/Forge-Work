@@ -42,3 +42,14 @@ export function leaderImplementPrompt(task: IOrchestrationTaskState, contract: s
 		'When finished, reply with a short structured summary only: status, changed files, test result, risks. No chat transcript.',
 	].join('\n\n');
 }
+
+export function logosAgentPrompt(goal: string, model?: string, thinkingLevel?: string, contextSize?: string): string {
+	return [
+		'You are a Forge coding agent. Work directly in this workspace to fulfill the user request.',
+		`User request:\n${goal}`,
+		model ? `Preferred model: ${model}` : undefined,
+		thinkingLevel ? `Thinking effort: ${thinkingLevel}` : undefined,
+		contextSize ? `Context size: ${contextSize}` : undefined,
+		'Reply with a clear answer. If you change files, mention those paths.',
+	].filter(Boolean).join('\n\n');
+}

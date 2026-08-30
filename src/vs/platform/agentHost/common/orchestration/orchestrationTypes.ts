@@ -46,6 +46,14 @@ export function orchestrationAgentRef(providerId: string, role: 'leader' | 'work
 	};
 }
 
+/** Logos never carries Dialectic workers. A missing leader falls back to Codex. */
+export function isolateLogosAssignment(assignment: IOrchestrationAssignment | undefined): IOrchestrationAssignment {
+	const leader = assignment?.leader.providerId
+		? { ...assignment.leader, role: 'leader' as const }
+		: orchestrationAgentRef(CODEX_LEADER_PROVIDER_ID, 'leader');
+	return { leader, workers: [] };
+}
+
 function optionalString(value: unknown): string | undefined {
 	return typeof value === 'string' && value.trim() !== '' ? value : undefined;
 }
@@ -254,6 +262,8 @@ export interface ILeaderProvider {
 	plan(context: ILeaderPlanContext, abort: AbortSignal): Promise<IOrchestrationPlan>;
 	review(run: IOrchestrationRunState, abort: AbortSignal, hooks?: IOrchestrationProgressHooks): Promise<string>;
 	implement(task: IOrchestrationTaskState, workspace: string, contract: string, abort: AbortSignal, run?: IOrchestrationRunState, hooks?: IOrchestrationProgressHooks): Promise<IWorkerTaskResult>;
+	/** Logos single-agent turn. Runs in the user's workspace; not a Dialectic worker. */
+	chat(goal: string, workspace: string, model: string | undefined, abort: AbortSignal, hooks?: IOrchestrationProgressHooks, extras?: { thinkingLevel?: string; contextSize?: string }): Promise<string>;
 }
 
 export interface IWorkerRunRequest {

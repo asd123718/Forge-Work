@@ -31,7 +31,7 @@ import { IAgentHostProxyResolver } from '../agentHostProxyResolver.js';
 import { grokAuthPath, grokLoginUrl, grokNetworkErrorMessage, pollGrokDeviceToken, requestGrokDeviceCode, resolveGrokFetch, writeGrokOidcAuth } from './grokDeviceLogin.js';
 import { IAgentConfigurationService } from '../agentConfigurationService.js';
 import { getVendorAccountSecret, setVendorAccountSecret } from './vendorAccountSecrets.js';
-import { resolveGrokCommand } from './workerAdapters.js';
+import { findGrokBuildBinary, resolveSpawnCommand } from './workerRuntime.js';
 
 export class ForgeVendorAccountHost extends Disposable {
 	private _lastGrokSignIn?: string;
@@ -342,9 +342,9 @@ function writeDeepSeekCredentials(userHome: string, apiKey: string | undefined):
 }
 
 function resolveGrokLoginCommand(repoRoot: string): { command: string; prefixArgs: string[] } | undefined {
-	const fromWorker = resolveGrokCommand(repoRoot, { ...process.env, FORGE_GROK_SIGNED_IN: '1' } as NodeJS.ProcessEnv);
-	if (fromWorker) {
-		return { command: fromWorker.command, prefixArgs: fromWorker.prefixArgs };
+	const built = findGrokBuildBinary(repoRoot);
+	if (built) {
+		return { command: built, prefixArgs: [] };
 	}
 	return { command: isWindows ? 'grok.cmd' : 'grok', prefixArgs: [] };
 }
@@ -354,7 +354,8 @@ function spawnDetached(command: string | undefined, args: readonly string[]): vo
 		return;
 	}
 	try {
-		spawn(command, [...args], { detached: true, stdio: 'ignore', windowsHide: true }).unref();
+		const resolved = resolveSpawnCommand(command);
+		spawn(resolved.command, [...resolved.prefixArgs, ...args], { detached: true, stdio: 'ignore', windowsHide: true, shell: resolved.shell }).unref();
 	} catch {
 		return;
 	}

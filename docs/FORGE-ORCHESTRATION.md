@@ -23,10 +23,10 @@ would block the vertical slice.
 Rejected for this phase: a full ACP client. Neither sibling tree is the Forge
 session runtime; both are executed through adapters.
 
-Sibling source (not the originally named folders):
+Vendored source (inside this repo):
 
-- `../deepseek-harness-master`
-- `../grok-build-main`
+- `third_party/deepseek-harness`
+- `third_party/grok-build`
 
 Default assignment (UI-overridable; any catalog agent can be Leader or Worker):
 
@@ -91,10 +91,12 @@ keeps Leader / Worker on the composer and the **编排** action. In Dialectic,
 pressing **Enter** in the chat input starts orchestration the same way as the
 **编排** button. Both the work mode and model configuration persist across restarts.
 
-CLI workers resolve from sibling source trees, `~/.forge/` install paths, or
-`npx` / `PATH` fallbacks. They require `DEEPSEEK_API_KEY`, `XAI_API_KEY`, or
-saved credentials under `~/.dsh` / `~/.grok`. When a CLI worker is unavailable,
-the scheduler falls back to Codex for that task.
+CLI workers resolve from in-tree `third_party/deepseek-harness` and
+`third_party/grok-build` (walking up from `appRoot`), then `~/.dsh` / `~/.grok` /
+`~/.forge/` install paths, then `npx` / `PATH` fallbacks. They require
+`DEEPSEEK_API_KEY`, `XAI_API_KEY`, or saved credentials under `~/.dsh` /
+`~/.grok`. When a CLI worker is unavailable, the scheduler falls back to Codex
+for that task.
 
 ## Vertical slice
 

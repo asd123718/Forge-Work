@@ -46,6 +46,12 @@ export class LocalLeaderProvider implements ILeaderProvider {
 			usage: { durationMs: 0 },
 		};
 	}
+
+	async chat(_goal: string, _workspace: string, _model: string | undefined, _abort: AbortSignal, hooks?: IOrchestrationProgressHooks): Promise<string> {
+		const error = 'No CLI agent is available for this Logos request.';
+		hooks?.onProgress?.({ progress: error, output: error });
+		throw new Error(error);
+	}
 }
 
 export class CodexLeaderProvider implements ILeaderProvider {
@@ -92,6 +98,10 @@ export class CodexLeaderProvider implements ILeaderProvider {
 				usage: { durationMs: Date.now() - startedAt },
 			};
 		}
+	}
+
+	async chat(goal: string, workspace: string, model: string | undefined, abort: AbortSignal, hooks?: IOrchestrationProgressHooks): Promise<string> {
+		return this._fallback.chat(goal, workspace, model, abort, hooks);
 	}
 }
 

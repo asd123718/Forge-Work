@@ -80,8 +80,8 @@ suite('Forge agent setup', () => {
 		});
 		const assignment = logosAssignment(DEEPSEEK_WORKER_PROVIDER_ID, setup);
 		assert.strictEqual(assignment.leader.providerId, DEEPSEEK_WORKER_PROVIDER_ID);
-		assert.strictEqual(assignment.workers.length, 1);
-		assert.strictEqual(assignment.workers[0].role, 'worker');
+		assert.strictEqual(assignment.workers.length, 0);
+		assert.strictEqual(assignment.leader.role, 'leader');
 		assert.strictEqual(assignment.leader.thinkingLevel, 'high');
 	});
 

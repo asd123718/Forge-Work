@@ -30,6 +30,7 @@ import {
 	FORGE_ORCHESTRATION_COMMAND_KEY,
 	FORGE_ORCHESTRATION_REQUEST_KEY,
 	FORGE_ORCHESTRATION_STATE_KEY,
+	isolateLogosAssignment,
 	isOrchestrationRequest,
 	orchestrationAgentInfo,
 	readAssignment,
@@ -142,7 +143,7 @@ export class ForgeOrchestrationService extends Disposable {
 		this._paused = false;
 		const stored = readAssignment(this._configuration.getRootConfigValues?.()?.[FORGE_ORCHESTRATION_ASSIGNMENT_KEY]);
 		const assignment = request.mode === 'logos'
-			? request.assignment ?? stored ?? DEFAULT_ORCHESTRATION_ASSIGNMENT
+			? isolateLogosAssignment(request.assignment)
 			: stored ?? request.assignment ?? DEFAULT_ORCHESTRATION_ASSIGNMENT;
 		this._run = {
 			runId: generateUuid(),
@@ -251,10 +252,7 @@ export class ForgeOrchestrationService extends Disposable {
 					return;
 				}
 			}
-			await this._pump(runId, this._abort.signal);
-			if (this._isCurrentRun(runId) && this._run.status !== 'paused' && this._run.status !== 'cancelled') {
-				await this._finalizeContinuation(runId, this._abort.signal);
-			}
+			await this._continueRun(runId, this._abort.signal);
 			return;
 		}
 		if (!command.taskId) {
@@ -270,14 +268,19 @@ export class ForgeOrchestrationService extends Disposable {
 			this._abort = new AbortController();
 			this._run = { ...this._run, status: 'running', updatedAt: Date.now() };
 			this._publish();
-			const runId = this._run.runId;
-			await this._pump(runId, this._abort.signal);
-			if (this._isCurrentRun(runId) && this._run.status !== 'paused' && this._run.status !== 'cancelled') {
-				await this._finalizeContinuation(runId, this._abort.signal);
-			}
+			await this._continueRun(this._run.runId, this._abort.signal);
 			return;
 		}
 		if (command.type === 'escalate') {
+			if (this._run.mode === 'logos') {
+				this._updateTask(task.id, { status: 'queued', attempt: 0, result: undefined, error: undefined });
+				this._paused = false;
+				this._abort = new AbortController();
+				this._run = { ...this._run, status: 'running', updatedAt: Date.now() };
+				this._publish();
+				await this._continueRun(this._run.runId, this._abort.signal);
+				return;
+			}
 			const runId = this._run.runId;
 			await this._escalate(task, runId, this._abort?.signal ?? new AbortController().signal);
 			if (this._isCurrentRun(runId) && this._run.status !== 'paused' && this._run.status !== 'cancelled') {
@@ -287,7 +290,9 @@ export class ForgeOrchestrationService extends Disposable {
 			return;
 		}
 		if (command.type === 'reassign' && command.workerProviderId) {
-			const worker = this._workerRef(this._run.assignment, command.workerProviderId);
+			const worker = this._run.mode === 'logos'
+				? this._agentRef(command.workerProviderId)
+				: this._workerRef(this._run.assignment, command.workerProviderId);
 			this._updateTask(task.id, {
 				status: 'queued',
 				requestedWorkerProviderId: worker.providerId,
@@ -301,11 +306,7 @@ export class ForgeOrchestrationService extends Disposable {
 			this._abort = new AbortController();
 			this._run = { ...this._run, status: 'running', updatedAt: Date.now() };
 			this._publish();
-			const runId = this._run.runId;
-			await this._pump(runId, this._abort.signal);
-			if (this._isCurrentRun(runId) && this._run.status !== 'paused' && this._run.status !== 'cancelled') {
-				await this._finalizeContinuation(runId, this._abort.signal);
-			}
+			await this._continueRun(this._run.runId, this._abort.signal);
 		}
 	}
 
@@ -313,23 +314,23 @@ export class ForgeOrchestrationService extends Disposable {
 		if (!this._run) {
 			throw new Error('Logos run was not initialized.');
 		}
-		const worker = assignment.leader;
+		const agent = assignment.leader;
 		this._run = {
 			...this._run,
 			status: 'running',
 			planSummary: request.goal,
 			tasks: [{
 				id: 'logos',
-				title: request.goal.slice(0, 80) || worker.label,
+				title: request.goal.slice(0, 80) || agent.label,
 				prompt: request.goal,
 				files: [],
 				dependsOn: [],
-				requestedWorkerProviderId: worker.providerId,
-				workerProviderId: worker.providerId,
-				workerLabel: worker.label,
-				workerModel: worker.model,
-				thinkingLevel: worker.thinkingLevel,
-				contextSize: worker.contextSize,
+				requestedWorkerProviderId: agent.providerId,
+				workerProviderId: agent.providerId,
+				workerLabel: agent.label,
+				workerModel: agent.model,
+				thinkingLevel: agent.thinkingLevel,
+				contextSize: agent.contextSize,
 				status: 'queued',
 				attempt: 0,
 			}],
@@ -337,11 +338,100 @@ export class ForgeOrchestrationService extends Disposable {
 		};
 		this._publish();
 		const runId = this._run.runId;
-		await this._pump(runId, abort);
+		await this._runLogosAgent('logos', runId, abort);
 		if (this._run.status === 'cancelled' || this._run.status === 'paused') {
 			return this._run;
 		}
 		return this._finalizeLogos(runId);
+	}
+
+	private async _continueRun(runId: string, abort: AbortSignal): Promise<void> {
+		if (this._run?.mode === 'logos') {
+			await this._runLogosAgent('logos', runId, abort);
+			if (this._isCurrentRun(runId) && this._run && this._run.status !== 'paused' && this._run.status !== 'cancelled') {
+				this._finalizeLogos(runId);
+			}
+			return;
+		}
+		await this._pump(runId, abort);
+		if (this._isCurrentRun(runId) && this._run && this._run.status !== 'paused' && this._run.status !== 'cancelled') {
+			await this._finalizeContinuation(runId, abort);
+		}
+	}
+
+	private async _runLogosAgent(taskId: string, runId: string, abort: AbortSignal): Promise<void> {
+		const task = this._run?.tasks.find(candidate => candidate.id === taskId);
+		if (!task || !this._run || !this._isCurrentRun(runId)) {
+			return;
+		}
+		if (task.status !== 'queued' && task.status !== 'retry') {
+			return;
+		}
+		this._updateTask(taskId, { status: 'running', attempt: task.attempt + 1 });
+		this._publish();
+		const entryId = this._beginTranscript('worker', task.workerLabel, task.title, task.id);
+		try {
+			const worker = this._workers.get(task.workerProviderId);
+			if (worker) {
+				const availability = await worker.checkAvailability();
+				if (!availability.available) {
+					const error = workerUnavailableMessage(orchestrationAgentInfo(task.workerProviderId)?.label ?? task.workerLabel, availability);
+					this._updateTask(taskId, { status: 'failed', error });
+					this._completeTranscript(entryId, error, 'failed');
+					return;
+				}
+			}
+			if (abort.aborted || !this._isCurrentRun(runId)) {
+				if (this._isCurrentRun(runId)) {
+					this._updateTask(taskId, { status: this._paused ? 'queued' : 'cancelled', attempt: this._paused ? task.attempt : task.attempt + 1 });
+					this._completeTranscript(entryId, this._paused ? 'Paused' : 'Cancelled', 'failed');
+				}
+				return;
+			}
+			const leader = this._agentForLogos(task);
+			const output = await leader.chat(this._run.goal, this._run.workspace, task.workerModel, abort, this._transcriptHooks(entryId), {
+				thinkingLevel: task.thinkingLevel,
+				contextSize: task.contextSize,
+			});
+			if (abort.aborted || !this._isCurrentRun(runId)) {
+				if (this._isCurrentRun(runId)) {
+					this._updateTask(taskId, { status: this._paused ? 'queued' : 'cancelled', attempt: this._paused ? task.attempt : task.attempt + 1 });
+					this._completeTranscript(entryId, this._paused ? 'Paused' : 'Cancelled', 'failed');
+				}
+				return;
+			}
+			const trimmed = output.trim();
+			if (trimmed === '') {
+				const error = `${task.workerLabel} returned an empty result.`;
+				this._updateTask(taskId, {
+					status: 'failed',
+					error,
+					result: { status: 'failed', summary: '', changedFiles: [], error, usage: { durationMs: 0 } },
+				});
+				this._completeTranscript(entryId, error, 'failed');
+				return;
+			}
+			this._completeTranscript(entryId, trimmed, 'completed');
+			this._updateTask(taskId, {
+				status: 'completed',
+				result: { status: 'completed', summary: trimmed, changedFiles: [], usage: { durationMs: 0 } },
+			});
+		} catch (error) {
+			const message = error instanceof Error ? error.message : String(error);
+			if (this._isCurrentRun(runId)) {
+				const interrupted = abort.aborted || this._paused;
+				this._updateTask(taskId, {
+					status: interrupted && this._paused ? 'queued' : 'failed',
+					attempt: interrupted && this._paused ? task.attempt : task.attempt + 1,
+					error: message,
+				});
+				this._completeTranscript(entryId, this._paused ? 'Paused' : message, 'failed');
+			}
+		} finally {
+			if (this._isCurrentRun(runId)) {
+				this._publish();
+			}
+		}
 	}
 
 	private async _pump(runId: string, abort: AbortSignal): Promise<void> {
@@ -643,9 +733,22 @@ export class ForgeOrchestrationService extends Disposable {
 	}
 
 	private _leaderFor(assignment: IOrchestrationAssignment): ILeaderProvider {
-		return this._overrideLeader
-			?? this._leaders.get(assignment.leader.providerId)
+		const registered = this._leaders.get(assignment.leader.providerId) ?? this._fallbackLeader;
+		if (this._run?.mode === 'logos') {
+			return registered;
+		}
+		return this._overrideLeader ?? registered;
+	}
+
+	private _agentForLogos(task: IOrchestrationTaskState): ILeaderProvider {
+		return this._leaders.get(task.workerProviderId)
+			?? this._leaders.get(this._run?.assignment.leader.providerId ?? '')
 			?? this._fallbackLeader;
+	}
+
+	private _agentRef(providerId: string) {
+		const agent = orchestrationAgentInfo(providerId);
+		return { providerId, label: agent?.label ?? providerId, model: agent?.defaultModel, role: 'leader' as const };
 	}
 
 	private _workerRef(assignment: IOrchestrationAssignment, providerId: string) {

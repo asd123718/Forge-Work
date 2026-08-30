@@ -172,8 +172,10 @@ class ForgeAgentSetupContribution extends Disposable {
 		}
 		this._register(this._chatWidgetService.onDidAddWidget(widget => this._bindWidget(widget)));
 		this._register(this._configurationService.onDidChangeConfiguration(e => {
-			if (e.affectsConfiguration(FORGE_AGENT_SETUP_SETTING_ID) || e.affectsConfiguration(FORGE_LOGOS_AGENT_SETTING_ID) || e.affectsConfiguration(FORGE_WORK_MODE_SETTING_ID)) {
+			if (e.affectsConfiguration(FORGE_AGENT_SETUP_SETTING_ID)) {
 				this._syncDialecticAssignment();
+			}
+			if (e.affectsConfiguration(FORGE_AGENT_SETUP_SETTING_ID) || e.affectsConfiguration(FORGE_LOGOS_AGENT_SETTING_ID) || e.affectsConfiguration(FORGE_WORK_MODE_SETTING_ID)) {
 				this._applyLogosSession(this._chatWidgetService);
 			}
 		}));

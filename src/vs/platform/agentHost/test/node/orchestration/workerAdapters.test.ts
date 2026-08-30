@@ -35,7 +35,8 @@ suite('Forge worker adapters', () => {
 			assert.strictEqual(resolveGrokCommand('/missing-root', {}), undefined);
 			const deepseek = resolveDeepSeekCommand('/missing-root', { DEEPSEEK_API_KEY: 'k' } as NodeJS.ProcessEnv);
 			assert.ok(deepseek);
-			assert.strictEqual(deepseek.command === 'pnpm' || deepseek.command === 'npx', true);
+			assert.ok(deepseek.command === 'pnpm' || deepseek.command === 'npx' || /node(\.exe)?$/i.test(deepseek.command));
+			assert.ok(deepseek.args.some(arg => arg.includes('@deepseek-ai/dsh') || arg.includes('dsh') || arg.endsWith('npx-cli.js')));
 			const grok = resolveGrokCommand('/missing-root', { XAI_API_KEY: 'k' } as NodeJS.ProcessEnv);
 			assert.ok(grok);
 			assert.ok(grok.command.includes('grok') || grok.command.endsWith('xai-grok-pager.exe') || grok.command.endsWith('xai-grok-pager'));

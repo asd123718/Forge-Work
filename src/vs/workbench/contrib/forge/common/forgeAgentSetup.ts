@@ -7,6 +7,7 @@ import { getCodexModelCatalogEntry, normalizeCodexModelsConfig } from '../../../
 import {
 	CODEX_LEADER_PROVIDER_ID,
 	FORGE_ORCHESTRATION_AGENTS,
+	isolateLogosAssignment,
 	orchestrationAgentInfo,
 	orchestrationAgentRef,
 	type IOrchestrationAssignment,
@@ -206,11 +207,10 @@ export function assignmentWithDialecticProfiles(assignment: IOrchestrationAssign
 }
 
 export function logosAssignment(providerId: string, setup: IForgeAgentSetup): IOrchestrationAssignment {
-	const leader = providerRefFromProfile(providerId, 'leader', setup, 'logos');
-	return {
-		leader,
-		workers: [{ ...leader, role: 'worker' }],
-	};
+	return isolateLogosAssignment({
+		leader: providerRefFromProfile(providerId, 'leader', setup, 'logos'),
+		workers: [],
+	});
 }
 
 export function providerRefFromProfile(providerId: string, role: 'leader' | 'worker', setup: IForgeAgentSetup, column: ForgeAgentColumn = 'dialectic'): IOrchestrationProviderRef {

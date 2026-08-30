@@ -12,11 +12,16 @@ import {
 	deepSeekCredentialSource,
 	deepSeekCredentialsPath,
 	deepSeekHarnessRoots,
+	findDeepSeekHarnessRoot,
+	findGrokBuildBinary,
 	grokBuildBinaryCandidates,
 	grokCredentialSource,
 	hasDeepSeekWorkerCredentials,
 	hasGrokWorkerCredentials,
+	isExecutablePath,
 	readDeepSeekApiKeyFromCredentials,
+	resolveNodeNpmCli,
+	resolveSpawnCommand,
 } from '../../../node/orchestration/workerRuntime.js';
 import { resolveDeepSeekCommand, resolveGrokCommand } from '../../../node/orchestration/workerAdapters.js';
 
@@ -25,14 +30,66 @@ suite('Forge worker runtime', () => {
 
 	test('discovers harness roots under repo and user home', () => {
 		const roots = deepSeekHarnessRoots('/app/resources/app');
+		assert.ok(roots.some(root => root.replace(/\\/g, '/').includes('third_party/deepseek-harness')));
 		assert.ok(roots.some(root => root.includes('deepseek-harness-master')));
 		assert.ok(roots.some(root => root.includes('.forge')));
 	});
 
 	test('discovers grok binary candidates under repo and user home', () => {
 		const roots = grokBuildBinaryCandidates('/app/resources/app');
+		assert.ok(roots.some(root => root.replace(/\\/g, '/').includes('third_party/grok-build')));
 		assert.ok(roots.some(root => root.includes('grok-build-main')));
-		assert.ok(roots.some(root => root.includes('.forge')));
+		assert.ok(roots.some(root => root.includes('.forge') || root.includes('.grok')));
+	});
+
+	test('finds vendored harness and grok binary by walking up from appRoot', () => {
+		const forgeRoot = mkdtempSync(join(tmpdir(), 'forge-vendor-'));
+		try {
+			const appRoot = join(forgeRoot, 'out');
+			mkdirSync(join(forgeRoot, 'third_party', 'deepseek-harness', 'apps', 'cli', 'src'), { recursive: true });
+			mkdirSync(join(forgeRoot, 'third_party', 'grok-build', 'bin'), { recursive: true });
+			mkdirSync(appRoot, { recursive: true });
+			writeFileSync(join(forgeRoot, 'third_party', 'deepseek-harness', 'package.json'), '{"name":"dsh"}\n', 'utf8');
+			const grokBin = join(forgeRoot, 'third_party', 'grok-build', 'bin', process.platform === 'win32' ? 'grok.exe' : 'grok');
+			writeFileSync(grokBin, '', 'utf8');
+			assert.strictEqual(findDeepSeekHarnessRoot(appRoot), join(forgeRoot, 'third_party', 'deepseek-harness'));
+			assert.strictEqual(findGrokBuildBinary(appRoot), grokBin);
+			const env = { DEEPSEEK_API_KEY: 'k', XAI_API_KEY: 'k' } as NodeJS.ProcessEnv;
+			const deepseek = resolveDeepSeekCommand(appRoot, env);
+			assert.ok(deepseek);
+			assert.ok(deepseek.args.some(arg => arg.includes('@deepseek-ai/dsh') || arg.includes('npx') || arg.endsWith('bin.js') || arg.endsWith('bin.ts')));
+			const grok = resolveGrokCommand(appRoot, env);
+			assert.ok(grok);
+			assert.strictEqual(grok.command, grokBin);
+		} finally {
+			rmSync(forgeRoot, { recursive: true, force: true });
+		}
+	});
+
+	test('does not treat bare PATH names as installed executables', () => {
+		assert.strictEqual(isExecutablePath('grok'), false);
+		assert.strictEqual(isExecutablePath('npx'), false);
+		assert.strictEqual(isExecutablePath(process.execPath), true);
+	});
+
+	test('resolves npx through node.exe instead of a Windows cmd shim', () => {
+		const npx = resolveNodeNpmCli('npx');
+		assert.ok(npx.command === 'npx' || npx.command === process.execPath);
+		if (npx.command === process.execPath) {
+			assert.ok(npx.prefixArgs.some(arg => arg.endsWith('npx-cli.js')));
+		}
+		const spawned = resolveSpawnCommand(process.execPath);
+		assert.strictEqual(spawned.shell, false);
+		assert.deepStrictEqual(spawned.prefixArgs, []);
+		if (process.platform === 'win32') {
+			const cmdShim = resolveSpawnCommand('npx.cmd');
+			assert.strictEqual(cmdShim.shell, false);
+			assert.ok(cmdShim.prefixArgs.includes('/c'));
+			assert.ok(cmdShim.command.toLowerCase().includes('cmd'));
+			const bare = resolveSpawnCommand('npx');
+			assert.strictEqual(bare.shell, true);
+			assert.notStrictEqual(bare.command, 'npx.cmd');
+		}
 	});
 
 	test('reads deepseek credentials from the harness yaml file', () => {

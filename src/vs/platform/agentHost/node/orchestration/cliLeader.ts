@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import type { ILeaderPlanContext, ILeaderProvider, IOrchestrationPlan, IOrchestrationProgressHooks, IOrchestrationRunState, IOrchestrationTaskState, IWorkerTaskResult } from '../../common/orchestration/orchestrationTypes.js';
-import { leaderImplementPrompt, leaderPlanPrompt, leaderReviewPrompt } from '../../common/orchestration/leaderPrompts.js';
+import { leaderImplementPrompt, leaderPlanPrompt, leaderReviewPrompt, logosAgentPrompt } from '../../common/orchestration/leaderPrompts.js';
 import { parseOrchestrationPlan } from '../../common/orchestration/taskGraph.js';
 import type { ProcessRunner } from './workerAdapters.js';
 import { parseWorkerSummary } from './workerAdapters.js';
@@ -36,6 +36,17 @@ export class CliLeaderProvider implements ILeaderProvider {
 			return this._fallback.implement(task, workspace, contract, abort, run, hooks);
 		}
 		return parseWorkerSummary(text, 0, startedAt);
+	}
+
+	async chat(goal: string, workspace: string, model: string | undefined, abort: AbortSignal, hooks?: IOrchestrationProgressHooks, extras?: { thinkingLevel?: string; contextSize?: string }): Promise<string> {
+		const prompt = logosAgentPrompt(goal, model, extras?.thinkingLevel, extras?.contextSize);
+		let streamed = '';
+		const text = await this._invoke(prompt, workspace, model, abort, chunk => {
+			streamed += chunk;
+			hooks?.onProgress?.({ progress: streamed });
+		});
+		hooks?.onProgress?.({ progress: streamed || text, output: text });
+		return text;
 	}
 
 	private async _safeInvoke(prompt: string, workspace: string, model: string | undefined, abort: AbortSignal, hooks?: IOrchestrationProgressHooks): Promise<string> {

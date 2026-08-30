@@ -6,16 +6,18 @@
 import { spawn } from 'child_process';
 import { existsSync } from 'fs';
 import { join } from '../../../../base/common/path.js';
-import { isWindows } from '../../../../base/common/platform.js';
 import type { IWorkerAvailability, IWorkerProvider, IWorkerRunRequest, IWorkerTaskResult } from '../../common/orchestration/orchestrationTypes.js';
 import { DEEPSEEK_WORKER_PROVIDER_ID, GROK_WORKER_PROVIDER_ID } from '../../common/orchestration/orchestrationTypes.js';
 import {
 	deepSeekCredentialSource,
-	deepSeekHarnessRoots,
-	grokBuildBinaryCandidates,
+	findDeepSeekHarnessRoot,
+	findGrokBuildBinary,
 	grokCredentialSource,
+	hasDeepSeekLocalRuntime,
 	isExecutablePath,
 	probeExecutable,
+	resolveNodeNpmCli,
+	resolveSpawnCommand,
 } from './workerRuntime.js';
 
 export interface IProcessRunResult {
@@ -29,7 +31,7 @@ export type ProcessRunner = (command: string, args: readonly string[], options: 
 export function createNodeProcessRunner(): ProcessRunner {
 	return (command, args, options) => new Promise((resolve, reject) => {
 		const resolved = resolveSpawnCommand(command);
-		const child = spawn(resolved.command, [...args], {
+		const child = spawn(resolved.command, [...resolved.prefixArgs, ...args], {
 			cwd: options.cwd,
 			env: options.env,
 			shell: resolved.shell,
@@ -125,44 +127,26 @@ function asNumber(value: unknown): number | undefined {
 	return typeof value === 'number' && Number.isFinite(value) ? value : undefined;
 }
 
-function resolveSpawnCommand(command: string): { command: string; shell: boolean } {
-	if (!isWindows) {
-		return { command, shell: false };
-	}
-	if (command.endsWith('.exe') || command.endsWith('.cmd') || command.endsWith('.bat') || command.includes('\\') || command.includes('/')) {
-		return { command, shell: false };
-	}
-	return { command: `${command}.cmd`, shell: false };
-}
-
-function findDeepSeekHarnessRoot(repoRoot: string): string | undefined {
-	for (const candidate of deepSeekHarnessRoots(repoRoot)) {
-		if (existsSync(join(candidate, 'package.json'))) {
-			return candidate;
-		}
-	}
-	return undefined;
-}
-
-function findGrokBuildBinary(repoRoot: string): string | undefined {
-	for (const candidate of grokBuildBinaryCandidates(repoRoot)) {
-		if (existsSync(candidate)) {
-			return candidate;
-		}
-	}
-	return undefined;
-}
-
 export function resolveDeepSeekCommand(repoRoot: string, env: NodeJS.ProcessEnv): { command: string; args: string[]; env: NodeJS.ProcessEnv } | undefined {
 	if (deepSeekCredentialSource(env) === 'none') {
 		return undefined;
 	}
 	const next = { ...env, DSH_PERMISSION_MODE: env.DSH_PERMISSION_MODE ?? 'workspace-write' };
 	const local = findDeepSeekHarnessRoot(repoRoot);
-	if (local) {
+	if (local && hasDeepSeekLocalRuntime(local)) {
+		const binJs = join(local, 'apps', 'cli', 'lib', 'bin.js');
+		if (existsSync(binJs)) {
+			return { command: process.execPath, args: [binJs, '--profile', 'headless'], env: next };
+		}
+		const binTs = join(local, 'apps', 'cli', 'src', 'bin.ts');
+		const tsx = join(local, 'node_modules', 'tsx', 'dist', 'esm', 'index.mjs');
+		if (existsSync(binTs) && existsSync(tsx)) {
+			return { command: process.execPath, args: ['--import', tsx, binTs, '--profile', 'headless'], env: next };
+		}
 		return { command: 'pnpm', args: ['--dir', local, 'dsh', '--profile', 'headless'], env: next };
 	}
-	return { command: 'npx', args: ['--yes', '@deepseek-ai/dsh', '--profile', 'headless'], env: next };
+	const npx = resolveNodeNpmCli('npx');
+	return { command: npx.command, args: [...npx.prefixArgs, '--yes', '@deepseek-ai/dsh', '--profile', 'headless'], env: next };
 }
 
 export function resolveGrokCommand(repoRoot: string, env: NodeJS.ProcessEnv): { command: string; prefixArgs: string[]; env: NodeJS.ProcessEnv } | undefined {
@@ -197,22 +181,22 @@ export class DeepSeekHarnessWorker implements IWorkerProvider {
 			return { available: false, credentialSource: 'none', reason: 'missing-credentials' };
 		}
 		const credentialSource = deepSeekCredentialSource(resolved.env);
+		const executable = [resolved.command, ...resolved.args.slice(0, 5)].join(' ');
+		if (isExecutablePath(resolved.command)) {
+			const imported = resolved.args[0] === '--import' ? resolved.args[1] : resolved.args[0];
+			if (imported && /\.(js|mjs|cjs|ts)$/i.test(imported) && !existsSync(imported)) {
+				return { available: false, credentialSource, executable, reason: 'missing-executable' };
+			}
+			return { available: true, credentialSource, executable };
+		}
 		if (resolved.command === 'pnpm') {
 			const localDir = resolved.args[1];
-			const executable = localDir ? `pnpm --dir ${localDir} dsh` : 'pnpm';
 			if (!localDir || !existsSync(join(localDir, 'package.json'))) {
 				return { available: false, credentialSource, executable, reason: 'missing-executable' };
 			}
-			const available = await probeExecutable('pnpm', ['--version'], resolved.env);
-			return { available, credentialSource, executable, reason: available ? undefined : 'probe-failed' };
 		}
-		if (resolved.command === 'npx') {
-			const executable = 'npx @deepseek-ai/dsh';
-			const available = await probeExecutable('npx', ['--version'], resolved.env);
-			return { available, credentialSource, executable, reason: available ? undefined : 'probe-failed' };
-		}
-		const available = isExecutablePath(resolved.command);
-		return { available, credentialSource, executable: resolved.command, reason: available ? undefined : 'missing-executable' };
+		const available = await probeExecutable(resolved.command, ['--version'], resolved.env);
+		return { available, credentialSource, executable, reason: available ? undefined : 'probe-failed' };
 	}
 
 	async isAvailable(): Promise<boolean> {

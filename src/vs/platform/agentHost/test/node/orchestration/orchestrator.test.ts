@@ -15,7 +15,8 @@ import { NullLogService } from '../../../../../platform/log/common/log.js';
 import { AgentHostStateManager } from '../../../node/agentHostStateManager.js';
 import { AgentConfigurationService } from '../../../node/agentConfigurationService.js';
 import { ForgeOrchestrationService } from '../../../node/orchestration/orchestrator.js';
-import type { ILeaderPlanContext, ILeaderProvider, IOrchestrationPlan, IWorkerAvailability, IWorkerProvider, IWorkerTaskResult } from '../../../common/orchestration/orchestrationTypes.js';
+import type { ILeaderPlanContext, ILeaderProvider, IOrchestrationPlan, IOrchestrationProgressHooks, IWorkerAvailability, IWorkerProvider, IWorkerTaskResult } from '../../../common/orchestration/orchestrationTypes.js';
+import { DEFAULT_ORCHESTRATION_ASSIGNMENT, FORGE_ORCHESTRATION_ASSIGNMENT_KEY } from '../../../common/orchestration/orchestrationTypes.js';
 
 function runGit(cwd: string, args: readonly string[]): Promise<void> {
 	return new Promise((resolve, reject) => {
@@ -27,6 +28,7 @@ class FakeLeader implements ILeaderProvider {
 	readonly label: string;
 	public reviews = 0;
 	public implemented: string[] = [];
+	public chats: string[] = [];
 	constructor(
 		private readonly _plan: IOrchestrationPlan,
 		readonly id = 'codex',
@@ -41,6 +43,15 @@ class FakeLeader implements ILeaderProvider {
 	async implement(task: { id: string }): Promise<IWorkerTaskResult> {
 		this.implemented.push(task.id);
 		return { status: 'completed', summary: 'leader patch', changedFiles: ['src/escalated.ts'], usage: { durationMs: 2 } };
+	}
+	async chat(goal: string, _workspace: string, _model: string | undefined, abort: AbortSignal, hooks?: IOrchestrationProgressHooks): Promise<string> {
+		if (abort.aborted) {
+			throw new Error('aborted');
+		}
+		this.chats.push(goal);
+		const output = `done:${goal}`;
+		hooks?.onProgress?.({ progress: output, output });
+		return output;
 	}
 }
 
@@ -92,6 +103,10 @@ class PausingPlanLeader implements ILeaderProvider {
 	async implement(): Promise<IWorkerTaskResult> {
 		return { status: 'failed', summary: '', changedFiles: [], error: 'not used', usage: { durationMs: 0 } };
 	}
+
+	async chat(): Promise<string> {
+		throw new Error('not used');
+	}
 }
 
 suite('Forge orchestration scheduler', () => {
@@ -100,11 +115,23 @@ suite('Forge orchestration scheduler', () => {
 	teardown(() => disposables.clear());
 	ensureNoDisposablesAreLeakedInTestSuite();
 
-	function createService(): ForgeOrchestrationService {
+	function createHarness(): { service: ForgeOrchestrationService; config: AgentConfigurationService } {
 		const log = new NullLogService();
 		const state = disposables.add(new AgentHostStateManager(log));
 		const config = disposables.add(new AgentConfigurationService(state, log));
-		return disposables.add(new ForgeOrchestrationService(config, state, log, { appRoot: process.cwd() } as never));
+		const service = disposables.add(new ForgeOrchestrationService(config, state, log, { appRoot: process.cwd() } as never));
+		return { service, config };
+	}
+
+	function createService(): ForgeOrchestrationService {
+		return createHarness().service;
+	}
+
+	async function tempDir(): Promise<string> {
+		const dir = await mkdtemp(join(tmpdir(), 'forge-orch-'));
+		await writeFile(join(dir, 'README.md'), '# Test workspace\n');
+		disposables.add({ dispose: () => { void rm(dir, { recursive: true, force: true }); } });
+		return dir;
 	}
 
 	async function tempWorkspace(): Promise<string> {
@@ -293,15 +320,17 @@ suite('Forge orchestration scheduler', () => {
 
 	test('logos mode runs the selected agent without a leader plan', async () => {
 		const service = createService();
-		let prompt = '';
-		service.registerWorker(new FakeWorker('grok-build', 'Grok Build', async (text) => {
-			prompt = text;
-			return { status: 'completed', summary: 'done', changedFiles: ['x.ts'], usage: { durationMs: 3 } };
+		const leader = new FakeLeader({ summary: '', contract: '', tasks: [] }, 'grok-build');
+		service.registerLeader(leader);
+		let workerRan = false;
+		service.registerWorker(new FakeWorker('grok-build', 'Grok Build', async () => {
+			workerRan = true;
+			return { status: 'completed', summary: 'worker must not run', changedFiles: ['x.ts'], usage: { durationMs: 3 } };
 		}));
 		const run = await service.start({
 			chatUri: 'ahp-chat://x/default',
 			sessionUri: 'codex://x',
-			workspace: await tempWorkspace(),
+			workspace: await tempDir(),
 			goal: 'Write the helper',
 			mode: 'logos',
 			assignment: {
@@ -309,11 +338,57 @@ suite('Forge orchestration scheduler', () => {
 				workers: [{ providerId: 'grok-build', label: 'Grok Build', model: 'grok-4.6', role: 'worker' }],
 			},
 		});
-		assert.strictEqual(prompt, 'Write the helper');
+		assert.strictEqual(workerRan, false);
+		assert.deepStrictEqual(leader.chats, ['Write the helper']);
 		assert.strictEqual(run.status, 'completed');
+		assert.strictEqual(run.assignment.workers.length, 0);
 		assert.strictEqual(run.tasks.length, 1);
 		assert.strictEqual(run.tasks[0].workerProviderId, 'grok-build');
 		assert.strictEqual(run.tasks[0].thinkingLevel, 'high');
+	});
+
+	test('logos mode ignores stored dialectic workers and does not require git', async () => {
+		const { service, config } = createHarness();
+		config.updateRootConfig({ [FORGE_ORCHESTRATION_ASSIGNMENT_KEY]: DEFAULT_ORCHESTRATION_ASSIGNMENT });
+		service.registerWorker(new FakeWorker('deepseek-harness', 'DeepSeek Harness', async () => {
+			throw new Error('dialectic worker must not run in logos');
+		}));
+		service.registerWorker(new FakeWorker('grok-build', 'Grok Build', async () => {
+			throw new Error('dialectic worker must not run in logos');
+		}));
+		const run = await service.start({
+			chatUri: 'ahp-chat://x/default',
+			sessionUri: 'codex://x',
+			workspace: await tempDir(),
+			goal: 'hello',
+			mode: 'logos',
+		});
+		assert.strictEqual(run.assignment.leader.providerId, 'codex');
+		assert.strictEqual(run.assignment.workers.length, 0);
+		const message = run.tasks[0]?.error ?? run.error ?? '';
+		assert.ok(message.includes('unavailable'), message);
+		assert.ok(!message.includes('Git workspace'), message);
+	});
+
+	test('dialectic workers still require a git workspace', async () => {
+		const service = createService();
+		service.setLeader(new FakeLeader({
+			summary: 'one task',
+			contract: '',
+			tasks: [{ id: 'a', title: 'A', prompt: 'do a', files: [], dependsOn: [], workerHint: 'deepseek-harness' }],
+		}));
+		service.registerWorker(new FakeWorker('deepseek-harness', 'DeepSeek Harness', async () => ({
+			status: 'completed', summary: 'should not run', changedFiles: [], usage: { durationMs: 1 },
+		})));
+		const run = await service.start({
+			chatUri: 'ahp-chat://x/default',
+			sessionUri: 'codex://x',
+			workspace: await tempDir(),
+			goal: 'Need git isolation',
+			mode: 'dialectic',
+		});
+		assert.notStrictEqual(run.status, 'completed');
+		assert.ok((run.tasks[0]?.error ?? run.error ?? '').includes('Git workspace'));
 	});
 
 	test('does not merge partial edits from a failed worker', async () => {
